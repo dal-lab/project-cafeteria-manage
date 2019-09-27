@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="16f1c755-6ac7-45c8-a9e1-6d1da69b6233" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cafeteria-manage-api/out/production/classes/com/poppo/dallab/cafeteria/interfaces/HelloController.class" beforeDir="false" afterPath="$PROJECT_DIR$/cafeteria-manage-api/out/production/classes/com/poppo/dallab/cafeteria/interfaces/HelloController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cafeteria-manage-api/src/main/java/com/poppo/dallab/cafeteria/interfaces/HelloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/cafeteria-manage-api/src/main/java/com/poppo/dallab/cafeteria/interfaces/HelloController.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -60,6 +64,7 @@
       <recent name="" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/cafeteria-manage-api" />
     </key>
   </component>
@@ -75,7 +80,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.HelloControllerTests.helloTest">
+  <component name="RunManager" selected="Spring Boot.CafeteriaApplication (1)">
     <configuration name="HelloControllerTests.helloTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="com.poppo.dallab.cafeteria.cafeteria-manage-api.test" />
       <extension name="coverage">
@@ -131,6 +136,9 @@
       <updated>1569558936638</updated>
       <workItem from="1569558939984" duration="77000" />
       <workItem from="1569559045626" duration="3222000" />
+      <workItem from="1569569243950" duration="204000" />
+      <workItem from="1569581942973" duration="320000" />
+      <workItem from="1569582666545" duration="2547000" />
     </task>
     <servers />
   </component>
