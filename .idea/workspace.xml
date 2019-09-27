@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="16f1c755-6ac7-45c8-a9e1-6d1da69b6233" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cafeteria-manage-api/out/production/classes/com/poppo/dallab/cafeteria/interfaces/HelloController.class" beforeDir="false" afterPath="$PROJECT_DIR$/cafeteria-manage-api/out/production/classes/com/poppo/dallab/cafeteria/interfaces/HelloController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cafeteria-manage-api/src/main/java/com/poppo/dallab/cafeteria/interfaces/HelloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/cafeteria-manage-api/src/main/java/com/poppo/dallab/cafeteria/interfaces/HelloController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -138,7 +134,7 @@
       <workItem from="1569559045626" duration="3222000" />
       <workItem from="1569569243950" duration="204000" />
       <workItem from="1569581942973" duration="320000" />
-      <workItem from="1569582666545" duration="2547000" />
+      <workItem from="1569582666545" duration="2711000" />
     </task>
     <servers />
   </component>
