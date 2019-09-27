@@ -1,0 +1,3 @@
+rootProject.name = 'com.poppo.dallab.cafeteria'
+
+include 'cafeteria-manage-api'
