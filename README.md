@@ -9,13 +9,15 @@ TODO (우선순위 정렬)
 - [X] MenuPlan 도메인 구현하기 (id, workDayId, menuId)
 - [X] Menu 도메인 구현하기 (id, name)
 - [X] WorkDay 도메인 구현하기 (id, day, date)
-- [ ] 새로운 식단 입력을 위해 POST /workDay/{20190930}/menuPlans 기능 만들기
+- [ ] 새로운 식단 입력을 위해 POST /workDay/{20190930}/menuPlans endpoint 만들기
     [
 		{
 			"name": "제육볶음"
 		},
 		...
     ]
+- [X] MenuPlanRequestDto 만들기
+- [ ] 요청받은 데이터 저장 기능 만들기 (service, repository)
 - [ ] GET /workDay/{20190930} 응답 기능 만들기
     {	
         "day": "월",
@@ -27,7 +29,6 @@ TODO (우선순위 정렬)
             ...
         ]
     }
-- [ ] 요청받은 데이터 저장 기능 만들기
 - [ ] 기존 식단을 보여주기 위한 제목 나오게 하기
 - [ ] 기존 식단 보여주기 제목 밑에 5 * 12로 된 표? 리스트? 출력하기
 - [ ] 기존 식단 내용을 보여주기 위해 GET /workDay/{20190930} 요청 기능 만들기
