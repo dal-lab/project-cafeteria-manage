@@ -4,8 +4,6 @@ import com.poppo.dallab.cafeteria.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -13,19 +11,18 @@ public class MenuPlanService {
 
     MenuPlanRepository menuPlanRepository;
 
-    WorkDayRepository workDayRepository;
-
-    MenuRepository menuRepository;
+    WorkDayService workDayService;
+    MenuService menuService;
 
     @Autowired
     public MenuPlanService(
             MenuPlanRepository menuPlanRepository,
-            WorkDayRepository workDayRepository,
-            MenuRepository menuRepository
+            WorkDayService workDayService,
+            MenuService menuService
     ) {
         this.menuPlanRepository = menuPlanRepository;
-        this.workDayRepository = workDayRepository;
-        this.menuRepository = menuRepository;
+        this.workDayService = workDayService;
+        this.menuService = menuService;
     }
 
     public void addBulkMenu(String workDay, List<Menu> menus) {
@@ -40,26 +37,15 @@ public class MenuPlanService {
 
     public MenuPlan addMenu(String workDay, Menu menu) {
 
-        Long workDayId = getWorkDayId(workDay);
-        Long menuId = menuRepository.findByName(menu.getName()).getId();
+        WorkDay foundWorkDay = workDayService.getWorkDayByString(workDay);
+        Menu foundMenu = menuService.getMenuByMenuName(menu.getName());
 
         MenuPlan menuPlan = MenuPlan.builder()
-                .menuId(menuId)
-                .workDayId(workDayId)
+                .menuId(foundMenu.getId())
+                .workDayId(foundWorkDay.getId())
                 .build();
 
         return menuPlanRepository.save(menuPlan);
-
-    }
-
-    public Long getWorkDayId(String workDay) {
-
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate date = LocalDate.parse(workDay, dateTimeFormatter);
-
-        WorkDay foundWorkDay = workDayRepository.findByDate(date);
-
-        return foundWorkDay.getId();
 
     }
 
