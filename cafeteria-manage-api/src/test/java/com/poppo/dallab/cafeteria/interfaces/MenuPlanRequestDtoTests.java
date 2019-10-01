@@ -5,12 +5,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -50,9 +49,11 @@ public class MenuPlanRequestDtoTests {
         menuPlanRequestDtos.add(mockPlanRequestDto1);
         menuPlanRequestDtos.add(mockPlanRequestDto2);
 
-        // TODO: 이거 어떻게 동작하는건지 공부할 것
-        Type menuListType = new TypeToken<List<Menu>>() {}.getType();
-        List<Menu> mappedList = modelMapper.map(menuPlanRequestDtos, menuListType);
+        List<Menu> mappedList = menuPlanRequestDtos.stream()
+                .map(menuPlanRequestDto -> {
+                    return modelMapper.map(menuPlanRequestDto, Menu.class);
+                })
+                .collect(Collectors.toList());
 
         assertThat(mappedList.get(0).getName()).isEqualTo("제육볶음");
 
