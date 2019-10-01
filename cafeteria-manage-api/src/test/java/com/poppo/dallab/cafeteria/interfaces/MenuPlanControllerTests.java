@@ -31,7 +31,7 @@ public class MenuPlanControllerTests {
     @Test
     public void bulkCreate() throws Exception {
 
-        mvc.perform(post("/workDay/20190930/menuPlans")
+        mvc.perform(post("/workDay/2019-09-30/menuPlans")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("[\n" +
                         "        {\n" +
@@ -41,11 +41,11 @@ public class MenuPlanControllerTests {
                         "            \"name\": \"닭갈비\"\n" +
                         "        }\n" +
                         "    ]"))
-                .andExpect(header().stringValues("Location", "/workDay/20190930/menuPlans"))
+                .andExpect(header().stringValues("Location", "/workDay/2019-09-30/menuPlans"))
                 .andExpect(status().isCreated());
 
         // TODO: anyList 앞에 꼭 Mockito 붙어야 하는지 확인할 것
-        verify(menuPlanService).addBulkMenu(eq("20190930"), Mockito.<Menu>anyList());
+        verify(menuPlanService).addBulkMenu(eq("2019-09-30"), Mockito.<Menu>anyList());
 
     }
 

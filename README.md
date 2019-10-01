@@ -17,7 +17,10 @@ TODO (우선순위 정렬)
 		...
     ]
 - [X] MenuPlanRequestDto 만들기
-- [ ] 요청받은 데이터 저장 기능 만들기 (service, repository)
+- [X] 요청받은 MenuPlan 저장 기능 만들기 (service, repository)
+- [ ] MenuPlan 저장 기능 의존성 과다 아닌지 확인할 것
+- [ ] 요청받은 MenuPlan 저장 기능 중 Menu가 없는 경우 예외 처리하기
+- [ ] 요청받은 MenuPlan 저장 기능 중 WorkDay가 없는 경우 예외 처리하기
 - [ ] GET /workDay/{20190930} 응답 기능 만들기
     {	
         "day": "월",
