@@ -1,5 +1,6 @@
 package com.poppo.dallab.cafeteria.interfaces;
 
+import com.poppo.dallab.cafeteria.adapters.Mapper;
 import com.poppo.dallab.cafeteria.applications.MenuPlanService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,6 +27,9 @@ public class MenuPlanControllerTests {
 
     @MockBean
     MenuPlanService menuPlanService;
+
+    @MockBean
+    Mapper mapper;
 
     @Test
     public void bulkCreate() throws Exception {
