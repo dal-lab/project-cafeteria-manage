@@ -1,13 +1,10 @@
 package com.poppo.dallab.cafeteria.adapters;
 
-import com.poppo.dallab.cafeteria.domain.Menu;
-import com.poppo.dallab.cafeteria.interfaces.MenuPlanRequestDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.lang.reflect.Type;
 
 @Component
 public class ModelMapperAdapter implements Mapper {
@@ -20,10 +17,8 @@ public class ModelMapperAdapter implements Mapper {
     }
 
     @Override
-    public Menu menuMapping(MenuPlanRequestDto source) {
+    public <D> D mapping(Object source, D destination) {
 
-        Menu menu = adaptee.map(source, Menu.class);
-
-        return menu;
+        return adaptee.map(source, (Type) destination.getClass());
     }
 }
