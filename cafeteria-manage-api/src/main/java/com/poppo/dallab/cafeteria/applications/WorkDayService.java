@@ -20,10 +20,16 @@ public class WorkDayService {
 
     public WorkDay getWorkDayByString(String workDay) {
 
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate date = LocalDate.parse(workDay, dateTimeFormatter);
+        LocalDate date = stringDateToLocalDate(workDay);
 
         return workDayRepository.findByDate(date);
+    }
+
+    protected LocalDate stringDateToLocalDate(String workDay) {
+
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return LocalDate.parse(workDay, dateTimeFormatter);
+
     }
 
 }
