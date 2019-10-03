@@ -34,7 +34,6 @@ public class MenuPlanServiceTests {
         menuPlanService = new MenuPlanService(menuPlanRepository, workDayService, menuService);
     }
 
-    // TODO: 의존성이 너무 덕지덕지 붙고 있음 리팩토링 필요
     @Test
     public void addMenuPlanWithMenuAndWorkDay() {
 
@@ -62,7 +61,7 @@ public class MenuPlanServiceTests {
         Menu mockReturnMenu = Menu.builder().id(2L).build();
         given(menuService.getMenuByMenuName("제육볶음")).willReturn(mockReturnMenu);
 
-        MenuPlan menuPlan = menuPlanService.addMenu(workDay, mockMenu);
+        MenuPlan menuPlan = menuPlanService.addMenu(workDay, mockMenu.getName());
         assertThat(menuPlan.getId()).isEqualTo(3L);
         assertThat(menuPlan.getMenuId()).isEqualTo(2L);
         assertThat(menuPlan.getWorkDayId()).isEqualTo(1L);

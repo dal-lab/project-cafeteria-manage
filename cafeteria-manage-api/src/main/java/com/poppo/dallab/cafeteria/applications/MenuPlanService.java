@@ -30,15 +30,15 @@ public class MenuPlanService {
         // 테스트 생략!!!
         // 아래꺼 잘 돌아가니까 잘돌겠지!!!
         for (Menu menu : menus) {
-            addMenu(workDay, menu);
+            addMenu(workDay, menu.getName());
         }
 
     }
 
-    public MenuPlan addMenu(String workDay, Menu menu) {
+    public MenuPlan addMenu(String workDay, String menuName) {
 
         WorkDay foundWorkDay = workDayService.getWorkDayByString(workDay);
-        Menu foundMenu = menuService.getMenuByMenuName(menu.getName());
+        Menu foundMenu = menuService.getMenuByMenuName(menuName);
 
         MenuPlan menuPlan = MenuPlan.builder()
                 .menuId(foundMenu.getId())
