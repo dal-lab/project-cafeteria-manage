@@ -26,12 +26,4 @@ public class ModelMapperAdapter implements Mapper {
 
         return menu;
     }
-
-    @Override
-    public List<Menu> manyMenuMapping(List<MenuPlanRequestDto> sources) {
-
-        return sources.stream()
-                .map(this::menuMapping)
-                .collect(Collectors.toList());
-    }
 }

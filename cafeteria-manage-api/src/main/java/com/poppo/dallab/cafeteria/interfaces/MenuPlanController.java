@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class MenuPlanController {
@@ -35,7 +36,9 @@ public class MenuPlanController {
 
         String url = "/workDay/"+ date +"/menuPlans";
 
-        List<Menu> menus = mapper.manyMenuMapping(menuPlanRequestDtos);
+        List<Menu> menus = menuPlanRequestDtos.stream()
+                .map(menuPlanRequestDto -> mapper.menuMapping(menuPlanRequestDto))
+                .collect(Collectors.toList());
 
         menuPlanService.addBulkMenu(date, menus);
 

@@ -9,9 +9,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Arrays;
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -40,21 +37,6 @@ public class ModelMapperAdapterTests {
         Menu result = modelMapperAdapter.menuMapping(mockMenuPlanRequestDto);
 
         assertThat(result.getName()).isEqualTo("제육볶음");
-
-    }
-
-    @Test
-    public void manyMenuMapperTest() {
-
-        List<MenuPlanRequestDto> mockMenuPlanRequestDtos = Arrays.asList(
-                MenuPlanRequestDto.builder().name("제육볶음").build()
-        );
-
-        given(modelMapper.map(any(), any())).willReturn(Menu.builder().name("제육볶음").build());
-
-        List<Menu> menus = modelMapperAdapter.manyMenuMapping(mockMenuPlanRequestDtos);
-
-        assertThat(menus.get(0).getName()).isEqualTo("제육볶음");
 
     }
 
