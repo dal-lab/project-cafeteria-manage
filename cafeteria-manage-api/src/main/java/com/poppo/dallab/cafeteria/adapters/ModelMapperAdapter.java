@@ -4,8 +4,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Type;
-
 @Component
 public class ModelMapperAdapter implements Mapper {
 
@@ -17,8 +15,8 @@ public class ModelMapperAdapter implements Mapper {
     }
 
     @Override
-    public <D> D mapping(Object source, D destination) {
+    public <D> D mapping(Object source, Class<D> destinationType) {
 
-        return adaptee.map(source, (Type) destination.getClass());
+        return adaptee.map(source, destinationType);
     }
 }

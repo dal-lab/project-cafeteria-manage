@@ -37,7 +37,7 @@ public class MenuPlanController {
         String url = "/workDay/"+ date +"/menuPlans";
 
         List<Menu> menus = menuPlanRequestDtos.stream()
-                .map(menuPlanRequestDto -> mapper.mapping(menuPlanRequestDto, new Menu()))
+                .map(menuPlanRequestDto -> mapper.mapping(menuPlanRequestDto, Menu.class))
                 .collect(Collectors.toList());
 
         menuPlanService.addBulkMenu(date, menus);
