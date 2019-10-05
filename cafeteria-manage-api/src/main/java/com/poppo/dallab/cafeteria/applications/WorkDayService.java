@@ -3,23 +3,19 @@ package com.poppo.dallab.cafeteria.applications;
 import com.poppo.dallab.cafeteria.domain.WorkDay;
 import com.poppo.dallab.cafeteria.domain.WorkDayRepository;
 import com.poppo.dallab.cafeteria.utils.DateTimeUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 
 @Service
+@Transactional
+@RequiredArgsConstructor
 public class WorkDayService {
 
-    WorkDayRepository workDayRepository;
-
-    DateTimeUtils dateTimeUtils;
-
-    @Autowired
-    public WorkDayService(WorkDayRepository workDayRepository, DateTimeUtils dateTimeUtils) {
-        this.workDayRepository = workDayRepository;
-        this.dateTimeUtils = dateTimeUtils;
-    }
+    private final WorkDayRepository workDayRepository;
+    private final DateTimeUtils dateTimeUtils;
 
     public WorkDay getWorkDayByString(String workDay) {
 
