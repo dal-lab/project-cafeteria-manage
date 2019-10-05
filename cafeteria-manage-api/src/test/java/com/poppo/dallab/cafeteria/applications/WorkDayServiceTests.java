@@ -2,17 +2,22 @@ package com.poppo.dallab.cafeteria.applications;
 
 import com.poppo.dallab.cafeteria.domain.WorkDay;
 import com.poppo.dallab.cafeteria.domain.WorkDayRepository;
+import com.poppo.dallab.cafeteria.utils.DateTimeUtils;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import java.time.LocalDate;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class WorkDayServiceTests {
 
     WorkDayService workDayService;
@@ -20,11 +25,14 @@ public class WorkDayServiceTests {
     @Mock
     WorkDayRepository workDayRepository;
 
+    @MockBean
+    DateTimeUtils dateTimeUtils;
+
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
 
-        workDayService = new WorkDayService(workDayRepository);
+        workDayService = new WorkDayService(workDayRepository, dateTimeUtils);
     }
 
     @Test
@@ -40,22 +48,6 @@ public class WorkDayServiceTests {
 
         // then
         assertThat(foundResult.getId()).isEqualTo(3L);
-    }
-
-    @Test
-    public void stringDateToLocalDate() {
-
-        // given
-        String workDay = "2019-10-01";
-
-        // when
-        LocalDate resultDate = workDayService.stringDateToLocalDate(workDay);
-
-        // then
-        assertThat(resultDate.getYear()).isEqualTo(2019);
-        assertThat(resultDate.getMonthValue()).isEqualTo(10);
-        assertThat(resultDate.getDayOfMonth()).isEqualTo(1);
-
     }
 
 }
