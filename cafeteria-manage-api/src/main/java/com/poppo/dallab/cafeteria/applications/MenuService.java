@@ -2,18 +2,16 @@ package com.poppo.dallab.cafeteria.applications;
 
 import com.poppo.dallab.cafeteria.domain.Menu;
 import com.poppo.dallab.cafeteria.domain.MenuRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
+@RequiredArgsConstructor
 public class MenuService {
 
-    MenuRepository menuRepository;
-
-    @Autowired
-    public MenuService(MenuRepository menuRepository) {
-        this.menuRepository = menuRepository;
-    }
+    private final MenuRepository menuRepository;
 
     public Menu getMenuByMenuName(String name) {
 

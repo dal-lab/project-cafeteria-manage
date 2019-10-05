@@ -3,7 +3,7 @@ package com.poppo.dallab.cafeteria.interfaces;
 import com.poppo.dallab.cafeteria.adapters.Mapper;
 import com.poppo.dallab.cafeteria.applications.MenuPlanService;
 import com.poppo.dallab.cafeteria.domain.Menu;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,17 +16,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@RequiredArgsConstructor
 public class MenuPlanController {
 
-    MenuPlanService menuPlanService;
-
-    Mapper mapper;
-
-    @Autowired
-    public MenuPlanController(MenuPlanService menuPlanService, Mapper mapper) {
-        this.menuPlanService = menuPlanService;
-        this.mapper = mapper;
-    }
+    private final MenuPlanService menuPlanService;
+    private final Mapper mapper;
 
     @PostMapping("/workDay/{date}/menuPlans")
     public ResponseEntity bulkCreate(
