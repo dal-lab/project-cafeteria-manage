@@ -23,5 +23,4 @@ public class WorkDayService {
 
         return workDayRepository.findByDate(date);
     }
-
 }

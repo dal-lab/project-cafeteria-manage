@@ -8,3 +8,17 @@ Content-Type: application/json
 ]
 
 ###
+
+POST http://localhost:8080/workDay/2019-09-30/menuPlans
+Content-Type: application/json
+
+[
+  {
+    "name": "제육볶음"
+  },
+  {
+    "name": "볶음밥"
+  }
+]
+
+###

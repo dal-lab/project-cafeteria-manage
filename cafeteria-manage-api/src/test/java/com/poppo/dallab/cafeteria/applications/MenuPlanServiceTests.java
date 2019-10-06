@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -14,6 +15,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
 @RunWith(SpringRunner.class)
+@SpringBootTest
 public class MenuPlanServiceTests {
 
     MenuPlanService menuPlanService;
@@ -30,7 +32,6 @@ public class MenuPlanServiceTests {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-
         menuPlanService = new MenuPlanService(menuPlanRepository, workDayService, menuService);
     }
 
