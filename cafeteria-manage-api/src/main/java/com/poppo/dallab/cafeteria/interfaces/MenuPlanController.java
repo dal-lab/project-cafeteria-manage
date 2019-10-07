@@ -2,13 +2,13 @@ package com.poppo.dallab.cafeteria.interfaces;
 
 import com.poppo.dallab.cafeteria.adapters.Mapper;
 import com.poppo.dallab.cafeteria.applications.MenuPlanService;
+import com.poppo.dallab.cafeteria.applications.MenuService;
+import com.poppo.dallab.cafeteria.applications.WorkDayService;
 import com.poppo.dallab.cafeteria.domain.Menu;
+import com.poppo.dallab.cafeteria.domain.WorkDay;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -19,8 +19,26 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class MenuPlanController {
 
+    private final WorkDayService workDayService;
+    private final MenuService menuService;
     private final MenuPlanService menuPlanService;
     private final Mapper mapper;
+
+    @GetMapping("/workDay/2019-09-30")
+    public MenuPlanResponseDto getOne() {
+
+        WorkDay workDay = workDayService.getWorkDayByString("2019-09-30");
+        List<Menu> menus = menuService.getMenusByWorkDayId(workDay.getId());
+
+        MenuPlanResponseDto menuPlanResponseDto = MenuPlanResponseDto.builder()
+                .date(workDay.getDate())
+                .day(workDay.getDay())
+                .menus(menus)
+                .build();
+
+        return menuPlanResponseDto;
+
+    }
 
     @PostMapping("/workDay/{date}/menuPlans")
     public ResponseEntity bulkCreate(

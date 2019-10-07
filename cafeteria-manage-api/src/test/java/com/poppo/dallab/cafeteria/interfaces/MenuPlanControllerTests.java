@@ -2,6 +2,10 @@ package com.poppo.dallab.cafeteria.interfaces;
 
 import com.poppo.dallab.cafeteria.adapters.Mapper;
 import com.poppo.dallab.cafeteria.applications.MenuPlanService;
+import com.poppo.dallab.cafeteria.applications.MenuService;
+import com.poppo.dallab.cafeteria.applications.WorkDayService;
+import com.poppo.dallab.cafeteria.domain.Menu;
+import com.poppo.dallab.cafeteria.domain.WorkDay;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +15,18 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(MenuPlanController.class)
@@ -29,7 +39,44 @@ public class MenuPlanControllerTests {
     MenuPlanService menuPlanService;
 
     @MockBean
+    WorkDayService workDayService;
+
+    @MockBean
+    MenuService menuService;
+
+    @MockBean
     Mapper mapper;
+
+    @Test
+    public void getOne() throws Exception {
+
+        WorkDay mockWorkDay = WorkDay.builder()
+                .id(1L)
+                .date(LocalDate.of(2019,9,30))
+                .day(LocalDate.of(2019,9,30).getDayOfWeek().name())
+                .build();
+        given(workDayService.getWorkDayByString("2019-09-30")).willReturn(mockWorkDay);
+
+        List<Menu> menus = new ArrayList<>();
+        menus.add(Menu.builder().name("제육볶음").build());
+        menus.add(Menu.builder().name("볶음밥").build());
+        given(menuService.getMenusByWorkDayId(1L)).willReturn(menus);
+
+        // when
+        mvc.perform(get("/workDay/2019-09-30"))
+                // then
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("day")))
+                .andExpect(content().string(containsString("date")))
+                .andExpect(content().string(containsString("menus")))
+                .andExpect(content().string(containsString("2019-09-30")))
+                .andExpect(content().string(containsString("MONDAY")))
+                .andExpect(content().string(containsString("제육볶음")))
+                .andExpect(content().string(containsString("볶음밥")))
+                .andExpect(content().string(containsString("[")))
+        ;
+
+    }
 
     @Test
     public void bulkCreate() throws Exception {

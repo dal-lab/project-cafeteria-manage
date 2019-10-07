@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -43,4 +44,11 @@ public class MenuPlanService {
 
     }
 
+    public List<MenuPlan> getMenuIdsByWorkDayId(Long workDayId) {
+
+        List<MenuPlan> menuPlans = new ArrayList<>();
+
+        return null;
+
+    }
 }
