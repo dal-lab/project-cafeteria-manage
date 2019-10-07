@@ -3,7 +3,7 @@ spring:
     url: jdbc:h2:~/data/cafeteria
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
 
 ---
 
