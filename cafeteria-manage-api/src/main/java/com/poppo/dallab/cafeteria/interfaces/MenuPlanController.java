@@ -41,10 +41,10 @@ public class MenuPlanController {
 
     }
 
-    @GetMapping("/workDay/2019-09-30")
-    public MenuPlanResponseDto getOne() {
+    @GetMapping("/workDay/{date}")
+    public MenuPlanResponseDto getOne(@PathVariable(name = "date") String date) {
 
-        WorkDay workDay = workDayService.getWorkDayByString("2019-09-30");
+        WorkDay workDay = workDayService.getWorkDayByString(date);
         List<Menu> menus = menuService.getMenusByWorkDayId(workDay.getId());
 
         MenuPlanResponseDto menuPlanResponseDto = MenuPlanResponseDto.builder()
