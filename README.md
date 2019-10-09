@@ -18,7 +18,7 @@ TODO (우선순위 정렬)
     ]
 - [X] MenuPlanRequestDto 만들기
 - [X] 요청받은 MenuPlan 저장 기능 만들기 (service, repository)
-- [ ] GET /workDay/{date} Member 응답 기능 만들기
+- [X] GET /workDay/{date} Member 응답 기능 만들기
     [
         {	
             "day": "월",

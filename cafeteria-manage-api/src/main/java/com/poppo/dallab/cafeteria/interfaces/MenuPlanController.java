@@ -24,6 +24,23 @@ public class MenuPlanController {
     private final MenuPlanService menuPlanService;
     private final Mapper mapper;
 
+    @GetMapping("/workDay")
+    public List<MenuPlanResponseDto> getList() {
+
+        List<WorkDay> workDays = workDayService.getWorkWeekFromNow();
+
+        List<MenuPlanResponseDto> menuPlanResponseDtos = workDays.stream()
+                .map(workDay -> MenuPlanResponseDto.builder()
+                        .date(workDay.getDate())
+                        .day(workDay.getDay())
+                        .menus(menuService.getMenusByWorkDayId(workDay.getId()))
+                        .build())
+                .collect(Collectors.toList());
+
+        return menuPlanResponseDtos;
+
+    }
+
     @GetMapping("/workDay/2019-09-30")
     public MenuPlanResponseDto getOne() {
 
