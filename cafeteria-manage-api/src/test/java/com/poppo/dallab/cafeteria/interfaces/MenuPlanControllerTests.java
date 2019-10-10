@@ -20,8 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
-import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -46,6 +45,38 @@ public class MenuPlanControllerTests {
 
     @MockBean
     Mapper mapper;
+
+    @Test
+    public void getList() throws Exception {
+
+        // given
+        List<WorkDay> mockWorkDays = new ArrayList<>();
+        mockWorkDays.add(WorkDay.builder()
+                .id(1L)
+                .date(LocalDate.of(2019, 9, 30))
+                .day("MONDAY")
+                .build());
+        given(workDayService.getWorkWeek(any())).willReturn(mockWorkDays);
+
+        List<Menu> mockMenus = new ArrayList<>();
+        mockMenus.add(Menu.builder().name("제육볶음").build());
+        given(menuService.getMenusByWorkDayId(1L)).willReturn(mockMenus);
+
+        // when
+        mvc.perform(get("/workDay"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("[")))
+                .andExpect(content().string(containsString("day")))
+                .andExpect(content().string(containsString("date")))
+                .andExpect(content().string(containsString("2019-09-30")))
+                .andExpect(content().string(containsString("MONDAY")))
+                .andExpect(content().string(containsString("menus")))
+                .andExpect(content().string(containsString("제육볶음")))
+            ;
+
+        // then
+
+    }
 
     @Test
     public void getOne() throws Exception {

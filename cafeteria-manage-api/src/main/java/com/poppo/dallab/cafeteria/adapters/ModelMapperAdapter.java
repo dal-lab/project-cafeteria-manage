@@ -1,18 +1,14 @@
 package com.poppo.dallab.cafeteria.adapters;
 
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class ModelMapperAdapter implements Mapper {
 
-    private ModelMapper adaptee;
-
-    @Autowired
-    public ModelMapperAdapter(ModelMapper adaptee) {
-        this.adaptee = adaptee;
-    }
+    private final ModelMapper adaptee;
 
     @Override
     public <D> D mapping(Object source, Class<D> destinationType) {

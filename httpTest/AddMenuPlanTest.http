@@ -1,0 +1,89 @@
+POST http://localhost:8080/workDay/2019-09-30/menuPlans
+Content-Type: application/json
+
+[
+  {
+    "name": "제육볶음"
+  }
+]
+
+###
+
+POST http://localhost:8080/workDay/2019-10-07/menuPlans
+Content-Type: application/json
+
+[
+  {
+    "name": "제육볶음"
+  },
+  {
+    "name": "볶음밥"
+  }
+]
+
+###
+
+POST http://localhost:8080/workDay/2019-10-08/menuPlans
+Content-Type: application/json
+
+[
+  {
+    "name": "된장국"
+  },
+  {
+    "name": "볶음밥"
+  },
+  {
+    "name": "새우튀김"
+  }
+]
+
+###
+
+POST http://localhost:8080/workDay/2019-10-09/menuPlans
+Content-Type: application/json
+
+[
+  {
+    "name": "족발"
+  }
+]
+
+###
+
+POST http://localhost:8080/workDay/2019-10-10/menuPlans
+Content-Type: application/json
+
+[
+  {
+    "name": "닭갈비"
+  },
+  {
+    "name": "해파리냉채"
+  }
+]
+
+###
+
+POST http://localhost:8080/workDay/2019-10-11/menuPlans
+Content-Type: application/json
+
+[
+  {
+    "name": "새우튀김"
+  },
+  {
+    "name": "제육볶음"
+  },
+  {
+    "name": "볶음밥"
+  },
+  {
+    "name": "된장국"
+  },
+  {
+    "name": "닭갈비"
+  }
+]
+
+###
