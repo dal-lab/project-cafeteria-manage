@@ -3,8 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title>Cafeteria Management</title>
+    <style>
+        table {
+            width:100%;
+        }
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+        table#t01 tr:nth-child(even) {
+            background-color: #eee;
+        }
+        table#t01 tr:nth-child(odd) {
+            background-color: #fff;
+        }
+        table#t01 th {
+            background-color: gray;
+            color: black;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
+    <h1>주간 식단</h1>
     <div id="app"></div>
     <script src="./main.js"></script>
 </body>
