@@ -56,7 +56,7 @@ public class MenuPlanControllerTests {
                 .date(LocalDate.of(2019, 9, 30))
                 .day("MONDAY")
                 .build());
-        given(workDayService.getWorkWeekFromNow()).willReturn(mockWorkDays);
+        given(workDayService.getWorkWeek(any())).willReturn(mockWorkDays);
 
         List<Menu> mockMenus = new ArrayList<>();
         mockMenus.add(Menu.builder().name("제육볶음").build());

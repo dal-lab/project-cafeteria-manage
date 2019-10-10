@@ -12,6 +12,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -48,6 +52,31 @@ public class WorkDayServiceTests {
 
         // then
         assertThat(foundResult.getId()).isEqualTo(3L);
+    }
+
+    @Test
+    public void getWorkWeekFromNow() throws Exception {
+
+        // given
+        LocalDate testDate = LocalDate.of(2019,10,10);
+
+        List<LocalDate> mockThisWeek = new ArrayList<>();
+        mockThisWeek.add(LocalDate.of(2019, 10, 7));
+        given(dateTimeUtils.getWeekOfDate(testDate)).willReturn(mockThisWeek);
+
+        WorkDay mockWorkDay = WorkDay.builder()
+                .date(LocalDate.of(2019,10,7))
+                .day(LocalDate.of(2019,10,7).getDayOfWeek().name())
+                .build();
+        given(workDayRepository.findByDate(any())).willReturn(mockWorkDay);
+
+        // when
+        List<WorkDay> workDays = workDayService.getWorkWeek(testDate);
+
+        // then
+        assertThat(workDays.get(0).getDate().toString()).isEqualTo("2019-10-07");
+        assertThat(workDays.get(0).getDay()).isEqualTo("MONDAY");
+
     }
 
 }

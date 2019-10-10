@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -25,8 +26,16 @@ public class WorkDayService {
         return workDayRepository.findByDate(date);
     }
 
-    public List<WorkDay> getWorkWeekFromNow() {
+    public List<WorkDay> getWorkWeek(LocalDate date) {
 
-        return null;
+        List<LocalDate> thisWeek = dateTimeUtils.getWeekOfDate(date);
+
+        List<WorkDay> workDays = new ArrayList<>();
+        for (LocalDate weekDay : thisWeek) {
+            workDays.add(workDayRepository.findByDate(weekDay));
+        }
+//        thisWeek.forEach(weekDay -> workDays.add(workDayRepository.findByDate(weekDay)));
+
+        return workDays;
     }
 }

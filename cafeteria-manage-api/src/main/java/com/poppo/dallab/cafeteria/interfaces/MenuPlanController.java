@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,7 +28,7 @@ public class MenuPlanController {
     @GetMapping("/workDay")
     public List<MenuPlanResponseDto> getList() {
 
-        List<WorkDay> workDays = workDayService.getWorkWeekFromNow();
+        List<WorkDay> workDays = workDayService.getWorkWeek(LocalDate.now());
 
         List<MenuPlanResponseDto> menuPlanResponseDtos = workDays.stream()
                 .map(workDay -> MenuPlanResponseDto.builder()

@@ -1,0 +1,7 @@
+GET http://localhost:8080/workDay/2019-09-30
+
+###
+
+GET http://localhost:8080/workDay
+
+###
