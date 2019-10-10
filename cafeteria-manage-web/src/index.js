@@ -21,6 +21,7 @@
                         ${menuPlanData.menus.map(menu => `
                             <p>${menu.name}</p>
                         `).join("")}
+                        <button>식단 입력</button>
                     </td> 
                 `).join("")}
             </tr>
