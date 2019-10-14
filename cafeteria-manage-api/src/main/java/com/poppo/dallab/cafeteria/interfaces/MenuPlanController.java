@@ -29,7 +29,9 @@ public class MenuPlanController {
     @GetMapping("/workDay")
     public List<MenuPlanResponseDto> getList() {
 
-        List<WorkDay> workDays = workDayService.getWorkWeek(LocalDate.now());
+        // TODO: 테스트 종료 후 현재 날짜 받도록 변경
+//        List<WorkDay> workDays = workDayService.getWorkWeek(LocalDate.now());
+        List<WorkDay> workDays = workDayService.getWorkWeek(LocalDate.of(2019, 10, 12));
 
         List<MenuPlanResponseDto> menuPlanResponseDtos = workDays.stream()
                 .map(workDay -> MenuPlanResponseDto.builder()
