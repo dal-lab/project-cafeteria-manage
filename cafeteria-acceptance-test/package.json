@@ -1,0 +1,18 @@
+{
+  "name": "cafeteria-acceptance-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "codeceptjs run --steps"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@wdio/selenium-standalone-service": "^5.15.0",
+    "codeceptjs": "^2.3.2",
+    "puppeteer": "^1.20.0",
+    "webdriverio": "^5.15.0"
+  }
+}
