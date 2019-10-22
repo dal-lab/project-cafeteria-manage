@@ -8,7 +8,6 @@ Scenario('메뉴 관리 페이지 이동 확인', (I) => {
 
 Scenario('메뉴_입력_페이지_확인', (I) => {
     I.amOnPage('http://localhost:3333/menus');
-    I.click({ css: 'button.addMenu' });
-    I.fillField('메뉴명', '제육볶음');
-    I.see('제육볶음')
+    I.click({ css: 'a.new-menu-btn' });
+    I.see('새 메뉴 추가')
 });
