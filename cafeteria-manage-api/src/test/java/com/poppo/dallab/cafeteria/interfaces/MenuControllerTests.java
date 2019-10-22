@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -26,6 +27,16 @@ public class MenuControllerTests {
 
     @MockBean
     MenuService menuService;
+
+    @Test
+    public void 메뉴_리스트_요청() throws Exception {
+        mvc.perform(get("/menus"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("[")))
+        ;
+
+        verify(menuService).getMenus();
+    }
 
     @Test
     public void 메뉴_생성_요청() throws Exception {

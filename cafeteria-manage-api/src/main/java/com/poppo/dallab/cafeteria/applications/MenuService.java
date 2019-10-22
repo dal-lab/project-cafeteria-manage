@@ -37,6 +37,11 @@ public class MenuService {
         return menus;
     }
 
+    public List<Menu> getMenus() {
+
+        return menuRepository.findAll();
+    }
+
     public Menu addMenu(String menuName) {
         Menu menu = Menu.builder().name(menuName).build();
 

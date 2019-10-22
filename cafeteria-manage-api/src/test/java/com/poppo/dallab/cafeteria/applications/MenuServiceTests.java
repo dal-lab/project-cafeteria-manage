@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -65,6 +66,16 @@ public class MenuServiceTests {
         assertThat(menus.get(0).getName()).isEqualTo("제육볶음");
         assertThat(menus.get(1).getName()).isEqualTo("볶음밥");
 
+    }
+
+    @Test
+    public void 메뉴_리스트_조회() {
+        List<Menu> mockMenus = Arrays.asList(Menu.builder().name("제육볶음").build());
+        given(menuRepository.findAll()).willReturn(mockMenus);
+
+        List<Menu> menus = menuService.getMenus();
+
+        assertThat(menus.get(0).getName()).isEqualTo("제육볶음");
     }
 
     @Test
