@@ -2,6 +2,9 @@
     <div>
         <div class="menu-home-title">메뉴 관리</div>
         <div class="menu-list">
+            <div class="menu-item" v-for="menu in menus" :key="menu.id" ref="boardItem">
+                <div class="menu-item-title">{{ menu.menuName }}</div>
+            </div>
             <div class="menu-item menu-item-new">
                 <a class="new-menu-btn" href="" @click.prevent="SET_IS_ADD_MENU(true)">
                     &plus; 새 메뉴 추가
@@ -13,22 +16,40 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 import AddMenu from './AddMenu.vue'
 
 export default {
     components: {
         AddMenu
     },
+    data() {
+        return {
+            loading: false,
+        }
+    },
     computed: {
         ...mapState({
-            isAddMenu: 'isAddMenu'
+            isAddMenu: 'isAddMenu',
+            menus: 'menus'
         })
+    },
+    created() {
+        this.fetchData()
     },
     methods: {
         ...mapMutations([
             'SET_IS_ADD_MENU'
-        ])
+        ]),
+        ...mapActions([
+            'FETCH_MENUS'
+        ]),
+        fetchData() {
+            this.loading = true
+            this.FETCH_MENUS().finally(_ => {
+                this.loading = false
+            })
+        }
     }
 }
 </script>
@@ -49,6 +70,7 @@ export default {
   height: 100px;
   margin: 0 2% 20px 0;
   border-radius: 3px;
+  background-color: rgb(0, 121, 191);
 }
 .menu-item-new {
   background-color: #ddd;
