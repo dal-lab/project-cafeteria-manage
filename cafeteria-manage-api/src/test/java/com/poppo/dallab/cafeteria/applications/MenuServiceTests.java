@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
 public class MenuServiceTests {
@@ -64,6 +65,18 @@ public class MenuServiceTests {
         assertThat(menus.get(0).getName()).isEqualTo("제육볶음");
         assertThat(menus.get(1).getName()).isEqualTo("볶음밥");
 
+    }
+
+    @Test
+    public void 새_메뉴_저장() {
+        Menu mockMenu = Menu.builder().id(1L).name("제육볶음").build();
+
+        given(menuRepository.save(any())).willReturn(mockMenu);
+
+        Menu saved = menuService.addMenu("제육볶음");
+
+        assertThat(saved.getId()).isEqualTo(1L);
+        assertThat(saved.getName()).isEqualTo("제육볶음");
     }
 
 }

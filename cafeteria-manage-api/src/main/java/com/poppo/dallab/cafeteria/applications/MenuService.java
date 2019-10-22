@@ -36,4 +36,10 @@ public class MenuService {
 
         return menus;
     }
+
+    public Menu addMenu(String menuName) {
+        Menu menu = Menu.builder().name(menuName).build();
+
+        return menuRepository.save(menu);
+    }
 }

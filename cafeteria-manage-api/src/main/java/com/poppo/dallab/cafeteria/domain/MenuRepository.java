@@ -10,4 +10,6 @@ public interface MenuRepository extends CrudRepository<Menu, Long> {
 
     Optional<Menu> findById(Long id);
 
+    Menu save(Menu menu);
+
 }
