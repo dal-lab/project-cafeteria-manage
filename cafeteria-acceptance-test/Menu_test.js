@@ -1,13 +1,33 @@
 
 Feature('MenuTest');
 
-Scenario('메뉴_입력_페이지_확인', (I) => {
-    I.amOnPage('http://localhost:3000/menus');
+Scenario('메뉴 관리 페이지 이동 확인', (I) => {
+    I.amOnPage('http://localhost:3333/menus');
     I.see('메뉴 관리');
-  });
+});
 
-Scenario('메뉴_입력_페이지_확인', (I) => {
-    I.amOnPage('http://localhost:3000/menus');
-    I.fillField('메뉴명', '제육볶음')
-    I.click({ css: 'button.submit' })
-  });
+// 이대로 두면 쓰래기 데이터가 너무 쌓여서 테스트가 어려울 것 같음 -> 삭제도 추가
+Scenario('메뉴 입력 테스트(제육볶음)', (I) => {
+    I.amOnPage('http://localhost:3333/menus');
+    I.see('새 메뉴 추가')
+    I.click('새 메뉴 추가');
+    I.fillField('menuName', '제육볶음');
+    I.click('메뉴 추가');
+    I.see('제육볶음');
+});
+
+Scenario('메뉴 삭제 테스트(제육볶음)', (I) => {
+    I.amOnPage('http://localhost:3333/menus');
+    I.click('제육볶음');
+    I.click('메뉴 삭제')
+    I.dontSee('제육볶음')
+});
+
+Scenario('메뉴 상세 테스트(제육볶음)', (I) => {
+    I.amOnPage('http://localhost:3333/menus');
+    I.click('제육볶음');
+    I.see('메뉴 상세');
+    I.fillField('menuName', '오징어볶음');
+    I.fillField('메뉴 수정');
+    I.see('오징어볶음')
+});

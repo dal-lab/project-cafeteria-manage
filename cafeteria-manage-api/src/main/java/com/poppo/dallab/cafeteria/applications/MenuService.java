@@ -36,4 +36,24 @@ public class MenuService {
 
         return menus;
     }
+
+    public List<Menu> getMenus() {
+
+        return menuRepository.findAll();
+    }
+
+    public Menu addMenu(String menuName) {
+        Menu menu = Menu.builder().name(menuName).build();
+
+        return menuRepository.save(menu);
+    }
+
+    public void removeMenu(Long menuId) {
+        menuRepository.deleteById(menuId);
+    }
+
+    public Menu getMenuById(Long menuId) {
+
+        return menuRepository.findById(menuId).orElseThrow(MenuNotFoundException::new);
+    }
 }

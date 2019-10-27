@@ -1,0 +1,20 @@
+POST http://localhost:8080/menus
+Content-Type: application/json
+
+{
+  "menuName": "제육볶음"
+}
+
+###
+
+GET http://localhost:8080/menus
+
+###
+
+GET http://localhost:8080/menus/22
+
+###
+
+DELETE http://localhost:8080/menus/21
+
+###
