@@ -15,3 +15,19 @@ Scenario('메뉴 입력 테스트(제육볶음)', (I) => {
     I.click('메뉴 추가');
     I.see('제육볶음');
 });
+
+Scenario('메뉴 삭제 테스트(제육볶음)', (I) => {
+    I.amOnPage('http://localhost:3333/menus');
+    I.click('제육볶음');
+    I.click('메뉴 삭제')
+    I.dontSee('제육볶음')
+});
+
+Scenario('메뉴 상세 테스트(제육볶음)', (I) => {
+    I.amOnPage('http://localhost:3333/menus');
+    I.click('제육볶음');
+    I.see('메뉴 상세');
+    I.fillField('menuName', '오징어볶음');
+    I.fillField('메뉴 수정');
+    I.see('오징어볶음')
+});

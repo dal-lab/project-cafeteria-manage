@@ -15,10 +15,13 @@ const request = (method, url, data) => {
 }
 
 export const menu = {
-    fetch() {
-        return request('get', '/menus')
+    fetch(id) {
+        return id ? request('get', `/menus/${id}`) : request('get', '/menus')
     },
     create(menuName) {
       return request('post', '/menus', { menuName })
+    },
+    destory(id) {
+      return request('delete', `/menus/${id}`)
     }
 }

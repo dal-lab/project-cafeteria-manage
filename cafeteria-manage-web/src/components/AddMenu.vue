@@ -8,14 +8,14 @@
             </h2>
         </div>
         <div slot="body">
-            <form id="add-menu-form" 
-                @submit.prevent="addMenu">
+            <form id="update-menu-form" 
+                @submit="addMenu">
                 <input class="form-control" type="text" v-model="input" name="menuName" ref="input">
             </form>
         </div>
         <div slot="footer">
             <button class="btn" :class="{'btn-success': valid}" type="submit" 
-                form="add-menu-form" :disabled="!valid">
+                form="add-menu-form" :disabled="!valid" @click.prevent="addMenu">
             메뉴 추가</button>
         </div>
     </Modal>

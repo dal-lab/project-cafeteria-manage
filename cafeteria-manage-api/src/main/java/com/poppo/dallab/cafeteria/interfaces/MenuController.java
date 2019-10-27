@@ -31,6 +31,19 @@ public class MenuController {
         return menus;
     }
 
+    @GetMapping("/menus/{menuId}")
+    public MenuResponseDto getOne(
+            @PathVariable("menuId") Long menuId
+    ) {
+
+        Menu menu = menuService.getMenuById(menuId);
+
+        return MenuResponseDto.builder()
+                .id(menu.getId())
+                .menuName(menu.getName())
+                .build();
+    }
+
     @PostMapping("/menus")
     public ResponseEntity<?> create(
             @RequestBody MenuRequestDto menuRequestDto
@@ -41,6 +54,15 @@ public class MenuController {
         String url = "/menus/" + saved.getId();
 
         return ResponseEntity.created(new URI(url)).body("{}");
+    }
+
+    // TODO: 삭제 전 조회하고 없으면 예외 발생 필요
+    @DeleteMapping("/menus/{menuId}")
+    public void delete(
+            @PathVariable(name = "menuId") Long menuId
+    ) {
+
+        menuService.removeMenu(menuId);
     }
 
 }

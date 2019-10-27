@@ -1,5 +1,6 @@
 package com.poppo.dallab.cafeteria.interfaces;
 
+import com.poppo.dallab.cafeteria.applications.MenuNotFoundException;
 import com.poppo.dallab.cafeteria.applications.MenuService;
 import com.poppo.dallab.cafeteria.domain.Menu;
 import org.junit.Test;
@@ -12,10 +13,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
@@ -39,6 +40,36 @@ public class MenuControllerTests {
     }
 
     @Test
+    public void 존재하는_단일_메뉴_요청() throws Exception {
+
+        Menu mockMenu = Menu.builder()
+                .id(1L)
+                .name("제육볶음")
+                .build();
+
+        given(menuService.getMenuById(1L)).willReturn(mockMenu);
+
+        mvc.perform(get("/menus/1"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("1")))
+                .andExpect(content().string(containsString("제육볶음")))
+        ;
+
+        verify(menuService).getMenuById(1L);
+    }
+
+    @Test
+    public void 없는_단일_메뉴_요청() throws Exception {
+
+        given(menuService.getMenuById(44L)).willThrow(MenuNotFoundException.class);
+
+        mvc.perform(get("/menus/44"))
+                .andExpect(status().isNoContent())
+        ;
+
+    }
+
+    @Test
     public void 메뉴_생성_요청() throws Exception {
         Menu mockMenu = Menu.builder().id(1L).build();
 
@@ -55,6 +86,14 @@ public class MenuControllerTests {
         ;
 
         verify(menuService).addMenu("제육볶음");
+    }
+
+    @Test
+    public void 메뉴_삭제_요청() throws Exception {
+        mvc.perform(delete("/menus/1"))
+                .andExpect(status().isOk());
+
+        verify(menuService).removeMenu(eq(1L));
     }
 
 }

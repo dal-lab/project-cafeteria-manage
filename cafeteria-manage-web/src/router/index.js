@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../components/Home.vue'
 import MenuHome from '../components/MenuHome.vue'
+import Menu from '../components/Menu.vue'
 import MenuplanHome from '../components/MenuplanHome.vue'
 import IngredientHome from '../components/IngredientHome.vue'
 import NotFound from '../components/NotFound.vue'
@@ -18,6 +19,10 @@ const router = new VueRouter({
         {
             path: '/menus',
             component: MenuHome
+        },
+        {
+            path: '/menus/:menuId',
+            component: Menu
         },
         {
             path: '/menuplans',

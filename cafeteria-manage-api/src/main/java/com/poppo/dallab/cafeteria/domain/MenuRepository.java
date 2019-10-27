@@ -15,4 +15,5 @@ public interface MenuRepository extends CrudRepository<Menu, Long> {
 
     Menu save(Menu menu);
 
+    void deleteById(Long menuId);
 }

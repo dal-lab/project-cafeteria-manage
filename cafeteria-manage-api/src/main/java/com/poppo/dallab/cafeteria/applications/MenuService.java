@@ -47,4 +47,13 @@ public class MenuService {
 
         return menuRepository.save(menu);
     }
+
+    public void removeMenu(Long menuId) {
+        menuRepository.deleteById(menuId);
+    }
+
+    public Menu getMenuById(Long menuId) {
+
+        return menuRepository.findById(menuId).orElseThrow(MenuNotFoundException::new);
+    }
 }

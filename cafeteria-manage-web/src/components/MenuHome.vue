@@ -2,8 +2,11 @@
     <div>
         <div class="menu-home-title">메뉴 관리</div>
         <div class="menu-list">
-            <div class="menu-item" v-for="menu in menus" :key="menu.id" ref="boardItem">
-                <div class="menu-item-title">{{ menu.menuName }}</div>
+            <div class="menu-item" v-for="menu in menus" :key="menu.id"
+                ref="boardItem">
+                <router-link :to="`/menus/${menu.id}`">
+                    <div class="menu-item-title">{{ menu.menuName }}</div>
+                </router-link>
             </div>
             <div class="menu-item menu-item-new">
                 <a class="new-menu-btn" href="" @click.prevent="SET_IS_ADD_MENU(true)">
@@ -12,16 +15,19 @@
             </div>
         </div>
         <AddMenu v-if="isAddMenu" />
+        <Menu v-if="isMenu" />
     </div>
 </template>
 
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
 import AddMenu from './AddMenu.vue'
+import Menu from './Menu.vue'
 
 export default {
     components: {
-        AddMenu
+        AddMenu,
+        Menu
     },
     data() {
         return {
@@ -31,6 +37,7 @@ export default {
     computed: {
         ...mapState({
             isAddMenu: 'isAddMenu',
+            isMenu: 'isMenu',
             menus: 'menus'
         })
     },
@@ -39,7 +46,8 @@ export default {
     },
     methods: {
         ...mapMutations([
-            'SET_IS_ADD_MENU'
+            'SET_IS_ADD_MENU',
+            'SET_IS_MENU'
         ]),
         ...mapActions([
             'FETCH_MENUS'
@@ -71,6 +79,7 @@ export default {
   margin: 0 2% 20px 0;
   border-radius: 3px;
   background-color: rgb(0, 121, 191);
+  position: relative;
 }
 .menu-item-new {
   background-color: #ddd;
