@@ -15,13 +15,19 @@ const request = (method, url, data) => {
 }
 
 export const menu = {
-    fetch(id) {
-        return id ? request('get', `/menus/${id}`) : request('get', '/menus')
-    },
-    create(menuName) {
-      return request('post', '/menus', { menuName })
-    },
-    destory(id) {
-      return request('delete', `/menus/${id}`)
-    }
+  fetch(id) {
+      return id ? request('get', `/menus/${id}`) : request('get', '/menus')
+  },
+  create(menuName) {
+    return request('post', '/menus', { menuName })
+  },
+  destory(id) {
+    return request('delete', `/menus/${id}`)
+  }
+}
+
+export const menuPlan = {
+  create(menuPlanMonth) {
+    return request('post', 'menuPlans', { menuPlanMonth })
+  }
 }

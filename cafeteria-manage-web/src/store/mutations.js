@@ -11,6 +11,10 @@ const mutations = {
     SET_MENU(state, menu) {
         state.menu = menu
     },
+    
+    SET_IS_ADD_MENUPLAN(state, toggle) {
+        state.isAddMenuplan = toggle
+    }
 }
 
 export default mutations

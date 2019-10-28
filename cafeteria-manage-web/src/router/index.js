@@ -25,7 +25,7 @@ const router = new VueRouter({
             component: Menu
         },
         {
-            path: '/menuplans',
+            path: '/menuPlans',
             component: MenuplanHome
         },
         {
