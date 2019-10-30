@@ -79,4 +79,20 @@ public class WorkDayServiceTests {
 
     }
 
+    @Test
+    public void 한방에_해당월_날짜_전부_만들기() {
+
+        List<LocalDate> mockLocalDates = new ArrayList<>();
+        for (int i = 0; i < 30; i++) {
+            mockLocalDates.add(LocalDate.now());
+        }
+        given(dateTimeUtils.getLocalDatesByMonth(11))
+                .willReturn(mockLocalDates);
+
+        List<WorkDay> workDays = workDayService.bulkCreate(11);
+
+        assertThat(workDays.size()).isEqualTo(30);
+
+    }
+
 }
