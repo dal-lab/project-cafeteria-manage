@@ -1,4 +1,4 @@
-package com.poppo.dallab.cafeteria.interfaces;
+package com.poppo.dallab.cafeteria.dto;
 
 import com.poppo.dallab.cafeteria.domain.Menu;
 import lombok.AllArgsConstructor;

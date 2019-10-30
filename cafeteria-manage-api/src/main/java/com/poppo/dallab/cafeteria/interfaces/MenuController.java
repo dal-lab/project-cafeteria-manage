@@ -2,6 +2,8 @@ package com.poppo.dallab.cafeteria.interfaces;
 
 import com.poppo.dallab.cafeteria.applications.MenuService;
 import com.poppo.dallab.cafeteria.domain.Menu;
+import com.poppo.dallab.cafeteria.dto.MenuRequestDto;
+import com.poppo.dallab.cafeteria.dto.MenuResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

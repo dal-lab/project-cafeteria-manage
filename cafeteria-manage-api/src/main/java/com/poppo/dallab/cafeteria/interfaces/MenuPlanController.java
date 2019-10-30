@@ -6,6 +6,8 @@ import com.poppo.dallab.cafeteria.applications.MenuService;
 import com.poppo.dallab.cafeteria.applications.WorkDayService;
 import com.poppo.dallab.cafeteria.domain.Menu;
 import com.poppo.dallab.cafeteria.domain.WorkDay;
+import com.poppo.dallab.cafeteria.dto.MenuPlanRequestDto;
+import com.poppo.dallab.cafeteria.dto.MenuPlanResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

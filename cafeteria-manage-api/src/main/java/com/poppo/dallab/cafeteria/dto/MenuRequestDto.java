@@ -1,4 +1,4 @@
-package com.poppo.dallab.cafeteria.interfaces;
+package com.poppo.dallab.cafeteria.dto;
 
 import lombok.Data;
 

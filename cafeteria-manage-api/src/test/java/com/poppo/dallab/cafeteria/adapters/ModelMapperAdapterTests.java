@@ -1,7 +1,7 @@
 package com.poppo.dallab.cafeteria.adapters;
 
 import com.poppo.dallab.cafeteria.domain.Menu;
-import com.poppo.dallab.cafeteria.interfaces.MenuPlanRequestDto;
+import com.poppo.dallab.cafeteria.dto.MenuPlanRequestDto;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

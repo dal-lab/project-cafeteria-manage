@@ -3,6 +3,7 @@ package com.poppo.dallab.cafeteria.utils;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
@@ -32,4 +33,23 @@ public class DateTimeUtils {
         return localDates;
     }
 
+    public List<LocalDate> getLocalDatesByMonth(Integer requestMonth) {
+
+        Integer thisYear = LocalDate.now().getYear();
+        Integer dayLength = this.getDayLengthOfMonth(thisYear, requestMonth);
+
+        List<LocalDate> monthDays = new ArrayList<>();
+        for (int i = 1; i < dayLength + 1; i ++) {
+            monthDays.add(LocalDate.of(thisYear, requestMonth, i));
+        }
+
+        return monthDays;
+    }
+
+    public Integer getDayLengthOfMonth(Integer year, Integer month) {
+
+        YearMonth yearMonth = YearMonth.of(year, month);
+
+        return yearMonth.lengthOfMonth();
+    }
 }
