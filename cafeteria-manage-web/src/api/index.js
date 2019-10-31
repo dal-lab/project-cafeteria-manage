@@ -28,6 +28,6 @@ export const menu = {
 
 export const menuPlan = {
   create(menuPlanMonth) {
-    return request('post', 'menuPlans', { menuPlanMonth })
+    return request('post', '/workDay', { menuPlanMonth })
   }
 }
