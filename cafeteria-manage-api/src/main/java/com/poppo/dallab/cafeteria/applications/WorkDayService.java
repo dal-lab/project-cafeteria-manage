@@ -47,11 +47,15 @@ public class WorkDayService {
 
         List<LocalDate> daysOfMonth = dateTimeUtils.getLocalDatesByMonth(month);
 
-        return daysOfMonth.stream().map(dayOfMonth ->
-                    workDayRepository.save(WorkDay.builder()
+        List<WorkDay> workDays = daysOfMonth.stream()
+                .map(dayOfMonth -> WorkDay.builder()
                         .date(dayOfMonth)
                         .day(dayOfMonth.getDayOfWeek().name())
-                        .build()))
+                        .build())
                 .collect(Collectors.toList());
+
+        workDayRepository.saveAll(workDays);
+
+        return workDays;
     }
 }
