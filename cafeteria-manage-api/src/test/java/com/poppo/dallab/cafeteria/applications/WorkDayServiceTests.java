@@ -15,6 +15,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -83,10 +85,10 @@ public class WorkDayServiceTests {
     @Test
     public void 한방에_해당월_날짜_전부_만들기() {
 
-        List<LocalDate> mockLocalDates = new ArrayList<>();
-        for (int i = 0; i < 30; i++) {
-            mockLocalDates.add(LocalDate.now());
-        }
+        List<LocalDate> mockLocalDates = Stream.generate(LocalDate::now)
+                .limit(30)
+                .collect(Collectors.toList());
+
         given(dateTimeUtils.getLocalDatesByMonth(11))
                 .willReturn(mockLocalDates);
 
