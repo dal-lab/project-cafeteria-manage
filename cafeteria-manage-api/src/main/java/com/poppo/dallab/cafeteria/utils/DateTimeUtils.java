@@ -10,6 +10,8 @@ import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Component
 public class DateTimeUtils {
@@ -38,12 +40,14 @@ public class DateTimeUtils {
         Integer thisYear = LocalDate.now().getYear();
         Integer dayLength = this.getDayLengthOfMonth(thisYear, requestMonth);
 
-        List<LocalDate> monthDays = new ArrayList<>();
-        for (int i = 1; i < dayLength + 1; i ++) {
-            monthDays.add(LocalDate.of(thisYear, requestMonth, i));
-        }
+//        List<LocalDate> monthDays = new ArrayList<>();
+//        for (int i = 1; i < dayLength + 1; i ++) {
+//            monthDays.add(LocalDate.of(thisYear, requestMonth, i));
+//        }
 
-        return monthDays;
+        return IntStream.range(1, dayLength)
+                .mapToObj(day -> LocalDate.of(thisYear, requestMonth, day))
+                .collect(Collectors.toList());
     }
 
     public Integer getDayLengthOfMonth(Integer year, Integer month) {
