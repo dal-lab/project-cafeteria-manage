@@ -11,8 +11,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.mockito.BDDMockito.given;
@@ -33,10 +34,9 @@ public class WorkDayControllerTests {
     @Test
     public void 새로운_달의_시작_요청() throws Exception {
 
-        List<WorkDay> mockWorkDays = new ArrayList<>();
-        for(int i = 0; i < 30; i++) {
-            mockWorkDays.add(WorkDay.builder().build());
-        }
+        List<WorkDay> mockWorkDays = Stream.generate(WorkDay::new)
+                .limit(30)
+                .collect(Collectors.toList());
 
         given(workDayService.bulkCreate(11)).willReturn(mockWorkDays);
 
