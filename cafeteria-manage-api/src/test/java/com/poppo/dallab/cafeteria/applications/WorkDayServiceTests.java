@@ -93,7 +93,7 @@ public class WorkDayServiceTests {
         List<WorkDay> workDays = workDayService.bulkCreate(11);
 
         verify(workDayRepository).saveAll(any());
-        assertThat(workDays).isEqualTo(30);
+        assertThat(workDays).hasSize(30);
 
     }
 
