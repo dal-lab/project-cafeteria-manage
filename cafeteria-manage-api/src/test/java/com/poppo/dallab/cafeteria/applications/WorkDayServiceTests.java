@@ -19,6 +19,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -91,7 +92,8 @@ public class WorkDayServiceTests {
 
         List<WorkDay> workDays = workDayService.bulkCreate(11);
 
-        assertThat(workDays.size()).isEqualTo(30);
+        verify(workDayRepository).saveAll(any());
+        assertThat(workDays).isEqualTo(30);
 
     }
 
