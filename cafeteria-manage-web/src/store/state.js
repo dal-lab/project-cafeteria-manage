@@ -4,6 +4,7 @@ const state = {
     isAddMenuplan: false,
     menus: [],
     menu: {},
+    menuPlanMonth: [],
 }
 
 export default state

@@ -2,18 +2,24 @@
     <div>
         <div class="menu-plan-home-title">식단 관리</div>
         <div class="menu-plan-list">
-            <div class="menu-plan-item menu-plan-item-new">
-                <a class="new-menu-plan-btn" href="" @click.prevent="SET_IS_ADD_MENUPLAN(true)">
-                    &plus; 새 식단 추가
-                </a>
-            </div>
+          <div class="menu-plan-item" v-for="month in menuPlanMonth" :key="month"
+              ref="menuPlanItem">
+              <a>
+                  <div class="menu-plan-item-title">{{ month }}월</div>
+              </a>
+          </div>
+          <div class="menu-plan-item menu-plan-item-new">
+              <a class="new-menu-plan-btn" href="" @click.prevent="SET_IS_ADD_MENUPLAN(true)">
+                  &plus; 새 식단 추가
+              </a>
+          </div>
         </div>
         <AddMenuplan v-if="isAddMenuplan" />
     </div>
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 import AddMenuplan from './AddMenuplan.vue'
 
 export default {
@@ -22,18 +28,31 @@ export default {
     },
     data() {
         return {
-
+          loading: false,
         }
     },
     computed: {
         ...mapState({
-            isAddMenuplan: 'isAddMenuplan'
+            isAddMenuplan: 'isAddMenuplan',
+            menuPlanMonth: 'menuPlanMonth',
         })
+    },
+    created() {
+      this.fetchData()
     },
     methods: {
         ...mapMutations([
             'SET_IS_ADD_MENUPLAN'
-        ])
+        ]),
+        ...mapActions([
+          'GET_MENUPLANMONTH'
+        ]),
+        fetchData() {
+            this.loading = true
+            this.GET_MENUPLANMONTH().finally(_ => {
+                this.loading = false
+            })
+        }
     }
 }
 </script>
@@ -79,5 +98,11 @@ export default {
   width: inherit;
   color: #888;
   font-weight: 700;
+}
+.menu-plan-item-title {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  padding: 10px;
 }
 </style>
