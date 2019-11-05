@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 @Transactional
@@ -57,5 +58,18 @@ public class WorkDayService {
         workDayRepository.saveAll(workDays);
 
         return workDays;
+    }
+
+    public List<Integer> getWorkMonths() {
+
+        List<Integer> workMonths = new ArrayList<>();
+
+        IntStream.rangeClosed(1,12).forEach(month -> {
+            if(dateTimeUtils.isThisMonthExists(month)) {
+                workMonths.add(month);
+            }
+        });
+
+        return workMonths;
     }
 }

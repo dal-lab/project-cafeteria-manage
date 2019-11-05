@@ -1,22 +1,34 @@
 package com.poppo.dallab.cafeteria.utils;
 
+import com.poppo.dallab.cafeteria.domain.WorkDay;
+import com.poppo.dallab.cafeteria.domain.WorkDayRepository;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 
 public class DateTimeUtilsTests {
 
     @Autowired
     private DateTimeUtils dateTimeUtils;
 
+    @Mock
+    private WorkDayRepository workDayRepository;
+
     @Before
     public void setup() {
-        dateTimeUtils = new DateTimeUtils();
+        MockitoAnnotations.initMocks(this);
+
+        dateTimeUtils = new DateTimeUtils(workDayRepository);
     }
 
     @Test
@@ -90,6 +102,17 @@ public class DateTimeUtilsTests {
         Integer monthDaySize = dateTimeUtils.getDayLengthOfMonth(2016, 2);
 
         assertThat(monthDaySize).isEqualTo(29);
+    }
+
+    @Test
+    public void 이_달은_존재하나() {
+        List<WorkDay> mockWorkDays = Arrays.asList(WorkDay.builder().build());
+
+        given(workDayRepository.findByDateBetween(any(), any())).willReturn(mockWorkDays);
+
+        boolean thisMonthExists = dateTimeUtils.isThisMonthExists(10);
+
+        assertThat(thisMonthExists).isTrue();
     }
 
 }

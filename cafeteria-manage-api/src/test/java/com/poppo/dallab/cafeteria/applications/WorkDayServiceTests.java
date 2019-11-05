@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
@@ -25,7 +26,8 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class WorkDayServiceTests {
+@ActiveProfiles("test")
+public class  WorkDayServiceTests {
 
     WorkDayService workDayService;
 
@@ -98,5 +100,19 @@ public class WorkDayServiceTests {
         assertThat(workDays).hasSize(30);
 
     }
+
+    @Test
+    public void workDay가_있는_달만_가져오기() {
+
+        given(dateTimeUtils.isThisMonthExists(1)).willReturn(true);
+        given(dateTimeUtils.isThisMonthExists(2)).willReturn(true);
+
+        List<Integer> workMonths = workDayService.getWorkMonths();
+
+        assertThat(workMonths.get(0)).isEqualTo(1);
+        assertThat(workMonths.get(1)).isEqualTo(2);
+    }
+
+
 
 }

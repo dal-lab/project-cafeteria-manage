@@ -1,6 +1,9 @@
 package com.poppo.dallab.cafeteria.applications;
 
-import com.poppo.dallab.cafeteria.domain.*;
+import com.poppo.dallab.cafeteria.domain.Menu;
+import com.poppo.dallab.cafeteria.domain.MenuPlan;
+import com.poppo.dallab.cafeteria.domain.MenuPlanRepository;
+import com.poppo.dallab.cafeteria.domain.WorkDay;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,6 +20,7 @@ import static org.mockito.BDDMockito.given;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@ActiveProfiles("test")
 public class MenuPlanServiceTests {
 
     MenuPlanService menuPlanService;
