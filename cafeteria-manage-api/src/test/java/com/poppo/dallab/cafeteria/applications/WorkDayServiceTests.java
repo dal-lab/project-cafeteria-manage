@@ -104,8 +104,8 @@ public class  WorkDayServiceTests {
     @Test
     public void workDay가_있는_달만_가져오기() {
 
-        given(dateTimeUtils.isThisMonthExists(1)).willReturn(true);
-        given(dateTimeUtils.isThisMonthExists(2)).willReturn(true);
+        given(dateTimeUtils.getDayLengthOfMonth(any(), any())).willReturn(20);
+        given(workDayRepository.storedMonthSize(any(), any())).willReturn(20);
 
         List<Integer> workMonths = workDayService.getWorkMonths();
 
@@ -113,6 +113,14 @@ public class  WorkDayServiceTests {
         assertThat(workMonths.get(1)).isEqualTo(2);
     }
 
+    @Test
+    public void 제시된_달의_저장된_workDay는_몇개인고() {
+        given(dateTimeUtils.getDayLengthOfMonth(2019, 10)).willReturn(30);
+        given(workDayRepository.storedMonthSize(any(), any())).willReturn(30);
 
+        Integer savedMonthSize = workDayService.getSavedMonthSize(10);
+
+        assertThat(savedMonthSize).isEqualTo(30);
+    }
 
 }
