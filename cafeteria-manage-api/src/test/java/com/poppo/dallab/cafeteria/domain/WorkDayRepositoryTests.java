@@ -20,7 +20,8 @@ public class WorkDayRepositoryTests {
     private WorkDayRepository workDayRepository;
 
     @Test
-    public void 저장된_workDay_중_제시된_범위에_속하는_건_몇개일까() {
+    public void 저장된_workDay_중_제시된_범위에_속하는_게_있는가() {
+
         WorkDay workDay = WorkDay.builder()
                 .date(LocalDate.of(2019,10,1))
                 .build();
@@ -29,9 +30,9 @@ public class WorkDayRepositoryTests {
         LocalDate startDate = LocalDate.of(2019, 10, 1);
         LocalDate endDate = LocalDate.of(2019, 10, 30);
 
-        Integer monthSize = workDayRepository.storedMonthSize(startDate, endDate);
+        Boolean result = workDayRepository.existsByDateBetween(startDate, endDate);
 
-        assertThat(monthSize).isEqualTo(1);
+        assertThat(result).isTrue();
     }
 
 }

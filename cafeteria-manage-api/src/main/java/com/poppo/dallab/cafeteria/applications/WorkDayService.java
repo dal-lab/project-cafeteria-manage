@@ -65,7 +65,7 @@ public class WorkDayService {
         List<Integer> workMonths = new ArrayList<>();
 
         IntStream.rangeClosed(1,12).forEach(month -> {
-            if(this.getSavedMonthSize(month) != 0) {
+            if(this.isThisMonthExists(month)) {
                 workMonths.add(month);
             }
         });
@@ -73,12 +73,12 @@ public class WorkDayService {
         return workMonths;
     }
 
-    protected Integer getSavedMonthSize(Integer month) {
+    protected Boolean isThisMonthExists(Integer month) {
 
         Integer thisYear = LocalDate.now().getYear();
         LocalDate startDate = LocalDate.of(thisYear, month, 1);
         LocalDate endDate = LocalDate.of(thisYear, month, dateTimeUtils.getDayLengthOfMonth(thisYear, month));
 
-        return workDayRepository.storedMonthSize(startDate, endDate);
+        return workDayRepository.existsByDateBetween(startDate,endDate);
     }
 }

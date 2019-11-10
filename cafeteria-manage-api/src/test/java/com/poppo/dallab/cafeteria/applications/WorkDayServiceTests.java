@@ -105,7 +105,7 @@ public class  WorkDayServiceTests {
     public void workDay가_있는_달만_가져오기() {
 
         given(dateTimeUtils.getDayLengthOfMonth(any(), any())).willReturn(20);
-        given(workDayRepository.storedMonthSize(any(), any())).willReturn(20);
+        given(workDayRepository.existsByDateBetween(any(), any())).willReturn(true);
 
         List<Integer> workMonths = workDayService.getWorkMonths();
 
@@ -114,13 +114,13 @@ public class  WorkDayServiceTests {
     }
 
     @Test
-    public void 제시된_달의_저장된_workDay는_몇개인고() {
+    public void 제시된_달의_저장된_workDay가_있는고() {
         given(dateTimeUtils.getDayLengthOfMonth(2019, 10)).willReturn(30);
-        given(workDayRepository.storedMonthSize(any(), any())).willReturn(30);
+        given(workDayRepository.existsByDateBetween(any(), any())).willReturn(true);
 
-        Integer savedMonthSize = workDayService.getSavedMonthSize(10);
+        Boolean result = workDayService.isThisMonthExists(10);
 
-        assertThat(savedMonthSize).isEqualTo(30);
+        assertThat(result).isTrue();
     }
 
 }
