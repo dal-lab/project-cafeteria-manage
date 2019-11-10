@@ -14,6 +14,9 @@ const mutations = {
     
     SET_IS_ADD_MENUPLAN(state, toggle) {
         state.isAddMenuplan = toggle
+    },
+    SET_MENUPLANMONTH(state, menuPlanMonth) {
+        state.menuPlanMonth = menuPlanMonth
     }
 }
 

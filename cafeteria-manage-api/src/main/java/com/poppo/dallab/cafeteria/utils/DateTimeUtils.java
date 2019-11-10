@@ -1,5 +1,7 @@
 package com.poppo.dallab.cafeteria.utils;
 
+import com.poppo.dallab.cafeteria.domain.WorkDayRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -14,7 +16,10 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Component
+@RequiredArgsConstructor
 public class DateTimeUtils {
+
+    private final WorkDayRepository workDayRepository;
 
     public LocalDate stringDateToLocalDate(String workDay) {
 
@@ -39,11 +44,6 @@ public class DateTimeUtils {
 
         Integer thisYear = LocalDate.now().getYear();
         Integer dayLength = this.getDayLengthOfMonth(thisYear, requestMonth);
-
-//        List<LocalDate> monthDays = new ArrayList<>();
-//        for (int i = 1; i < dayLength + 1; i ++) {
-//            monthDays.add(LocalDate.of(thisYear, requestMonth, i));
-//        }
 
         // range의 끝 수가 빠지는 듯
         return IntStream.range(1, dayLength + 1)

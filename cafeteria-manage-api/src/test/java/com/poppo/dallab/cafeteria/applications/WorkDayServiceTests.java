@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
@@ -25,7 +26,8 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class WorkDayServiceTests {
+@ActiveProfiles("test")
+public class  WorkDayServiceTests {
 
     WorkDayService workDayService;
 
@@ -97,6 +99,28 @@ public class WorkDayServiceTests {
         verify(workDayRepository).saveAll(any());
         assertThat(workDays).hasSize(30);
 
+    }
+
+    @Test
+    public void workDay가_있는_달만_가져오기() {
+
+        given(dateTimeUtils.getDayLengthOfMonth(any(), any())).willReturn(20);
+        given(workDayRepository.existsByDateBetween(any(), any())).willReturn(true);
+
+        List<Integer> workMonths = workDayService.getWorkMonths();
+
+        assertThat(workMonths.get(0)).isEqualTo(1);
+        assertThat(workMonths.get(1)).isEqualTo(2);
+    }
+
+    @Test
+    public void 제시된_달의_저장된_workDay가_있는고() {
+        given(dateTimeUtils.getDayLengthOfMonth(2019, 10)).willReturn(30);
+        given(workDayRepository.existsByDateBetween(any(), any())).willReturn(true);
+
+        Boolean result = workDayService.isThisMonthExists(10);
+
+        assertThat(result).isTrue();
     }
 
 }

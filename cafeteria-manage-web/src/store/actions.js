@@ -26,9 +26,15 @@ const actions = {
     },
 
     // Menuplan actions
-    ADD_MENUPLAN(_, { menuPlanMonth }) {
+    ADD_MENUPLAN({ dispatch }, { menuPlanMonth }) {
         return api.menuPlan.create(menuPlanMonth).then(data => {
+            dispatch('GET_MENUPLANMONTH')
             return data
+        })
+    },
+    GET_MENUPLANMONTH({ commit }) {
+        return api.menuPlan.fetchMonth().then(data => {
+            commit('SET_MENUPLANMONTH', data.existedMonthList)
         })
     }
 }

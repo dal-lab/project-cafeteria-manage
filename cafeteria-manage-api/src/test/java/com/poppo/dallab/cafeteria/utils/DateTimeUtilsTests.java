@@ -1,7 +1,10 @@
 package com.poppo.dallab.cafeteria.utils;
 
+import com.poppo.dallab.cafeteria.domain.WorkDayRepository;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
@@ -14,9 +17,14 @@ public class DateTimeUtilsTests {
     @Autowired
     private DateTimeUtils dateTimeUtils;
 
+    @Mock
+    private WorkDayRepository workDayRepository;
+
     @Before
     public void setup() {
-        dateTimeUtils = new DateTimeUtils();
+        MockitoAnnotations.initMocks(this);
+
+        dateTimeUtils = new DateTimeUtils(workDayRepository);
     }
 
     @Test

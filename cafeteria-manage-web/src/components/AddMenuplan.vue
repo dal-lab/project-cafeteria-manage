@@ -10,7 +10,7 @@
         <div slot="body">
             <form id="update-menu-form" 
                 @submit="addMenuplan">
-                <input class="form-control" type="text" v-model="input" name="menuName" ref="input">
+                <input class="form-control" type="text" v-model="input" name="workMonth" ref="input">
             </form>
         </div>
         <div slot="footer">

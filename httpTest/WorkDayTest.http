@@ -6,3 +6,16 @@ Content-Type: application/json
 }
 
 ###
+
+POST http://localhost:8080/workDay
+Content-Type: application/json
+
+{
+  "menuPlanMonth": 2
+}
+
+###
+
+GET http://localhost:8080/workMonth
+
+###

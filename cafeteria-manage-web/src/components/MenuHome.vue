@@ -3,7 +3,7 @@
         <div class="menu-home-title">메뉴 관리</div>
         <div class="menu-list">
             <div class="menu-item" v-for="menu in menus" :key="menu.id"
-                ref="boardItem">
+                ref="menuItem">
                 <router-link :to="`/menus/${menu.id}`">
                     <div class="menu-item-title">{{ menu.menuName }}</div>
                 </router-link>

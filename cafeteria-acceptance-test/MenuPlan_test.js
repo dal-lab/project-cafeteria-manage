@@ -6,13 +6,13 @@ Scenario('식단관리 관리 페이지 이동 확인', (I) => {
     I.see('식단 관리');
 });
 
-Scenario('식단 입력 테스트(11월)', (I) => {
+Scenario('식단 입력 테스트(10월)', (I) => {
     I.amOnPage('http://localhost:3333/menuPlans');
     I.see('새 식단 추가')
     I.click('새 식단 추가');
-    I.fillField('month', '10');
+    I.fillField('workMonth', '10');
     I.click('식단 추가');
-    I.see('2019-11-01');
+    I.see('10월');
 });
 
 // Scenario('메뉴 삭제 테스트(제육볶음)', (I) => {
