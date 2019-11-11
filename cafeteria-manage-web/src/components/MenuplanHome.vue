@@ -52,10 +52,6 @@ export default {
             this.GET_MENUPLANMONTH().finally(_ => {
                 this.loading = false
             })
-        },
-        setMonth(month) {
-          this.SET_MONTH(month)
-          console.log(month)
         }
     }
 }
