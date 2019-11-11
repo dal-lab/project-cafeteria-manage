@@ -4,9 +4,9 @@
         <div class="menu-plan-list">
           <div class="menu-plan-item" v-for="month in menuPlanMonth" :key="month"
               ref="menuPlanItem">
-              <a>
+              <router-link :to="`/menuPlans/${month}`">
                   <div class="menu-plan-item-title">{{ month }}월</div>
-              </a>
+              </router-link>
           </div>
           <div class="menu-plan-item menu-plan-item-new">
               <a class="new-menu-plan-btn" href="" @click.prevent="SET_IS_ADD_MENUPLAN(true)">
@@ -42,7 +42,7 @@ export default {
     },
     methods: {
         ...mapMutations([
-            'SET_IS_ADD_MENUPLAN'
+            'SET_IS_ADD_MENUPLAN',
         ]),
         ...mapActions([
           'GET_MENUPLANMONTH'
@@ -52,6 +52,10 @@ export default {
             this.GET_MENUPLANMONTH().finally(_ => {
                 this.loading = false
             })
+        },
+        setMonth(month) {
+          this.SET_MONTH(month)
+          console.log(month)
         }
     }
 }

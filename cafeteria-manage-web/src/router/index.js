@@ -4,6 +4,7 @@ import Home from '../components/Home.vue'
 import MenuHome from '../components/MenuHome.vue'
 import Menu from '../components/Menu.vue'
 import MenuplanHome from '../components/MenuplanHome.vue'
+import MonthlyMenuplan from '../components/MonthlyMenuplan.vue'
 import IngredientHome from '../components/IngredientHome.vue'
 import NotFound from '../components/NotFound.vue'
 
@@ -27,6 +28,10 @@ const router = new VueRouter({
         {
             path: '/menuPlans',
             component: MenuplanHome
+        },
+        {
+            path: '/menuPlans/:month',
+            component: MonthlyMenuplan
         },
         {
             path: '/ingredients',
