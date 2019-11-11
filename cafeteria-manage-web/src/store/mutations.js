@@ -17,7 +17,7 @@ const mutations = {
     },
     SET_MENUPLANMONTH(state, menuPlanMonth) {
         state.menuPlanMonth = menuPlanMonth
-    }
+    },
 }
 
 export default mutations
