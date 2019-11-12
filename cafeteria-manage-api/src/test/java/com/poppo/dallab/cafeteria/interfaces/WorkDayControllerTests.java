@@ -1,5 +1,6 @@
 package com.poppo.dallab.cafeteria.interfaces;
 
+import com.poppo.dallab.cafeteria.applications.MenuPlanService;
 import com.poppo.dallab.cafeteria.applications.WorkDayService;
 import com.poppo.dallab.cafeteria.domain.WorkDay;
 import org.junit.Test;
@@ -33,6 +34,9 @@ public class WorkDayControllerTests {
     @MockBean
     private WorkDayService workDayService;
 
+    @MockBean
+    private MenuPlanService menuPlanService;
+
     @Test
     public void 일하는_날이_있는_월만_목록으로_가져오기() throws  Exception {
 
@@ -64,6 +68,8 @@ public class WorkDayControllerTests {
                 .andExpect(status().isCreated())
                 .andExpect(content().string(containsString("30")))
         ;
+
+        verify()
 
     }
 

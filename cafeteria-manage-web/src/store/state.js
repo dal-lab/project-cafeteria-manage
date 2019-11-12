@@ -5,6 +5,7 @@ const state = {
     menus: [],
     menu: {},
     menuPlanMonth: [],
+    monthlyMenuPlans: [],
 }
 
 export default state
