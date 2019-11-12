@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -121,6 +122,32 @@ public class  WorkDayServiceTests {
         Boolean result = workDayService.isThisMonthExists(10);
 
         assertThat(result).isTrue();
+    }
+
+    @Test
+    public void 아이디로_workday_가져오기() {
+        given(workDayRepository.getOne(1L)).willReturn(WorkDay.builder()
+                .id(1L)
+                .build());
+
+        WorkDay workday = workDayService.getWorkDayById(1L);
+
+        assertThat(workday.getId()).isEqualTo(1L);
+    }
+
+    @Test
+    public void 해당월의_workDay_가져오기() {
+        List<WorkDay> workDays = Arrays.asList(WorkDay.builder().id(1L).build());
+
+        given(dateTimeUtils.getDayLengthOfMonth(2019,11)).willReturn(30);
+        given(workDayRepository.findByDateBetween(
+                LocalDate.of(2019,11,1),
+                LocalDate.of(2019,11,30))
+        ).willReturn(workDays);
+
+        List<WorkDay> workDaysByMonth = workDayService.getWorkDaysByMonth(2019, 11);
+
+        assertThat(workDaysByMonth.get(0).getId()).isEqualTo(1L);
     }
 
 }
