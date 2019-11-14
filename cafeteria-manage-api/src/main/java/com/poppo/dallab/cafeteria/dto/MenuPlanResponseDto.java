@@ -15,6 +15,8 @@ import java.util.List;
 @AllArgsConstructor
 public class MenuPlanResponseDto {
 
+    Long workDayId;
+
     String day;
 
     LocalDate date;

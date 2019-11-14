@@ -36,6 +36,11 @@ const actions = {
         return api.menuPlan.fetchMonth().then(data => {
             commit('SET_MENUPLANMONTH', data.existedMonthList)
         })
+    },
+    GET_MONTHLYMENUPLANS({ commit }, { year, month }) {
+        return api.menuPlan.fetchMonthlyMenuPlan(year, month).then(data => {
+            commit('SET_MONTHLYMENUPLANS', data)
+        })
     }
 }
 

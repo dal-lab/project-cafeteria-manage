@@ -1,5 +1,6 @@
 package com.poppo.dallab.cafeteria.interfaces;
 
+import com.poppo.dallab.cafeteria.applications.MenuPlanService;
 import com.poppo.dallab.cafeteria.applications.WorkDayService;
 import com.poppo.dallab.cafeteria.domain.WorkDay;
 import com.poppo.dallab.cafeteria.dto.WorkDayRequestDto;
@@ -18,6 +19,7 @@ import java.util.List;
 public class WorkDayController {
 
     private final WorkDayService workDayService;
+    private final MenuPlanService menuPlanService;
 
     @GetMapping("/workMonth")
     public WorkMonthResponseDto getWorkMonthList() {

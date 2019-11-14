@@ -81,4 +81,19 @@ public class WorkDayService {
 
         return workDayRepository.existsByDateBetween(startDate,endDate);
     }
+
+    public WorkDay getWorkDayById(Long id) {
+
+        return workDayRepository.getOne(id);
+    }
+
+    public List<WorkDay> getWorkDaysByMonth(Integer year, Integer month) {
+
+        LocalDate startDate = LocalDate.of(year, month,1);
+        LocalDate endDate = LocalDate.of(year, month, dateTimeUtils.getDayLengthOfMonth(year, month));
+
+        List<WorkDay> workDays = workDayRepository.findByDateBetween(startDate, endDate);
+
+        return workDays;
+    }
 }

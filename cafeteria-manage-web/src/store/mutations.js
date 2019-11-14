@@ -18,6 +18,9 @@ const mutations = {
     SET_MENUPLANMONTH(state, menuPlanMonth) {
         state.menuPlanMonth = menuPlanMonth
     },
+    SET_MONTHLYMENUPLANS(state, monthlyMenuPlans) {
+        state.monthlyMenuPlans = monthlyMenuPlans
+    }
 }
 
 export default mutations

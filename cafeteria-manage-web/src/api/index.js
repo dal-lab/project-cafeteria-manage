@@ -32,5 +32,8 @@ export const menuPlan = {
   },
   fetchMonth()  {
     return request('get', '/workMonth')
+  },
+  fetchMonthlyMenuPlan(year, month) {
+    return request('get', `/menuPlans?year=${year}&month=${month}`)
   }
 }

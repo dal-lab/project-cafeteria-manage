@@ -12,9 +12,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,22 +28,21 @@ public class MenuPlanController {
     private final MenuPlanService menuPlanService;
     private final Mapper mapper;
 
-    @GetMapping("/workDay")
-    public List<MenuPlanResponseDto> getList() {
+    @GetMapping("/menuPlans")
+    public List<MenuPlanResponseDto> getList(
+            @PathParam(value = "year") Integer year,
+            @PathParam(value = "month") Integer month
+    ) {
 
-        // TODO: 테스트 종료 후 현재 날짜 받도록 변경
-//        List<WorkDay> workDays = workDayService.getWorkWeek(LocalDate.now());
-        List<WorkDay> workDays = workDayService.getWorkWeek(LocalDate.of(2019, 10, 12));
+        List<WorkDay> workDays = workDayService.getWorkDaysByMonth(year, month);
 
-        List<MenuPlanResponseDto> menuPlanResponseDtos = workDays.stream()
-                .map(workDay -> MenuPlanResponseDto.builder()
-                        .date(workDay.getDate())
-                        .day(workDay.getDay())
-                        .menus(menuService.getMenusByWorkDayId(workDay.getId()))
-                        .build())
-                .collect(Collectors.toList());
-
-        return menuPlanResponseDtos;
+        return workDays.stream().map(workDay -> {
+            return MenuPlanResponseDto.builder()
+                    .workDayId(workDay.getId())
+                    .date(workDay.getDate())
+                    .day(workDay.getDay())
+                    .build();
+        }).collect(Collectors.toList());
 
     }
 
