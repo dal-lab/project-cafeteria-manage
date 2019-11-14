@@ -38,6 +38,7 @@ public class MenuPlanController {
 
         return workDays.stream().map(workDay -> {
             return MenuPlanResponseDto.builder()
+                    .workDayId(workDay.getId())
                     .date(workDay.getDate())
                     .day(workDay.getDay())
                     .build();

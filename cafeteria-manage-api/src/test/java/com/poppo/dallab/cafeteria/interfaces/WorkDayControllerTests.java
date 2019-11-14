@@ -69,8 +69,6 @@ public class WorkDayControllerTests {
                 .andExpect(content().string(containsString("30")))
         ;
 
-        verify()
-
     }
 
 }

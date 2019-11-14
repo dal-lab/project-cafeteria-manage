@@ -52,6 +52,7 @@ public class MenuPlanControllerTests {
     public void getListByMonth() throws Exception {
 
         List<WorkDay> workDays = Arrays.asList(WorkDay.builder()
+                .id(1L)
                 .date(LocalDate.of(2019,11,1))
                 .build());
 
@@ -61,6 +62,7 @@ public class MenuPlanControllerTests {
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("[")))
                 .andExpect(content().string(containsString("2019-11-01")))
+                .andExpect(content().string(containsString("\"workDayId\":1")))
             ;
     }
 
