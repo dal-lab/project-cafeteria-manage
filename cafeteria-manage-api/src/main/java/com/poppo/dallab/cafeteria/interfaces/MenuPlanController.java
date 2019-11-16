@@ -5,6 +5,7 @@ import com.poppo.dallab.cafeteria.applications.MenuPlanService;
 import com.poppo.dallab.cafeteria.applications.MenuService;
 import com.poppo.dallab.cafeteria.applications.WorkDayService;
 import com.poppo.dallab.cafeteria.domain.Menu;
+import com.poppo.dallab.cafeteria.domain.MenuPlan;
 import com.poppo.dallab.cafeteria.domain.WorkDay;
 import com.poppo.dallab.cafeteria.dto.MenuPlanRequestDto;
 import com.poppo.dallab.cafeteria.dto.MenuPlanResponseDto;
@@ -62,22 +63,17 @@ public class MenuPlanController {
 
     }
 
-    @PostMapping("/workDay/{date}/menuPlans")
-    public ResponseEntity bulkCreate(
-            @PathVariable(name = "date") String date,
-            @RequestBody List<MenuPlanRequestDto> menuPlanRequestDtos
-        ) throws URISyntaxException {
+    @PostMapping("/workDays/{workDayId}/menu")
+    public ResponseEntity addMenu(
+            @PathVariable(name = "workDayId") Long workDayId,
+            @RequestBody MenuPlanRequestDto resource
+    ) throws URISyntaxException {
 
-        String url = "/workDay/"+ date +"/menuPlans";
+        MenuPlan menuPlan = menuPlanService.addMenu(workDayId, resource.getMenuName());
 
-        List<Menu> menus = menuPlanRequestDtos.stream()
-                .map(menuPlanRequestDto -> mapper.mapping(menuPlanRequestDto, Menu.class))
-                .collect(Collectors.toList());
+        String url = "/menuPlans/" + menuPlan.getId();
 
-        menuPlanService.addBulkMenu(date, menus);
-
-        return ResponseEntity.created(new URI(url)).body("{}");
-
+        return ResponseEntity.created(new URI(url)).build();
     }
 
 }

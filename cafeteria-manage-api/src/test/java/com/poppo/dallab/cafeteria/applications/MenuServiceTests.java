@@ -12,6 +12,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -43,7 +44,7 @@ public class MenuServiceTests {
 
         Menu mockMenu = Menu.builder().id(1L).build();
 
-        given(menuRepository.findByName(name)).willReturn(mockMenu);
+        given(menuRepository.findByName(name)).willReturn(Optional.ofNullable(mockMenu));
         Menu foundMenu = menuService.getMenuByMenuName(name);
 
         assertThat(foundMenu.getId()).isEqualTo(1L);

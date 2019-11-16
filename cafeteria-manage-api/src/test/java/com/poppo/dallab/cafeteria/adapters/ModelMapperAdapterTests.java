@@ -30,7 +30,7 @@ public class ModelMapperAdapterTests {
     public void oneMenuMapperTest() {
 
         Menu menu = Menu.builder().name("제육볶음").build();
-        MenuPlanRequestDto mockMenuPlanRequestDto = MenuPlanRequestDto.builder().name("제육볶음").build();
+        MenuPlanRequestDto mockMenuPlanRequestDto = MenuPlanRequestDto.builder().menuName("제육볶음").build();
 
         given(modelMapper.map(any(), any())).willReturn(menu);
 

@@ -9,7 +9,7 @@ public interface MenuRepository extends CrudRepository<Menu, Long> {
 
     List<Menu> findAll();
 
-    Menu findByName(String name);
+    Optional<Menu> findByName(String name);
 
     Optional<Menu> findById(Long id);
 
