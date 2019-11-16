@@ -1,11 +1,9 @@
 package com.poppo.dallab.cafeteria.domain;
 
 import lombok.*;
+import org.hibernate.validator.constraints.UniqueElements;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Builder
@@ -19,6 +17,7 @@ public class Menu {
     Long id;
 
     @Setter
+    @UniqueElements
     String name;
 
 }

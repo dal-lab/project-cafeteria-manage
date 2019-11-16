@@ -5,7 +5,9 @@ import com.poppo.dallab.cafeteria.applications.MenuPlanService;
 import com.poppo.dallab.cafeteria.applications.MenuService;
 import com.poppo.dallab.cafeteria.applications.WorkDayService;
 import com.poppo.dallab.cafeteria.domain.Menu;
+import com.poppo.dallab.cafeteria.domain.MenuPlan;
 import com.poppo.dallab.cafeteria.domain.WorkDay;
+import com.poppo.dallab.cafeteria.exceptions.NoMenuException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
-import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -98,23 +97,28 @@ public class MenuPlanControllerTests {
     }
 
     @Test
-    public void bulkCreate() throws Exception {
+    public void 존재하는_메뉴를_해당날짜의_식단에_추가하기() throws Exception {
 
-        mvc.perform(post("/workDay/2019-09-30/menuPlans")
+        MenuPlan menuPlan = MenuPlan.builder().id(1L).build();
+
+        given(menuPlanService.addMenu(1L, "닭갈비")).willReturn(menuPlan);
+
+        mvc.perform(post("/workDays/1/menu")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("[\n" +
-                        "        {\n" +
-                        "            \"name\": \"제육볶음\"\n" +
-                        "        },\n" +
-                        "        {\n" +
-                        "            \"name\": \"닭갈비\"\n" +
-                        "        }\n" +
-                        "    ]"))
-                .andExpect(header().stringValues("Location", "/workDay/2019-09-30/menuPlans"))
+                .content("{\"menuName\": \"닭갈비\"}"))
+                .andExpect(header().stringValues("Location", "/menuPlans/1"))
                 .andExpect(status().isCreated());
-
-        verify(menuPlanService).addBulkMenu(eq("2019-09-30"), anyList());
-
     }
 
+    @Test
+    public void 존재하지_않는_메뉴를_해당날짜의_식단에_추가하기() throws Exception {
+
+        given(menuPlanService.addMenu(1L, "이제까지이런맛은없었다이것은갈비인가통닭인가"))
+                .willThrow(NoMenuException.class);
+
+        mvc.perform(post("/workDays/1/menu")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"menuName\": \"이제까지이런맛은없었다이것은갈비인가통닭인가\"}"))
+                .andExpect(status().isNotFound());
+    }
 }

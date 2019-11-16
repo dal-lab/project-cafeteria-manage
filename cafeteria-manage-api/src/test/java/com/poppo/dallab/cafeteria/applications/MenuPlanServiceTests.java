@@ -3,76 +3,63 @@ package com.poppo.dallab.cafeteria.applications;
 import com.poppo.dallab.cafeteria.domain.Menu;
 import com.poppo.dallab.cafeteria.domain.MenuPlan;
 import com.poppo.dallab.cafeteria.domain.MenuPlanRepository;
-import com.poppo.dallab.cafeteria.domain.WorkDay;
+import com.poppo.dallab.cafeteria.domain.MenuRepository;
+import com.poppo.dallab.cafeteria.exceptions.NoMenuException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("test")
 public class MenuPlanServiceTests {
 
-    MenuPlanService menuPlanService;
+    private MenuPlanService menuPlanService;
 
     @MockBean
-    MenuPlanRepository menuPlanRepository;
-
-    @Mock
-    WorkDayService workDayService;
+    private MenuRepository menuRepository;
 
     @MockBean
-    MenuService menuService;
+    private MenuPlanRepository menuPlanRepository;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        menuPlanService = new MenuPlanService(menuPlanRepository, workDayService, menuService);
+
+        menuPlanService = new MenuPlanService(menuRepository, menuPlanRepository);
     }
 
     @Test
-    public void addMenuPlanWithMenuAndWorkDay() {
+    public void 요청된_WorkDay_Menu_모두_존재할_때_menu추가_요청_처리하기() {
 
-        String workDay = "2019-10-01";
+        Menu menu = Menu.builder().id(3L).build();
+        given(menuRepository.findByName("닭갈비")).willReturn(Optional.ofNullable(menu));
 
-        Menu mockMenu = Menu.builder()
-                .id(2L)
-                .name("제육볶음")
-                .build();
+        MenuPlan menuPlan = MenuPlan.builder().id(1L).build();
+        given(menuPlanRepository.save(any(MenuPlan.class))).willReturn(menuPlan);
 
-        MenuPlan mockMenuPlan = MenuPlan.builder()
-                .id(3L)
-                .menuId(2L)
-                .workDayId(1L)
-                .build();
+        MenuPlan saved = menuPlanService.addMenu(1L, "닭갈비");
 
-        // MenuPlanRepository 의존성
-        given(menuPlanRepository.save(any())).willReturn(mockMenuPlan);
+        assertThat(saved.getId()).isEqualTo(1L);
+    }
 
-        // WorkDayRepository 의존성
-        WorkDay mockWorkDay = WorkDay.builder().id(3L).build();
-        given(workDayService.getWorkDayByString(workDay)).willReturn(mockWorkDay);
+    @Test(expected = NoMenuException.class)
+    public void 요청된__Menu__존재하지_않을_때_menu추가_요청_처리하기() {
 
-        // MenuRepository 의존성
-        Menu mockReturnMenu = Menu.builder().id(2L).build();
-        given(menuService.getMenuByMenuName("제육볶음")).willReturn(mockReturnMenu);
+        given(menuRepository.findByName("이제까지이런맛은없었다이것은갈비인가치킨인가")).willThrow(NoMenuException.class);
 
-        MenuPlan menuPlan = menuPlanService.addMenu(workDay, mockMenu.getName());
-        assertThat(menuPlan.getId()).isEqualTo(3L);
-        assertThat(menuPlan.getMenuId()).isEqualTo(2L);
-        assertThat(menuPlan.getWorkDayId()).isEqualTo(1L);
-
+        MenuPlan saved = menuPlanService.addMenu(1L, "이제까지이런맛은없었다이것은갈비인가치킨인가");
     }
 
 }

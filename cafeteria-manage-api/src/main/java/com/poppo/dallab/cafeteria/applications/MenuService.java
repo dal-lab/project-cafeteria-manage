@@ -4,6 +4,7 @@ import com.poppo.dallab.cafeteria.domain.Menu;
 import com.poppo.dallab.cafeteria.domain.MenuPlan;
 import com.poppo.dallab.cafeteria.domain.MenuPlanRepository;
 import com.poppo.dallab.cafeteria.domain.MenuRepository;
+import com.poppo.dallab.cafeteria.exceptions.NoMenuException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +22,7 @@ public class MenuService {
 
     public Menu getMenuByMenuName(String name) {
 
-        return menuRepository.findByName(name);
+        return menuRepository.findByName(name).orElseThrow(NoMenuException::new);
     }
 
     public List<Menu> getMenusByWorkDayId(Long workDayId) {
