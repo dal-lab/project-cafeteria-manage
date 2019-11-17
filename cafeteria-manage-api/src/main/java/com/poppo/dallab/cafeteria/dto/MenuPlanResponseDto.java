@@ -1,6 +1,5 @@
 package com.poppo.dallab.cafeteria.dto;
 
-import com.poppo.dallab.cafeteria.domain.Menu;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,6 +20,6 @@ public class MenuPlanResponseDto {
 
     LocalDate date;
 
-    List<Menu> menus;
+    List<MenuResponseDto> menus;
 
 }
