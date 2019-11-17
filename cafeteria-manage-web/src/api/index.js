@@ -16,13 +16,13 @@ const request = (method, url, data) => {
 
 export const menu = {
   fetch(id) {
-      return id ? request('get', `/menus/${id}`) : request('get', '/menus')
+      return id ? request('get', `/menus/${ id }`) : request('get', '/menus')
   },
   create(menuName) {
     return request('post', '/menus', { menuName })
   },
   destory(id) {
-    return request('delete', `/menus/${id}`)
+    return request('delete', `/menus/${ id }`)
   }
 }
 
@@ -34,6 +34,9 @@ export const menuPlan = {
     return request('get', '/workMonth')
   },
   fetchMonthlyMenuPlan(year, month) {
-    return request('get', `/menuPlans?year=${year}&month=${month}`)
+    return request('get', `/menuPlans?year=${ year }&month=${ month }`)
+  },
+  ceateMenuPlan(workDayId, menuName) {
+    return request('post', `/workDays/${ workDayId }/menu`, { menuName })
   }
 }
