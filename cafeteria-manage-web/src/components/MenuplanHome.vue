@@ -4,7 +4,7 @@
         <div class="menu-plan-list">
           <div class="menu-plan-item" v-for="month in menuPlanMonth" :key="month"
               ref="menuPlanItem">
-              <router-link :to="`/menuPlans/${month}`">
+              <router-link :to="`/menuPlans/${ month }`">
                   <div class="menu-plan-item-title">{{ month }}월</div>
               </router-link>
           </div>
@@ -42,7 +42,7 @@ export default {
     },
     methods: {
         ...mapMutations([
-            'SET_IS_ADD_MENUPLAN',
+          'SET_IS_ADD_MENUPLAN',
         ]),
         ...mapActions([
           'GET_MENUPLANMONTH'

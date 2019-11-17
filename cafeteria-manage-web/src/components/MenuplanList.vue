@@ -8,16 +8,32 @@
         <div class="menu-list" :data-monthlyMenuPlan-id="data.id">
           <MenuItem v-for="menu in data.menus" :key="`${menu.id}`" :data="menu"/>
         </div>
+
+        <div v-if="isAddMenu">
+          <AddMenuOnMenuplan :work-day-id="data.workDayId" @close="isAddMenu=false"/>
+        </div>
+        <div v-else>
+          <a class="add-menu-btn" href="" @click.prevent="isAddMenu=true">
+            &plus; 메뉴 추가
+          </a>
+        </div>
     </div>
 </template>
 
 <script>
 import MenuItem from './MenuItem.vue'
+import AddMenuOnMenuplan from './AddMenuOnMenuplan.vue'
 
 export default {
+    data() {
+      return {
+        isAddMenu: false
+      }
+    },
     props: ['data'],
     components: {
-      MenuItem
+      MenuItem,
+      AddMenuOnMenuplan,
     }
 }
 </script>

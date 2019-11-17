@@ -38,7 +38,8 @@ export default {
     },
     computed: {
         ...mapState({
-            monthlyMenuPlans: 'monthlyMenuPlans'
+            monthlyMenuPlans: 'monthlyMenuPlans',
+            year: 'year'
         })
     },
     methods: {
@@ -47,7 +48,7 @@ export default {
         ]),
         fetchData() {
             this.loading = true
-            this.GET_MONTHLYMENUPLANS({ year: 2019, month: this.month }).finally(_ => {
+            this.GET_MONTHLYMENUPLANS({ year: this.year, month: this.month }).finally(_ => {
                 this.loading = false
             })
         }
