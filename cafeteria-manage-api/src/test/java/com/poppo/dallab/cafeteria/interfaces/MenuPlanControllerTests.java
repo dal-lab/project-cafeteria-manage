@@ -64,7 +64,7 @@ public class MenuPlanControllerTests {
                 .andExpect(content().string(containsString("2019-11-01")))
                 .andExpect(content().string(containsString("\"workDayId\":1")))
                 .andExpect(content().string(containsString("\"menus\":[")))
-                .andExpect(content().string(containsString("")))
+                .andExpect(content().string(containsString("밥")))
             ;
     }
 
