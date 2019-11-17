@@ -1,6 +1,5 @@
 package com.poppo.dallab.cafeteria.interfaces;
 
-import com.poppo.dallab.cafeteria.adapters.Mapper;
 import com.poppo.dallab.cafeteria.applications.MenuPlanService;
 import com.poppo.dallab.cafeteria.applications.MenuService;
 import com.poppo.dallab.cafeteria.applications.WorkDayService;
@@ -9,7 +8,9 @@ import com.poppo.dallab.cafeteria.domain.MenuPlan;
 import com.poppo.dallab.cafeteria.domain.WorkDay;
 import com.poppo.dallab.cafeteria.dto.MenuPlanRequestDto;
 import com.poppo.dallab.cafeteria.dto.MenuPlanResponseDto;
+import com.poppo.dallab.cafeteria.dto.MenuResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,7 @@ public class MenuPlanController {
     private final WorkDayService workDayService;
     private final MenuService menuService;
     private final MenuPlanService menuPlanService;
-    private final Mapper mapper;
+    private final ModelMapper modelMapper;
 
     @GetMapping("/menuPlans")
     public List<MenuPlanResponseDto> getList(
@@ -38,10 +39,17 @@ public class MenuPlanController {
         List<WorkDay> workDays = workDayService.getWorkDaysByMonth(year, month);
 
         return workDays.stream().map(workDay -> {
+
+            List<Menu> menus = menuService.getMenusByWorkDayId(workDay.getId());
+            List<MenuResponseDto> menuResponseDtos = menus.stream().map(menu ->
+                    modelMapper.map(menu, MenuResponseDto.class)
+            ).collect(Collectors.toList());
+
             return MenuPlanResponseDto.builder()
                     .workDayId(workDay.getId())
                     .date(workDay.getDate())
                     .day(workDay.getDay())
+                    .menus(menuResponseDtos)
                     .build();
         }).collect(Collectors.toList());
 
@@ -51,16 +59,19 @@ public class MenuPlanController {
     public MenuPlanResponseDto getOne(@PathVariable(name = "date") String date) {
 
         WorkDay workDay = workDayService.getWorkDayByString(date);
+
         List<Menu> menus = menuService.getMenusByWorkDayId(workDay.getId());
+        List<MenuResponseDto> menuResponseDtos = menus.stream().map(menu ->
+            modelMapper.map(menu, MenuResponseDto.class)
+        ).collect(Collectors.toList());
 
         MenuPlanResponseDto menuPlanResponseDto = MenuPlanResponseDto.builder()
                 .date(workDay.getDate())
                 .day(workDay.getDay())
-                .menus(menus)
+                .menus(menuResponseDtos)
                 .build();
 
         return menuPlanResponseDto;
-
     }
 
     @PostMapping("/workDays/{workDayId}/menu")

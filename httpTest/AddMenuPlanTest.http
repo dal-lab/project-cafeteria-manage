@@ -15,3 +15,12 @@ Content-Type: application/json
 }
 
 ###
+
+POST http://localhost:8080/workDays/1/menu
+Content-Type: application/json
+
+{
+  "menuName": "오징어볶음"
+}
+
+###

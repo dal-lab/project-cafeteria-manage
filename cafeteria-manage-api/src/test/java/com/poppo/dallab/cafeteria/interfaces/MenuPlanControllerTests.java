@@ -1,6 +1,5 @@
 package com.poppo.dallab.cafeteria.interfaces;
 
-import com.poppo.dallab.cafeteria.adapters.Mapper;
 import com.poppo.dallab.cafeteria.applications.MenuPlanService;
 import com.poppo.dallab.cafeteria.applications.MenuService;
 import com.poppo.dallab.cafeteria.applications.WorkDayService;
@@ -44,9 +43,6 @@ public class MenuPlanControllerTests {
     @MockBean
     MenuService menuService;
 
-    @MockBean
-    Mapper mapper;
-
     @Test
     public void getListByMonth() throws Exception {
 
@@ -55,13 +51,20 @@ public class MenuPlanControllerTests {
                 .date(LocalDate.of(2019,11,1))
                 .build());
 
+        List<Menu> menus = Arrays.asList(Menu.builder()
+                .name("밥")
+                .build());
+
         given(workDayService.getWorkDaysByMonth(2019, 11)).willReturn(workDays);
+        given(menuService.getMenusByWorkDayId(1L)).willReturn(menus);
 
         mvc.perform(get("/menuPlans?year=2019&month=11"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("[")))
                 .andExpect(content().string(containsString("2019-11-01")))
                 .andExpect(content().string(containsString("\"workDayId\":1")))
+                .andExpect(content().string(containsString("\"menus\":[")))
+                .andExpect(content().string(containsString("")))
             ;
     }
 

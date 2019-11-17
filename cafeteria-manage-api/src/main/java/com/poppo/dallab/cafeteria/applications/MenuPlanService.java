@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -27,5 +29,10 @@ public class MenuPlanService {
                 .build();
 
         return menuPlanRepository.save(menuPlan);
+    }
+
+    public List<Menu> getMenuByWorkDayId(Long workDayId) {
+
+        return null;
     }
 }
