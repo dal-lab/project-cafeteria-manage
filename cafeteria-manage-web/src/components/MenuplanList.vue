@@ -1,19 +1,24 @@
 <template>
     <div class="menuplan" :data-monthlyMenuPlan-id="data.workDayId">
         <div class="menuplan-header">
-            <div class="menuplan-header-title">{{ data.date }}</div>
-            <a class="delete-menu-list-btn" href="" @click.prevent="onDeleteList">&times;</a>
+          <div class="menuplan-header-title">{{ data.date }}</div>
+          <a class="delete-menu-list-btn" href="" @click.prevent="onDeleteList">&times;</a>
         </div>
 
-        <div class="menu-list">
-
+        <div class="menu-list" :data-monthlyMenuPlan-id="data.id">
+          <MenuItem v-for="menu in data.menus" :key="`${menu.id}`" :data="menu"/>
         </div>
     </div>
 </template>
 
 <script>
+import MenuItem from './MenuItem.vue'
+
 export default {
-    props: ['data']
+    props: ['data'],
+    components: {
+      MenuItem
+    }
 }
 </script>
 
