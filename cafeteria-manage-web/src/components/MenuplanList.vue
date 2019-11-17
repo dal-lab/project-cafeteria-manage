@@ -6,9 +6,6 @@
         </div>
 
         <div class="menu-list" :data-monthlyMenuPlan-id="data.id">
-          <!-- <div v-for="menu in data.menus" :key="`${menu.id}`">
-            {{ menu.menuName }}
-          </div> -->
           <MenuItem v-for="menu in data.menus" :key="`${menu.id}`" :data="menu"/>
         </div>
     </div>

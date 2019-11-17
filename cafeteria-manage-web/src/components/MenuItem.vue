@@ -1,8 +1,8 @@
 <template>
     <div class="menu-item" :data-menu-id="data.id">
-        <router-link :to="`/menus/${data.id}`">
+        <a href="" @click.prevent="onModify">
             <div>{{ data.menuName }}</div>
-        </router-link>
+        </a>
         <a class="delete-menu-btn" href="" @click.prevent="onDelete">&times;</a>
     </div>
 </template>
@@ -11,8 +11,13 @@
 export default {
     props: ['data'],
     methods: {
+        onModify() {
+            // TODO: 현재 선택된 일자의 메뉴 변경 기능 구현 필요
+            console.log("onModify")
+        },
         onDelete() {
-            //TODO: 삭제 API 구현 후 연결 필요
+            // TODO: 삭제 API 구현 후 연결 필요
+            console.log("onDelete")
         } 
     }
 }
