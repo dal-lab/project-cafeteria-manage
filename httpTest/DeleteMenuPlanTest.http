@@ -1,0 +1,7 @@
+DELETE http://localhost:8080/workDays/1/menu/64
+
+###
+
+DELETE http://localhost:8080/workDays/1/menu/1
+
+###

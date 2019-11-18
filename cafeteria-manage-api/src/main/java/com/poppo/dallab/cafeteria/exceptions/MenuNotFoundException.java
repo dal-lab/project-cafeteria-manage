@@ -1,4 +1,4 @@
-package com.poppo.dallab.cafeteria.applications;
+package com.poppo.dallab.cafeteria.exceptions;
 
 public class MenuNotFoundException extends RuntimeException {
 
