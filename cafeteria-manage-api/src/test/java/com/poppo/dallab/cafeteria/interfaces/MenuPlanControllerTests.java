@@ -6,7 +6,8 @@ import com.poppo.dallab.cafeteria.applications.WorkDayService;
 import com.poppo.dallab.cafeteria.domain.Menu;
 import com.poppo.dallab.cafeteria.domain.MenuPlan;
 import com.poppo.dallab.cafeteria.domain.WorkDay;
-import com.poppo.dallab.cafeteria.exceptions.NoMenuException;
+import com.poppo.dallab.cafeteria.exceptions.MenuNotFoundException;
+import com.poppo.dallab.cafeteria.exceptions.WorkDayNotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,8 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
@@ -117,11 +118,42 @@ public class MenuPlanControllerTests {
     public void 존재하지_않는_메뉴를_해당날짜의_식단에_추가하기() throws Exception {
 
         given(menuPlanService.addMenu(1L, "이제까지이런맛은없었다이것은갈비인가통닭인가"))
-                .willThrow(NoMenuException.class);
+                .willThrow(MenuNotFoundException.class);
 
         mvc.perform(post("/workDays/1/menu")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"menuName\": \"이제까지이런맛은없었다이것은갈비인가통닭인가\"}"))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void 선택된_일자의_선택된_존재하는_메뉴를_삭제하기() throws Exception {
+        mvc.perform(delete("/workDays/1/menu/3"))
+                .andExpect(status().isOk())
+        ;
+
+        verify(menuPlanService).deleteMenuPlan(1L, 3L);
+    }
+
+    @Test
+    public void 선택된_일자의_선택된_존재하지_않는_메뉴_삭제하기() throws Exception {
+
+        given(menuPlanService.deleteMenuPlan(1L, 44L))
+                .willThrow(new MenuNotFoundException());
+
+        mvc.perform(delete("/workDays/1/menu/44"))
+                .andExpect(status().isNotFound())
+        ;
+    }
+
+    @Test
+    public void 이상한_날짜에_삭제_시도하기() throws Exception {
+
+        given(menuPlanService.deleteMenuPlan(44L, 1L))
+                .willThrow(new WorkDayNotFoundException());
+
+        mvc.perform(delete("/workDays/44/menu/1"))
+                .andExpect(status().isNotFound())
+        ;
     }
 }

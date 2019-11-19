@@ -5,8 +5,8 @@
           <a class="delete-menu-list-btn" href="" @click.prevent="onDeleteList">&times;</a>
         </div>
 
-        <div class="menu-list" :data-monthlyMenuPlan-id="data.id">
-          <MenuItem v-for="menu in data.menus" :key="`${menu.id}`" :data="menu"/>
+        <div class="menu-list" :data-monthlyMenuPlan-id="data.workDayId">
+          <MenuItem v-for="menu in data.menus" :key="`${ menu.id }`" :data="menu" :work-day-id="data.workDayId" />
         </div>
 
         <div v-if="isAddMenu">

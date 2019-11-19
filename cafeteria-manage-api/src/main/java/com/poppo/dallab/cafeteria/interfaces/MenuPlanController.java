@@ -87,4 +87,12 @@ public class MenuPlanController {
         return ResponseEntity.created(new URI(url)).build();
     }
 
+    @DeleteMapping("/workDays/{workDayId}/menu/{menuId}")
+    public void deleteMenuPlan(
+            @PathVariable(name = "workDayId") Long workDayId,
+            @PathVariable(name = "menuId") Long menuId
+    ) {
+
+        menuPlanService.deleteMenuPlan(workDayId, menuId);
+    }
 }

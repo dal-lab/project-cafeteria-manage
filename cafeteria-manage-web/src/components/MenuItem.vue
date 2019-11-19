@@ -8,18 +8,37 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
+
 export default {
-    props: ['data'],
-    methods: {
-        onModify() {
-            // TODO: 현재 선택된 일자의 메뉴 변경 기능 구현 필요
-            console.log("onModify")
-        },
-        onDelete() {
-            // TODO: 삭제 API 구현 후 연결 필요
-            console.log("onDelete")
-        } 
+  data() {
+    return {
+      month: this.$route.params.month
     }
+  },
+  computed: {
+    ...mapState({
+      year: 'year'
+    })
+  },
+  props: ['data', 'workDayId'],
+  methods: {
+    ...mapActions([
+      'DELETE_MENUPLAN'
+    ]),
+    onModify() {
+      // TODO: 현재 선택된 일자의 메뉴 변경 기능 구현 필요
+      console.log("onModify")
+    },
+    onDelete() {
+      this.DELETE_MENUPLAN({
+        workDayId: this.workDayId,
+        menuId: this.data.id,
+        year: this.year,
+        month: this.month
+      })
+    } 
+  }
 }
 </script>
 

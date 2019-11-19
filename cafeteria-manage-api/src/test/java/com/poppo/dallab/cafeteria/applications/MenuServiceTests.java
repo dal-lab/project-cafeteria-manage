@@ -4,6 +4,7 @@ import com.poppo.dallab.cafeteria.domain.Menu;
 import com.poppo.dallab.cafeteria.domain.MenuPlan;
 import com.poppo.dallab.cafeteria.domain.MenuPlanRepository;
 import com.poppo.dallab.cafeteria.domain.MenuRepository;
+import com.poppo.dallab.cafeteria.exceptions.MenuNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;

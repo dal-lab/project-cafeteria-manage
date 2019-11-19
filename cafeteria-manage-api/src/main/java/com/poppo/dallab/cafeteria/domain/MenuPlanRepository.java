@@ -7,4 +7,6 @@ import java.util.List;
 public interface MenuPlanRepository extends CrudRepository<MenuPlan, Long> {
 
     List<MenuPlan> findAllByWorkDayId(Long workDayId);
+
+    void deleteMenuPlansByWorkDayIdAndMenuId(Long workDayId, Long menuId);
 }

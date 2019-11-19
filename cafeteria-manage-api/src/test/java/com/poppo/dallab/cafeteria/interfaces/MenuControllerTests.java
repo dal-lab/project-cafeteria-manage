@@ -1,6 +1,6 @@
 package com.poppo.dallab.cafeteria.interfaces;
 
-import com.poppo.dallab.cafeteria.applications.MenuNotFoundException;
+import com.poppo.dallab.cafeteria.exceptions.MenuNotFoundException;
 import com.poppo.dallab.cafeteria.applications.MenuService;
 import com.poppo.dallab.cafeteria.domain.Menu;
 import org.junit.Test;
@@ -64,7 +64,7 @@ public class MenuControllerTests {
         given(menuService.getMenuById(44L)).willThrow(MenuNotFoundException.class);
 
         mvc.perform(get("/menus/44"))
-                .andExpect(status().isNoContent())
+                .andExpect(status().isNotFound())
         ;
 
     }
