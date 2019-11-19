@@ -46,6 +46,11 @@ const actions = {
         return api.menuPlan.ceateMenuPlan(workDayId, menuName).then(_ => {
             dispatch('GET_MONTHLYMENUPLANS', { year, month })
         })
+    },
+    DELETE_MENUPLAN({ dispatch }, { workDayId, menuId, year, month }) {
+        return api.menuPlan.deleteMenuPlan(workDayId, menuId).then(_ => {
+            dispatch('GET_MONTHLYMENUPLANS', { year, month })
+        })
     }
 }
 

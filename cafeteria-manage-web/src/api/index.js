@@ -38,5 +38,8 @@ export const menuPlan = {
   },
   ceateMenuPlan(workDayId, menuName) {
     return request('post', `/workDays/${ workDayId }/menu`, { menuName })
+  },
+  deleteMenuPlan(workDayId, menuId) {
+    return request('delete', `/workDays/${ workDayId }/menu/${ menuId }`)
   }
 }
