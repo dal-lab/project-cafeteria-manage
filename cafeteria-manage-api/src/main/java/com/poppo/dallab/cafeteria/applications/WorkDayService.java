@@ -92,7 +92,10 @@ public class WorkDayService {
         LocalDate startDate = LocalDate.of(year, month,1);
         LocalDate endDate = LocalDate.of(year, month, dateTimeUtils.getDayLengthOfMonth(year, month));
 
-        List<WorkDay> workDays = workDayRepository.findByDateBetween(startDate, endDate);
+//        List<WorkDay> workDays = workDayRepository.findByDateBetween(startDate, endDate);
+
+        List<WorkDay> workDays = workDayRepository.findAllByDateBetweenAndDayNotLikeAndDayNotLike(
+                startDate, endDate, "SATURDAY", "SUNDAY");
 
         return workDays;
     }
