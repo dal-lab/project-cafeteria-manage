@@ -44,7 +44,7 @@ public class DateTimeUtilsTests {
     }
 
     @Test
-    public void getThisWeek() throws Exception {
+    public void getThisWeek() {
 
         // given
         LocalDate date = LocalDate.of(2019,10,10);
@@ -100,4 +100,11 @@ public class DateTimeUtilsTests {
         assertThat(monthDaySize).isEqualTo(29);
     }
 
+    @Test
+    public void 제시된_월의_첫주_갯수_구하기() {
+
+        Integer firstWeekLength = dateTimeUtils.getFirstWeekLength(2019, 11);
+
+        assertThat(firstWeekLength).isEqualTo(1);
+    }
 }

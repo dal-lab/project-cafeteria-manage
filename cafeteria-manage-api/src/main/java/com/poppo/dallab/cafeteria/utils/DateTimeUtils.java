@@ -57,4 +57,14 @@ public class DateTimeUtils {
 
         return yearMonth.lengthOfMonth();
     }
+
+    // TODO: 이제 이걸 기반으로 VO객체 하나 만들어서 year, month, weekCount(주차)를 전달하면, Pageable 객체 반환하도록 구현
+    public Integer getFirstWeekLength(Integer year, Integer month) {
+
+        LocalDate firstDate = LocalDate.of(year, month, 1);
+        List<LocalDate> datesOfWeek = this.getWeekOfDate(firstDate);
+
+        return (int) datesOfWeek.stream()
+                .filter(date -> date.getMonthValue() == month).count();
+    }
 }

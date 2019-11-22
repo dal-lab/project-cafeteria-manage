@@ -140,9 +140,12 @@ public class  WorkDayServiceTests {
         List<WorkDay> workDays = Arrays.asList(WorkDay.builder().id(1L).build());
 
         given(dateTimeUtils.getDayLengthOfMonth(2019,11)).willReturn(30);
-        given(workDayRepository.findByDateBetween(
+        given(workDayRepository.findAllByDateBetweenAndDayNotLikeAndDayNotLike(
                 LocalDate.of(2019,11,1),
-                LocalDate.of(2019,11,30))
+                LocalDate.of(2019,11,30),
+                "SATURDAY",
+                "SUNDAY"
+                )
         ).willReturn(workDays);
 
         List<WorkDay> workDaysByMonth = workDayService.getWorkDaysByMonth(2019, 11);
