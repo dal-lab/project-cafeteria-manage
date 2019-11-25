@@ -3,7 +3,9 @@ package com.poppo.dallab.cafeteria.applications;
 import com.poppo.dallab.cafeteria.domain.WorkDay;
 import com.poppo.dallab.cafeteria.domain.WorkDayRepository;
 import com.poppo.dallab.cafeteria.utils.DateTimeUtils;
+import com.poppo.dallab.cafeteria.utils.PageUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +22,7 @@ public class WorkDayService {
 
     private final WorkDayRepository workDayRepository;
     private final DateTimeUtils dateTimeUtils;
+    private final PageUtils pageUtils;
 
     public WorkDay getWorkDayByString(String workDay) {
 
@@ -87,13 +90,15 @@ public class WorkDayService {
         return workDayRepository.getOne(id);
     }
 
-    public List<WorkDay> getWorkDaysByMonth(Integer year, Integer month) {
+    public List<WorkDay> getWorkDaysByMonth(Integer year, Integer month, Integer page) {
 
         LocalDate startDate = LocalDate.of(year, month,1);
         LocalDate endDate = LocalDate.of(year, month, dateTimeUtils.getDayLengthOfMonth(year, month));
 
+        Pageable pageable = pageUtils.getPageable(year, month, page);
+
         List<WorkDay> workDays = workDayRepository.findAllByDateBetweenAndDayNotLikeAndDayNotLike(
-                startDate, endDate, "SATURDAY", "SUNDAY");
+                startDate, endDate, "SATURDAY", "SUNDAY", pageable);
 
         return workDays;
     }

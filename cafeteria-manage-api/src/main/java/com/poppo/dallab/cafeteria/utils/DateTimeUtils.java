@@ -1,7 +1,5 @@
 package com.poppo.dallab.cafeteria.utils;
 
-import com.poppo.dallab.cafeteria.domain.WorkDayRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -16,10 +14,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Component
-@RequiredArgsConstructor
 public class DateTimeUtils {
-
-    private final WorkDayRepository workDayRepository;
 
     public LocalDate stringDateToLocalDate(String workDay) {
 

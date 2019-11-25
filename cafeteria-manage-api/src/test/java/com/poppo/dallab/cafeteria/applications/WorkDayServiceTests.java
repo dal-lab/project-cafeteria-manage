@@ -3,6 +3,7 @@ package com.poppo.dallab.cafeteria.applications;
 import com.poppo.dallab.cafeteria.domain.WorkDay;
 import com.poppo.dallab.cafeteria.domain.WorkDayRepository;
 import com.poppo.dallab.cafeteria.utils.DateTimeUtils;
+import com.poppo.dallab.cafeteria.utils.PageUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -30,19 +32,22 @@ import static org.mockito.Mockito.verify;
 @ActiveProfiles("test")
 public class  WorkDayServiceTests {
 
-    WorkDayService workDayService;
+    private WorkDayService workDayService;
 
     @Mock
-    WorkDayRepository workDayRepository;
+    private WorkDayRepository workDayRepository;
 
     @MockBean
-    DateTimeUtils dateTimeUtils;
+    private DateTimeUtils dateTimeUtils;
+
+    @MockBean
+    private PageUtils pageUtils;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
 
-        workDayService = new WorkDayService(workDayRepository, dateTimeUtils);
+        workDayService = new WorkDayService(workDayRepository, dateTimeUtils, pageUtils);
     }
 
     @Test
@@ -140,15 +145,17 @@ public class  WorkDayServiceTests {
         List<WorkDay> workDays = Arrays.asList(WorkDay.builder().id(1L).build());
 
         given(dateTimeUtils.getDayLengthOfMonth(2019,11)).willReturn(30);
+        given(pageUtils.getPageable(2019, 11, 1)).willReturn(PageRequest.of(0,1));
         given(workDayRepository.findAllByDateBetweenAndDayNotLikeAndDayNotLike(
                 LocalDate.of(2019,11,1),
                 LocalDate.of(2019,11,30),
                 "SATURDAY",
-                "SUNDAY"
+                "SUNDAY",
+                PageRequest.of(0, 1)
                 )
         ).willReturn(workDays);
 
-        List<WorkDay> workDaysByMonth = workDayService.getWorkDaysByMonth(2019, 11);
+        List<WorkDay> workDaysByMonth = workDayService.getWorkDaysByMonth(2019, 11,1);
 
         assertThat(workDaysByMonth.get(0).getId()).isEqualTo(1L);
     }

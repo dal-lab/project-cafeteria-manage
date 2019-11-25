@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,8 +56,10 @@ public class WorkDayRepositoryTests {
         LocalDate startDate = LocalDate.of(2019, 11, 1);
         LocalDate endDate = LocalDate.of(2019, 11, 30);
 
+        PageRequest pageable = PageRequest.of(0, 30);
+
         List<WorkDay> weekendFilteredWorkDay = workDayRepository.findAllByDateBetweenAndDayNotLikeAndDayNotLike(
-                startDate, endDate, "SATURDAY", "SUNDAY");
+                startDate, endDate, "SATURDAY", "SUNDAY", pageable);
 
         assertThat(weekendFilteredWorkDay).hasSize(21);
     }

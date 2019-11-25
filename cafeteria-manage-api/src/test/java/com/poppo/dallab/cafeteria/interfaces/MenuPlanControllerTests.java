@@ -56,10 +56,10 @@ public class MenuPlanControllerTests {
                 .name("밥")
                 .build());
 
-        given(workDayService.getWorkDaysByMonth(2019, 11)).willReturn(workDays);
+        given(workDayService.getWorkDaysByMonth(2019, 11, 1)).willReturn(workDays);
         given(menuService.getMenusByWorkDayId(1L)).willReturn(menus);
 
-        mvc.perform(get("/menuPlans?year=2019&month=11"))
+        mvc.perform(get("/menuPlans?year=2019&month=11&page=1"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("[")))
                 .andExpect(content().string(containsString("2019-11-01")))
