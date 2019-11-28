@@ -2,14 +2,16 @@ package com.poppo.dallab.cafeteria.applications;
 
 import com.poppo.dallab.cafeteria.domain.WorkDay;
 import com.poppo.dallab.cafeteria.domain.WorkDayRepository;
+import com.poppo.dallab.cafeteria.exceptions.WeekCountExceedException;
 import com.poppo.dallab.cafeteria.utils.DateTimeUtils;
 import com.poppo.dallab.cafeteria.utils.PageUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,7 +35,7 @@ public class WorkDayService {
 
     public List<WorkDay> getWorkWeek(LocalDate date) {
 
-        List<LocalDate> thisWeek = dateTimeUtils.getWeekOfDate(date);
+        List<LocalDate> thisWeek = dateTimeUtils.getWeekOfDateExceptWeekend(date);
 
         List<WorkDay> workDays = new ArrayList<>();
         for (LocalDate weekDay : thisWeek) {
@@ -90,16 +92,44 @@ public class WorkDayService {
         return workDayRepository.getOne(id);
     }
 
-    public List<WorkDay> getWorkDaysByMonth(Integer year, Integer month, Integer page) {
+    public List<WorkDay> getWorkDaysByMonth(Integer year, Integer month, Integer weekCount) {
 
-        LocalDate startDate = LocalDate.of(year, month,1);
-        LocalDate endDate = LocalDate.of(year, month, dateTimeUtils.getDayLengthOfMonth(year, month));
+        if (weekCount == 1) {
+            return this.getFirstWeekWorkDay(year, month);
+        }
 
-        Pageable pageable = pageUtils.getPageable(year, month, page);
+        List<LocalDate> mondaysOfMonth = dateTimeUtils.getMondaysOfMonthExceptFirstWeek(year, month);
 
+        // 해당 월 내의 주에 대해서만 처리
+        // 첫주가 무조건 제외되기 때문에 필
+        if (weekCount > mondaysOfMonth.size() + 1) throw new WeekCountExceedException();
+
+        // 무조건 2주차부터 오기 때문에 숫자 계산이 이상해짐
+        LocalDate startDate = mondaysOfMonth.get(weekCount - 2);
         List<WorkDay> workDays = workDayRepository.findAllByDateBetweenAndDayNotLikeAndDayNotLike(
-                startDate, endDate, "SATURDAY", "SUNDAY", pageable);
+                startDate, startDate.plusDays(4L), "SATURDAY", "SUNDAY");
 
         return workDays;
+    }
+
+    protected List<WorkDay> getFirstWeekWorkDay(Integer year, Integer month) {
+
+        LocalDate firstDate = LocalDate.of(year,month,1);
+
+        List<LocalDate> firstWeekDays
+                = dateTimeUtils.getWeekOfDateExceptWeekend(firstDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.FRIDAY)))
+                .stream()
+                .filter(firstWeekDay -> firstWeekDay.getMonthValue() == month)
+                .collect(Collectors.toList());
+
+        List<WorkDay> firstWeekWorkDays = workDayRepository
+                .findAllByDateBetweenAndDayNotLikeAndDayNotLike(
+                        firstWeekDays.get(0),
+                        firstWeekDays.get(firstWeekDays.size() - 1),
+                        "SATURDAY",
+                        "SUNDAY"
+                );
+
+        return firstWeekWorkDays;
     }
 }

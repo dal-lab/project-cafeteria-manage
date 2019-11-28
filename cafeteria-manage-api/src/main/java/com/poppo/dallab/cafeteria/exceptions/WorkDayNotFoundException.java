@@ -4,6 +4,6 @@ public class WorkDayNotFoundException extends RuntimeException {
 
     public WorkDayNotFoundException() {
 
-        super("This Day Is Not In DB");
+        super("This Day Not Exist");
     }
 }

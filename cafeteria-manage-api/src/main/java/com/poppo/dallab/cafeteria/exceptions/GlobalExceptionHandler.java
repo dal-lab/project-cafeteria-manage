@@ -24,4 +24,12 @@ public class GlobalExceptionHandler {
 
         return "WorkDay Not Found";
     }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(WeekCountExceedException.class)
+    public String handleWeekCountExceed() {
+
+        return "Request WeekCount is too big";
+    }
 }

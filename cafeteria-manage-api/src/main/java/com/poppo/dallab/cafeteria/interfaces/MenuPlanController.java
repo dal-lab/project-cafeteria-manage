@@ -34,10 +34,10 @@ public class MenuPlanController {
     public List<MenuPlanResponseDto> getList(
             @PathParam(value = "year") Integer year,
             @PathParam(value = "month") Integer month,
-            @PathParam(value = "page") Integer page
+            @PathParam(value = "weekCount") Integer weekCount
     ) {
 
-        List<WorkDay> workDays = workDayService.getWorkDaysByMonth(year, month, page);
+        List<WorkDay> workDays = workDayService.getWorkDaysByMonth(year, month, weekCount);
 
         return workDays.stream().map(workDay -> {
 

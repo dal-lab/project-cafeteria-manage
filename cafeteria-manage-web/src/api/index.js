@@ -34,7 +34,7 @@ export const menuPlan = {
     return request('get', '/workMonth')
   },
   fetchMonthlyMenuPlan(year, month) {
-    return request('get', `/menuPlans?year=${ year }&month=${ month }`)
+    return request('get', `/menuPlans?year=${ year }&month=${ month }&weekCount=1`)
   },
   ceateMenuPlan(workDayId, menuName) {
     return request('post', `/workDays/${ workDayId }/menu`, { menuName })

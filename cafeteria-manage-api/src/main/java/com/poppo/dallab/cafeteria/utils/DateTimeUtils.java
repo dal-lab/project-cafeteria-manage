@@ -23,7 +23,7 @@ public class DateTimeUtils {
         return LocalDate.parse(workDay, dateTimeFormatter);
     }
 
-    public List<LocalDate> getWeekOfDate(LocalDate date) {
+    public List<LocalDate> getWeekOfDateExceptWeekend(LocalDate date) {
 
         TemporalField fieldKR = WeekFields.of(Locale.KOREA).dayOfWeek();
 
@@ -53,13 +53,49 @@ public class DateTimeUtils {
         return yearMonth.lengthOfMonth();
     }
 
-    // TODO: 이제 이걸 기반으로 VO객체 하나 만들어서 year, month, weekCount(주차)를 전달하면, Pageable 객체 반환하도록 구현
     public Integer getFirstWeekLength(Integer year, Integer month) {
 
         LocalDate firstDate = LocalDate.of(year, month, 1);
-        List<LocalDate> datesOfWeek = this.getWeekOfDate(firstDate);
+        List<LocalDate> datesOfWeek = this.getWeekOfDateExceptWeekend(firstDate);
 
         return (int) datesOfWeek.stream()
-                .filter(date -> date.getMonthValue() == month).count();
+                .filter(date -> date.getMonthValue() == month)
+                .count();
+    }
+
+    public LocalDate getWeekStartDate(Integer year, Integer month, Integer weekCount) {
+
+        Integer date = 0;
+
+        if (weekCount == 1) {
+            date = 1;
+        }
+
+        List<LocalDate> weekDates = this.getWeekOfDateExceptWeekend(LocalDate.of(year, month, date)).stream()
+                .filter(weekDate -> weekDate.getMonthValue() == month)
+                .collect(Collectors.toList());
+
+        return weekDates.get(0);
+    }
+
+    public List<LocalDate> getMondaysOfMonth(Integer year, Integer month) {
+
+        Integer dayLengthOfMonth = this.getDayLengthOfMonth(year, month);
+
+        return IntStream.rangeClosed(1, dayLengthOfMonth)
+                .mapToObj(dayNumber -> LocalDate.of(year, month, dayNumber))
+                .filter(monthDate -> monthDate.getDayOfWeek().name().equals("MONDAY"))
+                .collect(Collectors.toList());
+    }
+
+    public List<LocalDate> getMondaysOfMonthExceptFirstWeek(Integer year, Integer month) {
+
+        List<LocalDate> mondaysOfMonth = this.getMondaysOfMonth(year, month);
+
+        return mondaysOfMonth.stream()
+                .filter(monday -> monday.getDayOfMonth() != 1)
+                .filter(monday -> monday.getDayOfMonth() != 2)
+                .filter(monday -> monday.getDayOfMonth() != 3)
+                .collect(Collectors.toList());
     }
 }

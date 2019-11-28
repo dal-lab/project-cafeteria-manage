@@ -31,6 +31,7 @@ public class PageUtilsTests {
 
         Pageable pageable = pageUtils.getPageable(2019, 11, 4);
 
+        Pageable first = pageable.first();
         assertThat(pageable.getPageSize()).isEqualTo(5);
     }
 }
