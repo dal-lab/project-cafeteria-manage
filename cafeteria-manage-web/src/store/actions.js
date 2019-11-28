@@ -37,8 +37,8 @@ const actions = {
             commit('SET_MENUPLANMONTH', data.existedMonthList)
         })
     },
-    GET_MONTHLYMENUPLANS({ commit }, { year, month }) {
-        return api.menuPlan.fetchMonthlyMenuPlan(year, month).then(data => {
+    GET_MONTHLYMENUPLANS({ commit }, { year, month, weekCount }) {
+        return api.menuPlan.fetchMonthlyMenuPlan(year, month, weekCount).then(data => {
             commit('SET_MONTHLYMENUPLANS', data)
         })
     },
