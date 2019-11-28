@@ -4,7 +4,6 @@ import com.poppo.dallab.cafeteria.domain.WorkDay;
 import com.poppo.dallab.cafeteria.domain.WorkDayRepository;
 import com.poppo.dallab.cafeteria.exceptions.WeekCountExceedException;
 import com.poppo.dallab.cafeteria.utils.DateTimeUtils;
-import com.poppo.dallab.cafeteria.utils.PageUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +23,6 @@ public class WorkDayService {
 
     private final WorkDayRepository workDayRepository;
     private final DateTimeUtils dateTimeUtils;
-    private final PageUtils pageUtils;
 
     public WorkDay getWorkDayByString(String workDay) {
 
@@ -106,8 +104,8 @@ public class WorkDayService {
 
         // 무조건 2주차부터 오기 때문에 숫자 계산이 이상해짐
         LocalDate startDate = mondaysOfMonth.get(weekCount - 2);
-        List<WorkDay> workDays = workDayRepository.findAllByDateBetweenAndDayNotLikeAndDayNotLike(
-                startDate, startDate.plusDays(4L), "SATURDAY", "SUNDAY");
+
+        List<WorkDay> workDays = workDayRepository.findByDateBetween(startDate, startDate.plusDays(4L));
 
         return workDays;
     }
@@ -122,13 +120,9 @@ public class WorkDayService {
                 .filter(firstWeekDay -> firstWeekDay.getMonthValue() == month)
                 .collect(Collectors.toList());
 
-        List<WorkDay> firstWeekWorkDays = workDayRepository
-                .findAllByDateBetweenAndDayNotLikeAndDayNotLike(
-                        firstWeekDays.get(0),
-                        firstWeekDays.get(firstWeekDays.size() - 1),
-                        "SATURDAY",
-                        "SUNDAY"
-                );
+        List<WorkDay> firstWeekWorkDays = workDayRepository.findByDateBetween(
+                firstWeekDays.get(0), firstWeekDays.get(firstWeekDays.size() - 1)
+        );
 
         return firstWeekWorkDays;
     }

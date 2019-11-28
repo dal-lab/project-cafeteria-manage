@@ -15,8 +15,5 @@ public interface WorkDayRepository extends JpaRepository<WorkDay, Long> {
     List<WorkDay> findByDateBetween(LocalDate startDate, LocalDate endDate);
 
     List<WorkDay> findAllByDateBetweenAndDayNotLikeAndDayNotLike(
-            LocalDate startDate, LocalDate endDate, String saturday, String sunday);
-
-    List<WorkDay> findAllByDateBetweenAndDayNotLikeAndDayNotLike(
             LocalDate startDate, LocalDate endDate, String saturday, String sunday, Pageable pageable);
 }

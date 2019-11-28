@@ -4,7 +4,6 @@ import com.poppo.dallab.cafeteria.domain.WorkDay;
 import com.poppo.dallab.cafeteria.domain.WorkDayRepository;
 import com.poppo.dallab.cafeteria.exceptions.WeekCountExceedException;
 import com.poppo.dallab.cafeteria.utils.DateTimeUtils;
-import com.poppo.dallab.cafeteria.utils.PageUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,14 +39,11 @@ public class  WorkDayServiceTests {
     @MockBean
     private DateTimeUtils dateTimeUtils;
 
-    @MockBean
-    private PageUtils pageUtils;
-
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
 
-        workDayService = new WorkDayService(workDayRepository, dateTimeUtils, pageUtils);
+        workDayService = new WorkDayService(workDayRepository, dateTimeUtils);
     }
 
     @Test
@@ -152,11 +148,9 @@ public class  WorkDayServiceTests {
 
         given(dateTimeUtils.getWeekOfDateExceptWeekend(LocalDate.of(2019,10,4)))
                 .willReturn(firstWeekDays);
-        given(workDayRepository.findAllByDateBetweenAndDayNotLikeAndDayNotLike(
+        given(workDayRepository.findByDateBetween(
                 LocalDate.of(2019,10,1),
-                LocalDate.of(2019,10,2),
-                "SATURDAY",
-                "SUNDAY"
+                LocalDate.of(2019,10,2)
         )).willReturn(workDays);
 
         List<WorkDay> firstWeekWorkDays = workDayService.getFirstWeekWorkDay(2019, 10);
@@ -175,11 +169,9 @@ public class  WorkDayServiceTests {
                         LocalDate.of(2019,11,11)
                 )
         );
-        given(workDayRepository.findAllByDateBetweenAndDayNotLikeAndDayNotLike(
+        given(workDayRepository.findByDateBetween(
                 LocalDate.of(2019,11,4),
-                LocalDate.of(2019,11,8),
-                "SATURDAY",
-                "SUNDAY"
+                LocalDate.of(2019,11,8)
                 )
         ).willReturn(workDays);
 
