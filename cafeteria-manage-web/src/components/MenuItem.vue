@@ -1,5 +1,5 @@
 <template>
-    <div class="menu-item" :data-menu-id="data.id">
+    <div class="menu-item2" :data-menu-id="data.id">
         <a href="" @click.prevent="onModify">
             <div>{{ data.menuName }}</div>
         </a>
@@ -43,7 +43,7 @@ export default {
 </script>
 
 <style>
-.menu-item {
+.menu-item2 {
   background-color: #fff;
   border-radius: 3px;
   margin: 8px;
@@ -51,7 +51,7 @@ export default {
   box-shadow: 0 1px 0 #ccc;
   position: relative;
 }
-.menu-item a {
+.menu-item2 a {
   text-decoration: none;
   color: #444;
   word-wrap: break-word;
@@ -59,8 +59,8 @@ export default {
   overflow: hidden;
   display: block;
 }
-.menu-item:hover,
-.menu-item:focus {
+.menu-item2:hover,
+.menu-item2:focus {
   background-color: rgba(0,0,0, .1);
   cursor: pointer;
 }

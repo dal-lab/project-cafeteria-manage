@@ -1,7 +1,5 @@
 package com.poppo.dallab.cafeteria.utils;
 
-import com.poppo.dallab.cafeteria.domain.WorkDayRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -16,10 +14,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Component
-@RequiredArgsConstructor
 public class DateTimeUtils {
-
-    private final WorkDayRepository workDayRepository;
 
     public LocalDate stringDateToLocalDate(String workDay) {
 
@@ -28,7 +23,7 @@ public class DateTimeUtils {
         return LocalDate.parse(workDay, dateTimeFormatter);
     }
 
-    public List<LocalDate> getWeekOfDate(LocalDate date) {
+    public List<LocalDate> getWeekOfDateExceptWeekend(LocalDate date) {
 
         TemporalField fieldKR = WeekFields.of(Locale.KOREA).dayOfWeek();
 
@@ -56,5 +51,51 @@ public class DateTimeUtils {
         YearMonth yearMonth = YearMonth.of(year, month);
 
         return yearMonth.lengthOfMonth();
+    }
+
+    public Integer getFirstWeekLength(Integer year, Integer month) {
+
+        LocalDate firstDate = LocalDate.of(year, month, 1);
+        List<LocalDate> datesOfWeek = this.getWeekOfDateExceptWeekend(firstDate);
+
+        return (int) datesOfWeek.stream()
+                .filter(date -> date.getMonthValue() == month)
+                .count();
+    }
+
+    public LocalDate getWeekStartDate(Integer year, Integer month, Integer weekCount) {
+
+        Integer date = 0;
+
+        if (weekCount == 1) {
+            date = 1;
+        }
+
+        List<LocalDate> weekDates = this.getWeekOfDateExceptWeekend(LocalDate.of(year, month, date)).stream()
+                .filter(weekDate -> weekDate.getMonthValue() == month)
+                .collect(Collectors.toList());
+
+        return weekDates.get(0);
+    }
+
+    public List<LocalDate> getMondaysOfMonth(Integer year, Integer month) {
+
+        Integer dayLengthOfMonth = this.getDayLengthOfMonth(year, month);
+
+        return IntStream.rangeClosed(1, dayLengthOfMonth)
+                .mapToObj(dayNumber -> LocalDate.of(year, month, dayNumber))
+                .filter(monthDate -> monthDate.getDayOfWeek().name().equals("MONDAY"))
+                .collect(Collectors.toList());
+    }
+
+    public List<LocalDate> getMondaysOfMonthExceptFirstWeek(Integer year, Integer month) {
+
+        List<LocalDate> mondaysOfMonth = this.getMondaysOfMonth(year, month);
+
+        return mondaysOfMonth.stream()
+                .filter(monday -> monday.getDayOfMonth() != 1)
+                .filter(monday -> monday.getDayOfMonth() != 2)
+                .filter(monday -> monday.getDayOfMonth() != 3)
+                .collect(Collectors.toList());
     }
 }

@@ -1,9 +1,7 @@
 package com.poppo.dallab.cafeteria.utils;
 
-import com.poppo.dallab.cafeteria.domain.WorkDayRepository;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -17,14 +15,11 @@ public class DateTimeUtilsTests {
     @Autowired
     private DateTimeUtils dateTimeUtils;
 
-    @Mock
-    private WorkDayRepository workDayRepository;
-
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
 
-        dateTimeUtils = new DateTimeUtils(workDayRepository);
+        dateTimeUtils = new DateTimeUtils();
     }
 
     @Test
@@ -44,13 +39,13 @@ public class DateTimeUtilsTests {
     }
 
     @Test
-    public void getThisWeek() throws Exception {
+    public void getThisWeek() {
 
         // given
         LocalDate date = LocalDate.of(2019,10,10);
 
         // when
-        List<LocalDate> localDates = dateTimeUtils.getWeekOfDate(date);
+        List<LocalDate> localDates = dateTimeUtils.getWeekOfDateExceptWeekend(date);
 
         // then
         assertThat(localDates.get(0).getDayOfWeek().name()).isEqualTo("MONDAY");
@@ -63,7 +58,6 @@ public class DateTimeUtilsTests {
         assertThat(localDates.get(3).toString()).isEqualTo("2019-10-10");
         assertThat(localDates.get(4).getDayOfWeek().name()).isEqualTo("FRIDAY");
         assertThat(localDates.get(4).toString()).isEqualTo("2019-10-11");
-
     }
 
     @Test
@@ -100,4 +94,46 @@ public class DateTimeUtilsTests {
         assertThat(monthDaySize).isEqualTo(29);
     }
 
+    @Test
+    public void 제시된_월의_첫주_갯수_구하기() {
+
+        Integer firstWeekLength = dateTimeUtils.getFirstWeekLength(2019, 11);
+
+        assertThat(firstWeekLength).isEqualTo(1);
+    }
+
+    @Test
+    public void 제시된_월의_월요일만_골라내기() {
+
+        List<LocalDate> mondays = dateTimeUtils.getMondaysOfMonth(2019, 11);
+
+        assertThat(mondays.get(0).getDayOfMonth()).isEqualTo(4);
+        assertThat(mondays.get(1).getDayOfMonth()).isEqualTo(11);
+        assertThat(mondays.get(2).getDayOfMonth()).isEqualTo(18);
+        assertThat(mondays.get(3).getDayOfMonth()).isEqualTo(25);
+    }
+
+    @Test
+    public void 제시된_월의_월요일_중_첫주가_월요일로_시작하는_경우를_빼고_골라내기_4월예시() {
+
+        List<LocalDate> mondays = dateTimeUtils.getMondaysOfMonthExceptFirstWeek(2019, 4);
+
+        assertThat(mondays.get(0).getDayOfMonth()).isEqualTo(8);
+    }
+
+    @Test
+    public void 제시된_월의_월요일_중_첫주가_월요일로_시작하는_경우를_빼고_골라내기_6월예시() {
+
+        List<LocalDate> mondays = dateTimeUtils.getMondaysOfMonthExceptFirstWeek(2019, 6);
+
+        assertThat(mondays.get(0).getDayOfMonth()).isEqualTo(10);
+    }
+
+    @Test
+    public void 제시된_월의_월요일_중_첫주가_월요일로_시작하는_경우를_빼고_골라내기_9월예시() {
+
+        List<LocalDate> mondays = dateTimeUtils.getMondaysOfMonthExceptFirstWeek(2019, 9);
+
+        assertThat(mondays.get(0).getDayOfMonth()).isEqualTo(9);
+    }
 }

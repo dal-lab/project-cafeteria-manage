@@ -2,6 +2,7 @@ package com.poppo.dallab.cafeteria.applications;
 
 import com.poppo.dallab.cafeteria.domain.WorkDay;
 import com.poppo.dallab.cafeteria.domain.WorkDayRepository;
+import com.poppo.dallab.cafeteria.exceptions.WeekCountExceedException;
 import com.poppo.dallab.cafeteria.utils.DateTimeUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,13 +31,13 @@ import static org.mockito.Mockito.verify;
 @ActiveProfiles("test")
 public class  WorkDayServiceTests {
 
-    WorkDayService workDayService;
+    private WorkDayService workDayService;
 
     @Mock
-    WorkDayRepository workDayRepository;
+    private WorkDayRepository workDayRepository;
 
     @MockBean
-    DateTimeUtils dateTimeUtils;
+    private DateTimeUtils dateTimeUtils;
 
     @Before
     public void setup() {
@@ -61,14 +62,14 @@ public class  WorkDayServiceTests {
     }
 
     @Test
-    public void getWorkWeekFromNow() throws Exception {
+    public void getWorkWeekFromNow() {
 
         // given
         LocalDate testDate = LocalDate.of(2019,10,10);
 
         List<LocalDate> mockThisWeek = new ArrayList<>();
         mockThisWeek.add(LocalDate.of(2019, 10, 7));
-        given(dateTimeUtils.getWeekOfDate(testDate)).willReturn(mockThisWeek);
+        given(dateTimeUtils.getWeekOfDateExceptWeekend(testDate)).willReturn(mockThisWeek);
 
         WorkDay mockWorkDay = WorkDay.builder()
                 .date(LocalDate.of(2019,10,7))
@@ -136,18 +137,56 @@ public class  WorkDayServiceTests {
     }
 
     @Test
-    public void 해당월의_workDay_가져오기() {
+    public void 해당월의_첫번째주의_workDay_가져오기() {
+
+        List<LocalDate> firstWeekDays = new ArrayList<>();
+        firstWeekDays.add(LocalDate.of(2019, 9,30));
+        firstWeekDays.add(LocalDate.of(2019,10,1));
+        firstWeekDays.add(LocalDate.of(2019,10,2));
+
         List<WorkDay> workDays = Arrays.asList(WorkDay.builder().id(1L).build());
 
-        given(dateTimeUtils.getDayLengthOfMonth(2019,11)).willReturn(30);
+        given(dateTimeUtils.getWeekOfDateExceptWeekend(LocalDate.of(2019,10,4)))
+                .willReturn(firstWeekDays);
         given(workDayRepository.findByDateBetween(
-                LocalDate.of(2019,11,1),
-                LocalDate.of(2019,11,30))
+                LocalDate.of(2019,10,1),
+                LocalDate.of(2019,10,2)
+        )).willReturn(workDays);
+
+        List<WorkDay> firstWeekWorkDays = workDayService.getFirstWeekWorkDay(2019, 10);
+
+        assertThat(firstWeekWorkDays.get(0).getId()).isEqualTo(1L);
+    }
+
+    @Test
+    public void 해당월의_첫번째주를_제외한_주의_workDay_가져오기() {
+
+        List<WorkDay> workDays = Arrays.asList(WorkDay.builder().id(1L).build());
+
+        given(dateTimeUtils.getMondaysOfMonthExceptFirstWeek(2019,11)).willReturn(
+                Arrays.asList(
+                        LocalDate.of(2019,11,4),
+                        LocalDate.of(2019,11,11)
+                )
+        );
+        given(workDayRepository.findByDateBetween(
+                LocalDate.of(2019,11,4),
+                LocalDate.of(2019,11,8)
+                )
         ).willReturn(workDays);
 
-        List<WorkDay> workDaysByMonth = workDayService.getWorkDaysByMonth(2019, 11);
+        List<WorkDay> workDaysByMonth = workDayService.getWorkDaysByMonth(2019, 11,2);
 
         assertThat(workDaysByMonth.get(0).getId()).isEqualTo(1L);
     }
 
+    @Test(expected = WeekCountExceedException.class)
+    public void 해당월을_벗어난_주차의_workDay_가져오기_요청하면_에러가_발생한다() {
+
+        given(dateTimeUtils.getMondaysOfMonth(2019,11)).willReturn(
+                Arrays.asList(LocalDate.of(2019,11,4))
+        );
+
+        workDayService.getWorkDaysByMonth(2019, 11,1000);
+    }
 }

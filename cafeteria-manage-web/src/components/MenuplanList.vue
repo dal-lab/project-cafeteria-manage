@@ -1,7 +1,7 @@
 <template>
     <div class="menuplan" :data-monthlyMenuPlan-id="data.workDayId">
         <div class="menuplan-header">
-          <div class="menuplan-header-title">{{ data.date }}</div>
+          <div class="menuplan-header-title">{{ data.date }} {{ data.day }}</div>
           <a class="delete-menu-list-btn" href="" @click.prevent="onDeleteList">&times;</a>
         </div>
 
@@ -56,6 +56,12 @@ export default {
   position: relative;
 }
 .menuplan-header-title {
+  font-size: 16px;
+  font-weight: 700;
+  padding-left: 8px;
+  line-height: 30px;
+}
+.menuplan-header-day {
   font-size: 16px;
   font-weight: 700;
   padding-left: 8px;
