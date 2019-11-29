@@ -105,7 +105,10 @@ public class WorkDayService {
         // 무조건 2주차부터 오기 때문에 숫자 계산이 이상해짐
         LocalDate startDate = mondaysOfMonth.get(weekCount - 2);
 
-        List<WorkDay> workDays = workDayRepository.findByDateBetween(startDate, startDate.plusDays(4L));
+        List<WorkDay> workDays = workDayRepository.findByDateBetween(startDate, startDate.plusDays(4L)).stream()
+                .filter(workDay -> workDay.getDate().getMonthValue() == month)
+                .collect(Collectors.toList())
+        ;
 
         return workDays;
     }

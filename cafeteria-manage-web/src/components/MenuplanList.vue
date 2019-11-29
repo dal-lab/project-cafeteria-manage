@@ -2,15 +2,15 @@
     <div class="menuplan" :data-monthlyMenuPlan-id="data.workDayId">
         <div class="menuplan-header">
           <div class="menuplan-header-title">{{ data.date }} {{ data.day }}</div>
-          <a class="delete-menu-list-btn" href="" @click.prevent="onDeleteList">&times;</a>
+          <a class="delete-menu-list2-btn" href="" @click.prevent="onDeleteList">&times;</a>
         </div>
 
-        <div class="menu-list" :data-monthlyMenuPlan-id="data.workDayId">
-          <MenuItem v-for="menu in data.menus" :key="`${ menu.id }`" :data="menu" :work-day-id="data.workDayId" />
+        <div class="menu-list2" :data-monthlyMenuPlan-id="data.workDayId">
+          <MenuItem v-for="menu in data.menus" :key="`${ menu.id }`" :data="menu" :work-day-id="data.workDayId" :week-count="weekCount"/>
         </div>
 
         <div v-if="isAddMenu">
-          <AddMenuOnMenuplan :work-day-id="data.workDayId" @close="isAddMenu=false"/>
+          <AddMenuOnMenuplan :work-day-id="data.workDayId" :week-count="weekCount" @close="isAddMenu=false"/>
         </div>
         <div v-else>
           <a class="add-menu-btn" href="" @click.prevent="isAddMenu=true">
@@ -30,7 +30,7 @@ export default {
         isAddMenu: false
       }
     },
-    props: ['data'],
+    props: ['data', 'weekCount'],
     components: {
       MenuItem,
       AddMenuOnMenuplan,
@@ -67,12 +67,12 @@ export default {
   padding-left: 8px;
   line-height: 30px;
 }
-.menu-list {
+.menu-list2 {
   flex: 1 1 auto;
   overflow-y: scroll;
   min-height: 10px;
 }
-.delete-menu-list-btn {
+.delete-menu-list2-btn {
   position: absolute;
   right: 10px;
   top: 8px;

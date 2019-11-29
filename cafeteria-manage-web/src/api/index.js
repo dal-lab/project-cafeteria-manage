@@ -33,13 +33,13 @@ export const menuPlan = {
   fetchMonth()  {
     return request('get', '/workMonth')
   },
-  fetchMonthlyMenuPlan(year, month) {
-    return request('get', `/menuPlans?year=${ year }&month=${ month }&weekCount=1`)
+  fetchMonthlyMenuPlan(year, month, weekCount) {
+    return request('get', `/menuPlans?year=${year}&month=${month}&weekCount=${weekCount}`)
   },
   ceateMenuPlan(workDayId, menuName) {
-    return request('post', `/workDays/${ workDayId }/menu`, { menuName })
+    return request('post', `/workDays/${workDayId}/menu`, {menuName})
   },
   deleteMenuPlan(workDayId, menuId) {
-    return request('delete', `/workDays/${ workDayId }/menu/${ menuId }`)
+    return request('delete', `/workDays/${workDayId}/menu/${menuId}`)
   }
 }

@@ -37,19 +37,19 @@ const actions = {
             commit('SET_MENUPLANMONTH', data.existedMonthList)
         })
     },
-    GET_MONTHLYMENUPLANS({ commit }, { year, month }) {
-        return api.menuPlan.fetchMonthlyMenuPlan(year, month).then(data => {
+    GET_MONTHLYMENUPLANS({ commit }, { year, month, weekCount }) {
+        return api.menuPlan.fetchMonthlyMenuPlan(year, month, weekCount).then(data => {
             commit('SET_MONTHLYMENUPLANS', data)
         })
     },
-    ADD_MENUTOMENUPLAN({ dispatch }, { workDayId, menuName, year, month }) {
+    ADD_MENUTOMENUPLAN({ dispatch }, { workDayId, menuName, year, month, weekCount }) {
         return api.menuPlan.ceateMenuPlan(workDayId, menuName).then(_ => {
-            dispatch('GET_MONTHLYMENUPLANS', { year, month })
+            dispatch('GET_MONTHLYMENUPLANS', { year, month, weekCount })
         })
     },
-    DELETE_MENUPLAN({ dispatch }, { workDayId, menuId, year, month }) {
+    DELETE_MENUPLAN({ dispatch }, { workDayId, menuId, year, month, weekCount }) {
         return api.menuPlan.deleteMenuPlan(workDayId, menuId).then(_ => {
-            dispatch('GET_MONTHLYMENUPLANS', { year, month })
+            dispatch('GET_MONTHLYMENUPLANS', { year, month, weekCount })
         })
     }
 }

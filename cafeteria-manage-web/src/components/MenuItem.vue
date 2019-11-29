@@ -21,7 +21,7 @@ export default {
       year: 'year'
     })
   },
-  props: ['data', 'workDayId'],
+  props: ['data', 'workDayId', 'weekCount'],
   methods: {
     ...mapActions([
       'DELETE_MENUPLAN'
@@ -35,7 +35,8 @@ export default {
         workDayId: this.workDayId,
         menuId: this.data.id,
         year: this.year,
-        month: this.month
+        month: this.month,
+        weekCount: this.weekCount
       })
     } 
   }
