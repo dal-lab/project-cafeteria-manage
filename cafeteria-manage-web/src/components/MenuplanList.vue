@@ -6,11 +6,11 @@
         </div>
 
         <div class="menu-list2" :data-monthlyMenuPlan-id="data.workDayId">
-          <MenuItem v-for="menu in data.menus" :key="`${ menu.id }`" :data="menu" :work-day-id="data.workDayId" />
+          <MenuItem v-for="menu in data.menus" :key="`${ menu.id }`" :data="menu" :work-day-id="data.workDayId" :week-count="weekCount"/>
         </div>
 
         <div v-if="isAddMenu">
-          <AddMenuOnMenuplan :work-day-id="data.workDayId" @close="isAddMenu=false"/>
+          <AddMenuOnMenuplan :work-day-id="data.workDayId" :week-count="weekCount" @close="isAddMenu=false"/>
         </div>
         <div v-else>
           <a class="add-menu-btn" href="" @click.prevent="isAddMenu=true">
@@ -30,7 +30,7 @@ export default {
         isAddMenu: false
       }
     },
-    props: ['data'],
+    props: ['data', 'weekCount'],
     components: {
       MenuItem,
       AddMenuOnMenuplan,

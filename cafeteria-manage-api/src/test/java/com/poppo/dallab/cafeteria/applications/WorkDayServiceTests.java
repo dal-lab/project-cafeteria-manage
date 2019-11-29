@@ -161,7 +161,8 @@ public class  WorkDayServiceTests {
     @Test
     public void 해당월의_첫번째주를_제외한_주의_workDay_가져오기() {
 
-        List<WorkDay> workDays = Arrays.asList(WorkDay.builder().id(1L).build());
+        List<WorkDay> workDays = Arrays.asList(
+                WorkDay.builder().date(LocalDate.of(2019,11,1)).id(1L).build());
 
         given(dateTimeUtils.getMondaysOfMonthExceptFirstWeek(2019,11)).willReturn(
                 Arrays.asList(

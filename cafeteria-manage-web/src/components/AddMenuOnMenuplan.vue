@@ -16,7 +16,7 @@ export default {
     data() {
         return {
             menuName: "",
-            month: this.$route.params.month
+            month: this.$route.params.month,
         }
     },
     computed: {
@@ -27,7 +27,7 @@ export default {
           year: 'year'
         })
     },
-    props: ['workDayId'],
+    props: ['workDayId', 'weekCount'],
     methods: {
       ...mapActions([
         'ADD_MENUTOMENUPLAN'
@@ -37,7 +37,8 @@ export default {
           workDayId: this.workDayId,
           menuName: this.menuName,
           year: this.year,
-          month: this.month
+          month: this.month,
+          weekCount: this.weekCount,
         })
           .catch(err => alert(err.data))
           .finally(_ => this.menuName = "")

@@ -4,7 +4,9 @@
 
             <div class="board-header">
                 <span class="board-title">
-                    {{ month }}월
+                    <div class="title-month">
+                        {{ month }}월
+                    </div>
                     <div class="week-count">
                         <a class="arrow-button" href="" @click.prevent="onPrevWeek">&#8249;</a>
                         {{ weekCount }}주차
@@ -17,7 +19,7 @@
                 <div class="menuplan-list-section">
                     <div class="menuplan-list-wrapper" v-for="monthlyMenuPlan in monthlyMenuPlans"
                         :key="monthlyMenuPlan.workDayId" :data-monthlyMenuPlan-id="monthlyMenuPlan.workDayId">
-                        <MenuplanList :data="monthlyMenuPlan" />
+                        <MenuplanList :data="monthlyMenuPlan" :week-count="weekCount"/>
                     </div>
                 </div>
             </div>
@@ -135,5 +137,8 @@ export default {
 }
 .week-count {
   padding: 0px 32px;
+}
+.title-month {
+  font-size: x-large
 }
 </style>
