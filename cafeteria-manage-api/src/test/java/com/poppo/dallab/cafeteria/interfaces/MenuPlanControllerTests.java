@@ -53,11 +53,15 @@ public class MenuPlanControllerTests {
                 .build());
 
         List<Menu> menus = Arrays.asList(Menu.builder()
+                .id(3L)
                 .name("밥")
                 .build());
 
+        MenuPlan menuPlan = MenuPlan.builder().pos(65535).build();
+
         given(workDayService.getWorkDaysByMonth(2019, 11, 1)).willReturn(workDays);
         given(menuService.getMenusByWorkDayId(1L)).willReturn(menus);
+        given(menuPlanService.getMenuPlanByWorkDayIdAndMenuId(1L, 3L)).willReturn(menuPlan);
 
         mvc.perform(get("/menuPlans?year=2019&month=11&weekCount=1"))
                 .andExpect(status().isOk())
@@ -66,11 +70,12 @@ public class MenuPlanControllerTests {
                 .andExpect(content().string(containsString("\"workDayId\":1")))
                 .andExpect(content().string(containsString("\"menus\":[")))
                 .andExpect(content().string(containsString("밥")))
+                .andExpect(content().string(containsString("\"pos\":65535")))
             ;
     }
 
     @Test
-    public void getOne() throws Exception {
+    public void workDay기준으로_menu까지_다_불러오기() throws Exception {
 
         WorkDay mockWorkDay = WorkDay.builder()
                 .id(1L)

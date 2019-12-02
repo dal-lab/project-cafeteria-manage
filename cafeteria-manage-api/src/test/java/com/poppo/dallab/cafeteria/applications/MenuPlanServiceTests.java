@@ -86,4 +86,16 @@ public class MenuPlanServiceTests {
 
         menuPlanService.deleteMenuPlan(3L, 44L);
     }
+
+    @Test
+    public void menuId와_workDayId로_menuPlan_가져오기() {
+
+        given(menuPlanRepository.findByWorkDayIdAndMenuId(1L, 3L)).willReturn(
+                MenuPlan.builder().id(1L).build()
+        );
+
+        MenuPlan menuPlan = menuPlanService.getMenuPlanByWorkDayIdAndMenuId(1L, 3L);
+
+        assertThat(menuPlan.getId()).isEqualTo(1L);
+    }
 }

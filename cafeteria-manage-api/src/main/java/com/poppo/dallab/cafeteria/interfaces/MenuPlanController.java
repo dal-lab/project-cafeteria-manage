@@ -42,8 +42,13 @@ public class MenuPlanController {
         return workDays.stream().map(workDay -> {
 
             List<Menu> menus = menuService.getMenusByWorkDayId(workDay.getId());
-            List<MenuResponseDto> menuResponseDtos = menus.stream().map(menu ->
-                    modelMapper.map(menu, MenuResponseDto.class)
+            List<MenuResponseDto> menuResponseDtos = menus.stream().map(menu -> {
+                MenuPlan menuPlan = menuPlanService.getMenuPlanByWorkDayIdAndMenuId(workDay.getId(), menu.getId());
+                MenuResponseDto menuResponseDto = modelMapper.map(menu, MenuResponseDto.class);
+                menuResponseDto.setPos(menuPlan.getPos());
+
+                return menuResponseDto;
+                }
             ).collect(Collectors.toList());
 
             return MenuPlanResponseDto.builder()

@@ -82,7 +82,7 @@ GET http://localhost:8080/menuPlans?year=2019&month=11&weekCount=1
 
 ###
 
-GET http://localhost:8080/menuPlans?year=2019&month=11&weekCount=2
+GET http://localhost:8080/menuPlans?year=2019&month=11&weekCount=5
 
 ###
 

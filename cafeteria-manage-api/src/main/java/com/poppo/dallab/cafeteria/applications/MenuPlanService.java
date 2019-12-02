@@ -38,4 +38,9 @@ public class MenuPlanService {
 
         return "{}";
     }
+
+    public MenuPlan getMenuPlanByWorkDayIdAndMenuId(Long workDayId, Long menuId) {
+
+        return menuPlanRepository.findByWorkDayIdAndMenuId(workDayId, menuId);
+    }
 }

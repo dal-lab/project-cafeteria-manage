@@ -122,7 +122,7 @@ export default {
 }
 .menuplan-list-wrapper {
   display: flex;
-  height: 33%;
+  height: 60%;
   width: 300px;
   vertical-align: top;
   padding: 5px;

@@ -9,4 +9,6 @@ public interface MenuPlanRepository extends CrudRepository<MenuPlan, Long> {
     List<MenuPlan> findAllByWorkDayId(Long workDayId);
 
     void deleteMenuPlansByWorkDayIdAndMenuId(Long workDayId, Long menuId);
+
+    MenuPlan findByWorkDayIdAndMenuId(Long workDayId, Long menuId);
 }
