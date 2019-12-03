@@ -13,4 +13,5 @@ public class MenuPlanRequestDto {
 
     String menuName;
 
+    Double pos;
 }

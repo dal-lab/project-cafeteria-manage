@@ -46,7 +46,7 @@ public class MenuPlanServiceTests {
         MenuPlan menuPlan = MenuPlan.builder().id(1L).build();
         given(menuPlanRepository.save(any(MenuPlan.class))).willReturn(menuPlan);
 
-        MenuPlan saved = menuPlanService.addMenu(1L, "닭갈비");
+        MenuPlan saved = menuPlanService.addMenu(1L, "닭갈비", 65535D);
 
         assertThat(saved.getId()).isEqualTo(1L);
     }
@@ -56,7 +56,7 @@ public class MenuPlanServiceTests {
 
         given(menuRepository.findByName("이제까지이런맛은없었다이것은갈비인가치킨인가")).willThrow(MenuNotFoundException.class);
 
-        menuPlanService.addMenu(1L, "이제까지이런맛은없었다이것은갈비인가치킨인가");
+        menuPlanService.addMenu(1L, "이제까지이런맛은없었다이것은갈비인가치킨인가", 65535D);
     }
 
     @Test

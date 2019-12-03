@@ -86,7 +86,7 @@ public class MenuPlanController {
             @RequestBody MenuPlanRequestDto resource
     ) throws URISyntaxException {
 
-        MenuPlan menuPlan = menuPlanService.addMenu(workDayId, resource.getMenuName());
+        MenuPlan menuPlan = menuPlanService.addMenu(workDayId, resource.getMenuName(), resource.getPos());
 
         String url = "/menuPlans/" + menuPlan.getId();
 

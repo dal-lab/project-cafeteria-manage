@@ -57,7 +57,7 @@ public class MenuPlanControllerTests {
                 .name("밥")
                 .build());
 
-        MenuPlan menuPlan = MenuPlan.builder().pos(65535).build();
+        MenuPlan menuPlan = MenuPlan.builder().pos(65535D).build();
 
         given(workDayService.getWorkDaysByMonth(2019, 11, 1)).willReturn(workDays);
         given(menuService.getMenusByWorkDayId(1L)).willReturn(menus);
@@ -110,11 +110,14 @@ public class MenuPlanControllerTests {
 
         MenuPlan menuPlan = MenuPlan.builder().id(1L).build();
 
-        given(menuPlanService.addMenu(1L, "닭갈비")).willReturn(menuPlan);
+        given(menuPlanService.addMenu(1L, "닭갈비", 65535D)).willReturn(menuPlan);
 
         mvc.perform(post("/workDays/1/menu")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"menuName\": \"닭갈비\"}"))
+                .content("{\n" +
+                        "  \"menuName\": \"닭갈비\",\n" +
+                        "  \"pos\": 65535\n" +
+                        "}"))
                 .andExpect(header().stringValues("Location", "/menuPlans/1"))
                 .andExpect(status().isCreated());
     }
@@ -122,12 +125,15 @@ public class MenuPlanControllerTests {
     @Test
     public void 존재하지_않는_메뉴를_해당날짜의_식단에_추가하기() throws Exception {
 
-        given(menuPlanService.addMenu(1L, "이제까지이런맛은없었다이것은갈비인가통닭인가"))
+        given(menuPlanService.addMenu(1L, "이제까지이런맛은없었다이것은갈비인가통닭인가", 65535D))
                 .willThrow(MenuNotFoundException.class);
 
         mvc.perform(post("/workDays/1/menu")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"menuName\": \"이제까지이런맛은없었다이것은갈비인가통닭인가\"}"))
+                .content("{\n" +
+                        "  \"menuName\": \"이제까지이런맛은없었다이것은갈비인가통닭인가\",\n" +
+                        "  \"pos\": 65535\n" +
+                        "}"))
                 .andExpect(status().isNotFound());
     }
 

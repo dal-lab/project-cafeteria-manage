@@ -16,13 +16,14 @@ public class MenuPlanService {
     private final MenuPlanRepository menuPlanRepository;
     private final WorkDayRepository workDayRepository;
 
-    public MenuPlan addMenu(Long workDayId, String menuName) {
+    public MenuPlan addMenu(Long workDayId, String menuName, Double pos) {
 
         Menu menu = menuRepository.findByName(menuName).orElseThrow(MenuNotFoundException::new);
 
         MenuPlan menuPlan = MenuPlan.builder()
                 .workDayId(workDayId)
                 .menuId(menu.getId())
+                .pos(pos)
                 .build();
 
         return menuPlanRepository.save(menuPlan);

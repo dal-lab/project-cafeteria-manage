@@ -15,6 +15,6 @@ public class MenuResponseDto {
 
     private String menuName;
 
-    private Integer pos;
+    private Double pos;
 
 }

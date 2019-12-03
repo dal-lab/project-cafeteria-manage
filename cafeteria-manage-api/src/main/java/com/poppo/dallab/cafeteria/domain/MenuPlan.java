@@ -25,5 +25,5 @@ public class MenuPlan {
 
     private Long menuId;
 
-    private Integer pos;
+    private Double pos;
 }
