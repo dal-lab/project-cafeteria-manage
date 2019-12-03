@@ -36,8 +36,8 @@ export const menuPlan = {
   fetchMonthlyMenuPlan(year, month, weekCount) {
     return request('get', `/menuPlans?year=${year}&month=${month}&weekCount=${weekCount}`)
   },
-  ceateMenuPlan(workDayId, menuName) {
-    return request('post', `/workDays/${workDayId}/menu`, {menuName})
+  ceateMenuPlan(workDayId, menuName, pos) {
+    return request('post', `/workDays/${workDayId}/menu`, {menuName, pos})
   },
   deleteMenuPlan(workDayId, menuId) {
     return request('delete', `/workDays/${workDayId}/menu/${menuId}`)

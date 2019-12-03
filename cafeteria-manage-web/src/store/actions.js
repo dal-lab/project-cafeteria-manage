@@ -42,8 +42,8 @@ const actions = {
             commit('SET_MONTHLYMENUPLANS', data)
         })
     },
-    ADD_MENUTOMENUPLAN({ dispatch }, { workDayId, menuName, year, month, weekCount }) {
-        return api.menuPlan.ceateMenuPlan(workDayId, menuName).then(_ => {
+    ADD_MENUTOMENUPLAN({ dispatch }, { workDayId, menuName, pos, year, month, weekCount }) {
+        return api.menuPlan.ceateMenuPlan(workDayId, menuName, pos).then(_ => {
             dispatch('GET_MONTHLYMENUPLANS', { year, month, weekCount })
         })
     },

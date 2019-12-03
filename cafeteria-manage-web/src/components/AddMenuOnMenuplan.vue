@@ -33,16 +33,26 @@ export default {
         'ADD_MENUTOMENUPLAN'
       ]),
       onSubmit() {
+        const menuPos = this.newMenuPos()
         this.ADD_MENUTOMENUPLAN({ 
           workDayId: this.workDayId,
           menuName: this.menuName,
+          pos: menuPos,
           year: this.year,
           month: this.month,
           weekCount: this.weekCount,
         })
           .catch(err => alert(err.data))
           .finally(_ => this.menuName = "")
-      }
+      },
+      newMenuPos() {
+        const workDay = this.$store.state.monthlyMenuPlans.filter(menuPlan => menuPlan.workDayId === this.workDayId)[0]
+        if (!workDay) return 65535
+        const {menus} = workDay
+        if (!workDay.length) return 65535
+        
+        return workDay[workDay.length - 1].pos * 2
+      },
     }
 }
 </script>
