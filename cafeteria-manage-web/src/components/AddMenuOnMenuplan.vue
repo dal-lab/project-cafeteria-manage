@@ -47,11 +47,12 @@ export default {
       },
       newMenuPos() {
         const workDay = this.$store.state.monthlyMenuPlans.filter(menuPlan => menuPlan.workDayId === this.workDayId)[0]
+        console.log(workDay.menus);
         if (!workDay) return 65535
         const {menus} = workDay
-        if (!workDay.length) return 65535
+        if (!menus.length) return 65535
         
-        return workDay[workDay.length - 1].pos * 2
+        return menus[menus.length - 1].pos * 2
       },
     }
 }
