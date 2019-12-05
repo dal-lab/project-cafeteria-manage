@@ -7,6 +7,7 @@ import com.poppo.dallab.cafeteria.domain.Menu;
 import com.poppo.dallab.cafeteria.domain.MenuPlan;
 import com.poppo.dallab.cafeteria.domain.WorkDay;
 import com.poppo.dallab.cafeteria.exceptions.MenuNotFoundException;
+import com.poppo.dallab.cafeteria.exceptions.MenuPlanNotFoundException;
 import com.poppo.dallab.cafeteria.exceptions.WorkDayNotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -165,6 +166,38 @@ public class MenuPlanControllerTests {
 
         mvc.perform(delete("/workDays/44/menu/1"))
                 .andExpect(status().isNotFound())
+        ;
+    }
+
+    @Test
+    public void 존재하는_menuPlan의_pos변경_성공() throws Exception {
+
+        given(menuPlanService.updateMenuPlan(1L, 3L, 233D))
+                .willReturn(MenuPlan.builder().id(1L).build());
+
+        mvc.perform(patch("/workDays/1/menus/3")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\n" +
+                        "  \"pos\": 233\n" +
+                        "}"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("/menuPlan/1")))
+        ;
+    }
+
+    @Test
+    public void 존재하지_않는_menuPlan의_pos변경_실패_404() throws Exception {
+
+        given(menuPlanService.updateMenuPlan(4L, 4L, 233D))
+                .willThrow(MenuPlanNotFoundException.class);
+
+        mvc.perform(patch("/workDays/4/menus/4")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\n" +
+                        "  \"pos\": 233\n" +
+                        "}"))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string(containsString("MenuPlan Not Exist")))
         ;
     }
 }

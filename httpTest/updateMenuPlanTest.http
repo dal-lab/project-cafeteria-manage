@@ -1,0 +1,8 @@
+PATCH http://localhost:8080/workDays/2/menus/66
+Content-Type: application/json
+
+{
+  "pos": 1
+}
+
+###

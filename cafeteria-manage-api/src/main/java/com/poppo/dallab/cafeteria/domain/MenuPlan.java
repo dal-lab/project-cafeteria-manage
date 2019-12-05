@@ -26,4 +26,8 @@ public class MenuPlan {
     private Long menuId;
 
     private Double pos;
+
+    public void changePos(Double pos) {
+        this.pos = pos;
+    }
 }

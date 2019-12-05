@@ -2,6 +2,7 @@ package com.poppo.dallab.cafeteria.applications;
 
 import com.poppo.dallab.cafeteria.domain.*;
 import com.poppo.dallab.cafeteria.exceptions.MenuNotFoundException;
+import com.poppo.dallab.cafeteria.exceptions.MenuPlanNotFoundException;
 import com.poppo.dallab.cafeteria.exceptions.WorkDayNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
@@ -91,11 +92,31 @@ public class MenuPlanServiceTests {
     public void menuId와_workDayId로_menuPlan_가져오기() {
 
         given(menuPlanRepository.findByWorkDayIdAndMenuId(1L, 3L)).willReturn(
-                MenuPlan.builder().id(1L).build()
+                Optional.ofNullable(MenuPlan.builder().id(1L).build())
         );
 
         MenuPlan menuPlan = menuPlanService.getMenuPlanByWorkDayIdAndMenuId(1L, 3L);
 
         assertThat(menuPlan.getId()).isEqualTo(1L);
+    }
+
+    @Test
+    public void 존재하는_MenuPlan의_pos변경하기_성공() {
+
+        given(menuPlanRepository.findByWorkDayIdAndMenuId(1L, 3L))
+                .willReturn(Optional.ofNullable(MenuPlan.builder().pos(65535D).build()));
+
+        MenuPlan menuPlan = menuPlanService.updateMenuPlan(1L, 3L, 277D);
+
+        assertThat(menuPlan.getPos()).isEqualTo(277D);
+    }
+
+    @Test(expected = MenuPlanNotFoundException.class)
+    public void 존재하지_않는_Menuplan_pos변경_시도시_MenuPlanNotExist_에러발생() {
+
+        given(menuPlanRepository.findByWorkDayIdAndMenuId(4L, 4L))
+                .willThrow(MenuPlanNotFoundException.class);
+
+        menuPlanService.updateMenuPlan(4L, 4L, 444D);
     }
 }

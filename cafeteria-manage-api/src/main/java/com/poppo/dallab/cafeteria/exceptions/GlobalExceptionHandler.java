@@ -32,4 +32,12 @@ public class GlobalExceptionHandler {
 
         return "Request WeekCount is too big";
     }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(MenuPlanNotFoundException.class)
+    public String handleMenuPlanNotFoundException() {
+
+        return "MenuPlan Not Exist";
+    }
 }

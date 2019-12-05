@@ -2,6 +2,7 @@ package com.poppo.dallab.cafeteria.applications;
 
 import com.poppo.dallab.cafeteria.domain.*;
 import com.poppo.dallab.cafeteria.exceptions.MenuNotFoundException;
+import com.poppo.dallab.cafeteria.exceptions.MenuPlanNotFoundException;
 import com.poppo.dallab.cafeteria.exceptions.WorkDayNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -42,6 +43,17 @@ public class MenuPlanService {
 
     public MenuPlan getMenuPlanByWorkDayIdAndMenuId(Long workDayId, Long menuId) {
 
-        return menuPlanRepository.findByWorkDayIdAndMenuId(workDayId, menuId);
+        return menuPlanRepository.findByWorkDayIdAndMenuId(workDayId, menuId)
+                .orElseThrow(MenuPlanNotFoundException::new);
+    }
+
+    public MenuPlan updateMenuPlan(Long workDayId, Long menuId, Double pos) {
+
+        MenuPlan menuPlan = menuPlanRepository.findByWorkDayIdAndMenuId(workDayId, menuId)
+                .orElseThrow(MenuPlanNotFoundException::new);
+
+        menuPlan.changePos(pos);
+
+        return menuPlan;
     }
 }
