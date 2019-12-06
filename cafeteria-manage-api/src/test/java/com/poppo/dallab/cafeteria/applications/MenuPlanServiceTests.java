@@ -21,6 +21,8 @@ import static org.mockito.Mockito.verify;
 public class MenuPlanServiceTests {
 
     private MenuPlanService menuPlanService;
+    private Long workDayId;
+    private Long menuId;
 
     @Mock
     private MenuRepository menuRepository;
@@ -35,19 +37,22 @@ public class MenuPlanServiceTests {
     public void setup() {
         MockitoAnnotations.initMocks(this);
 
+        workDayId = 1L;
+        menuId = 3L;
+
         menuPlanService = new MenuPlanService(menuRepository, menuPlanRepository, workDayRepository);
     }
 
     @Test
     public void 요청된_WorkDay_Menu_모두_존재할_때_menu추가_요청_처리하기() {
 
-        Menu menu = Menu.builder().id(3L).build();
+        Menu menu = Menu.builder().id(menuId).build();
         given(menuRepository.findByName("닭갈비")).willReturn(Optional.ofNullable(menu));
 
         MenuPlan menuPlan = MenuPlan.builder().id(1L).build();
         given(menuPlanRepository.save(any(MenuPlan.class))).willReturn(menuPlan);
 
-        MenuPlan saved = menuPlanService.addMenu(1L, "닭갈비", 65535D);
+        MenuPlan saved = menuPlanService.addMenu(workDayId, "닭갈비", 65535D);
 
         assertThat(saved.getId()).isEqualTo(1L);
     }
@@ -57,18 +62,18 @@ public class MenuPlanServiceTests {
 
         given(menuRepository.findByName("이제까지이런맛은없었다이것은갈비인가치킨인가")).willThrow(MenuNotFoundException.class);
 
-        menuPlanService.addMenu(1L, "이제까지이런맛은없었다이것은갈비인가치킨인가", 65535D);
+        menuPlanService.addMenu(workDayId, "이제까지이런맛은없었다이것은갈비인가치킨인가", 65535D);
     }
 
     @Test
     public void workDayId_menuPlanId_모두_존재할때_삭제하기() {
 
-        given(workDayRepository.findById(1L)).willReturn(Optional.ofNullable(WorkDay.builder().build()));
-        given(menuRepository.findById(3L)).willReturn(Optional.ofNullable(Menu.builder().build()));
+        given(workDayRepository.findById(workDayId)).willReturn(Optional.ofNullable(WorkDay.builder().build()));
+        given(menuRepository.findById(menuId)).willReturn(Optional.ofNullable(Menu.builder().build()));
 
-        menuPlanService.deleteMenuPlan(1L, 3L);
+        menuPlanService.deleteMenuPlan(workDayId, menuId);
 
-        verify(menuPlanRepository).deleteMenuPlansByWorkDayIdAndMenuId(1L, 3L);
+        verify(menuPlanRepository).deleteMenuPlansByWorkDayIdAndMenuId(workDayId, menuId);
     }
 
     @Test(expected = WorkDayNotFoundException.class)
@@ -76,26 +81,26 @@ public class MenuPlanServiceTests {
 
         given(workDayRepository.findById(44L)).willThrow(WorkDayNotFoundException.class);
 
-        menuPlanService.deleteMenuPlan(44L, 3L);
+        menuPlanService.deleteMenuPlan(44L, menuId);
     }
 
     @Test(expected = MenuNotFoundException.class)
     public void menu가_없을_때_삭제하기() {
 
-        given(workDayRepository.findById(3L)).willReturn(Optional.ofNullable(WorkDay.builder().build()));
+        given(workDayRepository.findById(workDayId)).willReturn(Optional.ofNullable(WorkDay.builder().build()));
         given(menuRepository.findById(44L)).willThrow(MenuNotFoundException.class);
 
-        menuPlanService.deleteMenuPlan(3L, 44L);
+        menuPlanService.deleteMenuPlan(workDayId, 44L);
     }
 
     @Test
     public void menuId와_workDayId로_menuPlan_가져오기() {
 
-        given(menuPlanRepository.findByWorkDayIdAndMenuId(1L, 3L)).willReturn(
+        given(menuPlanRepository.findByWorkDayIdAndMenuId(workDayId, menuId)).willReturn(
                 Optional.ofNullable(MenuPlan.builder().id(1L).build())
         );
 
-        MenuPlan menuPlan = menuPlanService.getMenuPlanByWorkDayIdAndMenuId(1L, 3L);
+        MenuPlan menuPlan = menuPlanService.getMenuPlanByWorkDayIdAndMenuId(workDayId, menuId);
 
         assertThat(menuPlan.getId()).isEqualTo(1L);
     }
@@ -103,10 +108,10 @@ public class MenuPlanServiceTests {
     @Test
     public void 존재하는_MenuPlan의_pos변경하기_성공() {
 
-        given(menuPlanRepository.findByWorkDayIdAndMenuId(1L, 3L))
+        given(menuPlanRepository.findByWorkDayIdAndMenuId(workDayId, menuId))
                 .willReturn(Optional.ofNullable(MenuPlan.builder().pos(65535D).build()));
 
-        MenuPlan menuPlan = menuPlanService.updateMenuPlan(1L, 3L, 277D);
+        MenuPlan menuPlan = menuPlanService.updateMenuPlan(workDayId, menuId, 277D);
 
         assertThat(menuPlan.getPos()).isEqualTo(277D);
     }
@@ -119,4 +124,5 @@ public class MenuPlanServiceTests {
 
         menuPlanService.updateMenuPlan(4L, 4L, 444D);
     }
+
 }
