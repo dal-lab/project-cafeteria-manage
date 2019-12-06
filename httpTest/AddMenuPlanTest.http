@@ -20,7 +20,8 @@ POST http://localhost:8080/workDays/1/menu
 Content-Type: application/json
 
 {
-  "menuName": "오징어볶음"
+  "menuName": "오징어볶음",
+  "pos": 65535
 }
 
 ###

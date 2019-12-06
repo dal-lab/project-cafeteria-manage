@@ -1,5 +1,5 @@
 <template>
-    <div class="menu-item2" :data-menu-id="data.id">
+    <div class="menu-item2" :data-menu-id="data.id" :data-menu-pos="data.pos">
         <a href="" @click.prevent="onModify">
             <div>{{ data.menuName }}</div>
         </a>

@@ -7,6 +7,7 @@ import com.poppo.dallab.cafeteria.domain.Menu;
 import com.poppo.dallab.cafeteria.domain.MenuPlan;
 import com.poppo.dallab.cafeteria.domain.WorkDay;
 import com.poppo.dallab.cafeteria.exceptions.MenuNotFoundException;
+import com.poppo.dallab.cafeteria.exceptions.MenuPlanNotFoundException;
 import com.poppo.dallab.cafeteria.exceptions.WorkDayNotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,11 +54,15 @@ public class MenuPlanControllerTests {
                 .build());
 
         List<Menu> menus = Arrays.asList(Menu.builder()
+                .id(3L)
                 .name("밥")
                 .build());
 
+        MenuPlan menuPlan = MenuPlan.builder().pos(65535D).build();
+
         given(workDayService.getWorkDaysByMonth(2019, 11, 1)).willReturn(workDays);
         given(menuService.getMenusByWorkDayId(1L)).willReturn(menus);
+        given(menuPlanService.getMenuPlanByWorkDayIdAndMenuId(1L, 3L)).willReturn(menuPlan);
 
         mvc.perform(get("/menuPlans?year=2019&month=11&weekCount=1"))
                 .andExpect(status().isOk())
@@ -66,11 +71,12 @@ public class MenuPlanControllerTests {
                 .andExpect(content().string(containsString("\"workDayId\":1")))
                 .andExpect(content().string(containsString("\"menus\":[")))
                 .andExpect(content().string(containsString("밥")))
+                .andExpect(content().string(containsString("\"pos\":65535")))
             ;
     }
 
     @Test
-    public void getOne() throws Exception {
+    public void workDay기준으로_menu까지_다_불러오기() throws Exception {
 
         WorkDay mockWorkDay = WorkDay.builder()
                 .id(1L)
@@ -105,11 +111,14 @@ public class MenuPlanControllerTests {
 
         MenuPlan menuPlan = MenuPlan.builder().id(1L).build();
 
-        given(menuPlanService.addMenu(1L, "닭갈비")).willReturn(menuPlan);
+        given(menuPlanService.addMenu(1L, "닭갈비", 65535D)).willReturn(menuPlan);
 
         mvc.perform(post("/workDays/1/menu")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"menuName\": \"닭갈비\"}"))
+                .content("{\n" +
+                        "  \"menuName\": \"닭갈비\",\n" +
+                        "  \"pos\": 65535\n" +
+                        "}"))
                 .andExpect(header().stringValues("Location", "/menuPlans/1"))
                 .andExpect(status().isCreated());
     }
@@ -117,12 +126,15 @@ public class MenuPlanControllerTests {
     @Test
     public void 존재하지_않는_메뉴를_해당날짜의_식단에_추가하기() throws Exception {
 
-        given(menuPlanService.addMenu(1L, "이제까지이런맛은없었다이것은갈비인가통닭인가"))
+        given(menuPlanService.addMenu(1L, "이제까지이런맛은없었다이것은갈비인가통닭인가", 65535D))
                 .willThrow(MenuNotFoundException.class);
 
         mvc.perform(post("/workDays/1/menu")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"menuName\": \"이제까지이런맛은없었다이것은갈비인가통닭인가\"}"))
+                .content("{\n" +
+                        "  \"menuName\": \"이제까지이런맛은없었다이것은갈비인가통닭인가\",\n" +
+                        "  \"pos\": 65535\n" +
+                        "}"))
                 .andExpect(status().isNotFound());
     }
 
@@ -154,6 +166,38 @@ public class MenuPlanControllerTests {
 
         mvc.perform(delete("/workDays/44/menu/1"))
                 .andExpect(status().isNotFound())
+        ;
+    }
+
+    @Test
+    public void 존재하는_menuPlan의_pos변경_성공() throws Exception {
+
+        given(menuPlanService.updateMenuPlan(1L, 3L, 233D))
+                .willReturn(MenuPlan.builder().id(1L).build());
+
+        mvc.perform(patch("/workDays/1/menus/3")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\n" +
+                        "  \"pos\": 233\n" +
+                        "}"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("/menuPlan/1")))
+        ;
+    }
+
+    @Test
+    public void 존재하지_않는_menuPlan의_pos변경_실패_404() throws Exception {
+
+        given(menuPlanService.updateMenuPlan(4L, 4L, 233D))
+                .willThrow(MenuPlanNotFoundException.class);
+
+        mvc.perform(patch("/workDays/4/menus/4")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\n" +
+                        "  \"pos\": 233\n" +
+                        "}"))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string(containsString("MenuPlan Not Exist")))
         ;
     }
 }

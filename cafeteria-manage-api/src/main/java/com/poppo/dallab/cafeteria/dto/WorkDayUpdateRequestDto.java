@@ -9,12 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MenuResponseDto {
-
-    private Long id;
-
-    private String menuName;
+public class WorkDayUpdateRequestDto {
 
     private Double pos;
-
 }

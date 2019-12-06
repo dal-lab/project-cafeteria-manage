@@ -19,10 +19,15 @@ public class MenuPlan {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
-    Long workDayId;
+    private Long workDayId;
 
-    Long menuId;
+    private Long menuId;
 
+    private Double pos;
+
+    public void changePos(Double pos) {
+        this.pos = pos;
+    }
 }

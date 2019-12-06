@@ -9,6 +9,7 @@ import com.poppo.dallab.cafeteria.domain.WorkDay;
 import com.poppo.dallab.cafeteria.dto.MenuPlanRequestDto;
 import com.poppo.dallab.cafeteria.dto.MenuPlanResponseDto;
 import com.poppo.dallab.cafeteria.dto.MenuResponseDto;
+import com.poppo.dallab.cafeteria.dto.WorkDayUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
@@ -42,8 +43,13 @@ public class MenuPlanController {
         return workDays.stream().map(workDay -> {
 
             List<Menu> menus = menuService.getMenusByWorkDayId(workDay.getId());
-            List<MenuResponseDto> menuResponseDtos = menus.stream().map(menu ->
-                    modelMapper.map(menu, MenuResponseDto.class)
+            List<MenuResponseDto> menuResponseDtos = menus.stream().map(menu -> {
+                MenuPlan menuPlan = menuPlanService.getMenuPlanByWorkDayIdAndMenuId(workDay.getId(), menu.getId());
+                MenuResponseDto menuResponseDto = modelMapper.map(menu, MenuResponseDto.class);
+                menuResponseDto.setPos(menuPlan.getPos());
+
+                return menuResponseDto;
+                }
             ).collect(Collectors.toList());
 
             return MenuPlanResponseDto.builder()
@@ -81,7 +87,7 @@ public class MenuPlanController {
             @RequestBody MenuPlanRequestDto resource
     ) throws URISyntaxException {
 
-        MenuPlan menuPlan = menuPlanService.addMenu(workDayId, resource.getMenuName());
+        MenuPlan menuPlan = menuPlanService.addMenu(workDayId, resource.getMenuName(), resource.getPos());
 
         String url = "/menuPlans/" + menuPlan.getId();
 
@@ -95,5 +101,17 @@ public class MenuPlanController {
     ) {
 
         menuPlanService.deleteMenuPlan(workDayId, menuId);
+    }
+
+    @PatchMapping("/workDays/{workDayId}/menus/{menuId}")
+    public String updatePos(
+            @PathVariable(name = "workDayId") Long workDayId,
+            @PathVariable(name = "menuId") Long menuId,
+            @RequestBody WorkDayUpdateRequestDto workDayUpdateRequestDto
+    ) {
+
+        MenuPlan menuPlan = menuPlanService.updateMenuPlan(workDayId, menuId, workDayUpdateRequestDto.getPos());
+
+        return "/menuPlan/" + menuPlan.getId();
     }
 }
