@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@CrossOrigin
 @RequiredArgsConstructor
 public class MenuPlanController {
 
@@ -42,15 +41,20 @@ public class MenuPlanController {
 
         return workDays.stream().map(workDay -> {
 
+            List<MenuPlan> menuPlans = menuPlanService.getMenuPlansByWorkDayId(workDay.getId());
             List<Menu> menus = menuService.getMenusByWorkDayId(workDay.getId());
-            List<MenuResponseDto> menuResponseDtos = menus.stream().map(menu -> {
-                MenuPlan menuPlan = menuPlanService.getMenuPlanByWorkDayIdAndMenuId(workDay.getId(), menu.getId());
-                MenuResponseDto menuResponseDto = modelMapper.map(menu, MenuResponseDto.class);
+
+            List<MenuResponseDto> menuResponseDtos = menuPlans.stream().map(menuPlan -> {
+                List<Menu> filteredMenu = menus.stream()
+                        .filter(menu -> menu.getId().equals(menuPlan.getMenuId()))
+                        .collect(Collectors.toList());
+                MenuResponseDto menuResponseDto = modelMapper.map(filteredMenu.get(0), MenuResponseDto.class);
+
+                menuResponseDto.setMenuPlanId(menuPlan.getId());
                 menuResponseDto.setPos(menuPlan.getPos());
 
                 return menuResponseDto;
-                }
-            ).collect(Collectors.toList());
+            }).collect(Collectors.toList());
 
             return MenuPlanResponseDto.builder()
                     .workDayId(workDay.getId())
@@ -103,7 +107,8 @@ public class MenuPlanController {
         menuPlanService.deleteMenuPlan(workDayId, menuId);
     }
 
-    @PatchMapping("/workDays/{workDayId}/menus/{menuId}")
+    // TODO: MenuPlan ID 받아서 처리하도록 변경 필요
+    @PutMapping("/workDays/{workDayId}/menu/{menuId}")
     public String updatePos(
             @PathVariable(name = "workDayId") Long workDayId,
             @PathVariable(name = "menuId") Long menuId,

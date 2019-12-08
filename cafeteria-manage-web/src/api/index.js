@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { create } from 'domain'
 
 const DOMAIN = 'http://localhost:8080'
 
@@ -41,5 +40,8 @@ export const menuPlan = {
   },
   deleteMenuPlan(workDayId, menuId) {
     return request('delete', `/workDays/${workDayId}/menu/${menuId}`)
+  },
+  updateMenuPlan(workDayId, menuId, pos) {
+    return request('put', `/workDays/${workDayId}/menu/${menuId}`, {pos}) 
   }
 }

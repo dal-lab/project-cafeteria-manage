@@ -51,6 +51,11 @@ const actions = {
         return api.menuPlan.deleteMenuPlan(workDayId, menuId).then(_ => {
             dispatch('GET_MONTHLYMENUPLANS', { year, month, weekCount })
         })
+    },
+    UPDATE_MENUPLAN({dispatch}, {workDayId, menuId, pos, year, month, weekCount}) {
+        return api.menuPlan.updateMenuPlan(workDayId, menuId, pos).then(_ => {
+            dispatch('GET_MONTHLYMENUPLANS', {year, month, weekCount})
+        })
     }
 }
 

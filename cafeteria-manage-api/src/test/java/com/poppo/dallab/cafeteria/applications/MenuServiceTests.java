@@ -58,7 +58,7 @@ public class MenuServiceTests {
         List<MenuPlan> mockMenuPlans = new ArrayList<>();
         mockMenuPlans.add(MenuPlan.builder().menuId(1L).build());
         mockMenuPlans.add(MenuPlan.builder().menuId(2L).build());
-        given(menuPlanRepository.findAllByWorkDayId(1L)).willReturn(mockMenuPlans);
+        given(menuPlanRepository.findAllByWorkDayIdOrderByPos(1L)).willReturn(mockMenuPlans);
 
         given(menuRepository.findById(1L))
                 .willReturn(java.util.Optional.ofNullable(Menu.builder().name("제육볶음").build()));

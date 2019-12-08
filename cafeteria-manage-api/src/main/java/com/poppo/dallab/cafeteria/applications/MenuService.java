@@ -27,7 +27,7 @@ public class MenuService {
 
     public List<Menu> getMenusByWorkDayId(Long workDayId) {
 
-        List<MenuPlan> menuPlans = menuPlanRepository.findAllByWorkDayId(workDayId);
+        List<MenuPlan> menuPlans = menuPlanRepository.findAllByWorkDayIdOrderByPos(workDayId);
 
         List<Menu> menus = menuPlans.stream()
                 // 여기 예외 처리 어떻게 할지 고민

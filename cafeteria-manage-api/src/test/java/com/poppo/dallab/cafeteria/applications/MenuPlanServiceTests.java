@@ -10,6 +10,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -125,4 +127,20 @@ public class MenuPlanServiceTests {
         menuPlanService.updateMenuPlan(4L, 4L, 444D);
     }
 
+    @Test
+    public void 존재하는_WorkDayId로_MenPlan_조회_시도_및_성공() {
+
+        given(menuPlanRepository.findAllByWorkDayIdOrderByPos(3L))
+                .willReturn(Arrays.asList(MenuPlan.builder().id(1L).build()));
+
+        List<MenuPlan> menuPlans = menuPlanService.getMenuPlansByWorkDayId(3L);
+
+        assertThat(menuPlans.get(0).getId()).isEqualTo(1L);
+    }
+
+    @Test(expected = MenuPlanNotFoundException.class)
+    public void 존재하지_않는_WorkDayId로_MenPlan_조회_시도_및_실패() {
+
+        menuPlanService.getMenuPlansByWorkDayId(44L);
+    }
 }
