@@ -110,21 +110,18 @@ public class MenuPlanServiceTests {
     @Test
     public void 존재하는_MenuPlan의_pos변경하기_성공() {
 
-        given(menuPlanRepository.findByWorkDayIdAndMenuId(workDayId, menuId))
-                .willReturn(Optional.ofNullable(MenuPlan.builder().pos(65535D).build()));
+        given(menuPlanRepository.findById(33L)).willReturn(Optional.ofNullable(MenuPlan.builder().build()));
 
-        MenuPlan menuPlan = menuPlanService.updateMenuPlan(workDayId, menuId, 277D);
+        MenuPlan menuPlan = menuPlanService.updateMenuPlan(33L, workDayId, menuId, 277D);
 
         assertThat(menuPlan.getPos()).isEqualTo(277D);
+        assertThat(menuPlan.getWorkDayId()).isEqualTo(workDayId);
     }
 
     @Test(expected = MenuPlanNotFoundException.class)
     public void 존재하지_않는_Menuplan_pos변경_시도시_MenuPlanNotExist_에러발생() {
 
-        given(menuPlanRepository.findByWorkDayIdAndMenuId(4L, 4L))
-                .willThrow(MenuPlanNotFoundException.class);
-
-        menuPlanService.updateMenuPlan(4L, 4L, 444D);
+        menuPlanService.updateMenuPlan(44L,4L, 4L, 444D);
     }
 
     @Test
@@ -136,11 +133,5 @@ public class MenuPlanServiceTests {
         List<MenuPlan> menuPlans = menuPlanService.getMenuPlansByWorkDayId(3L);
 
         assertThat(menuPlans.get(0).getId()).isEqualTo(1L);
-    }
-
-    @Test(expected = MenuPlanNotFoundException.class)
-    public void 존재하지_않는_WorkDayId로_MenPlan_조회_시도_및_실패() {
-
-        menuPlanService.getMenuPlansByWorkDayId(44L);
     }
 }

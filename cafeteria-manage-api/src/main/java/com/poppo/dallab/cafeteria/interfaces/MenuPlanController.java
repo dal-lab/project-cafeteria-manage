@@ -108,15 +108,15 @@ public class MenuPlanController {
     }
 
     // TODO: MenuPlan ID 받아서 처리하도록 변경 필요
-    @PutMapping("/workDays/{workDayId}/menu/{menuId}")
+    @PutMapping("/menuPlans/{menuPlanId}")
     public String updatePos(
-            @PathVariable(name = "workDayId") Long workDayId,
-            @PathVariable(name = "menuId") Long menuId,
-            @RequestBody WorkDayUpdateRequestDto workDayUpdateRequestDto
+            @PathVariable(name = "menuPlanId") Long menuPlanId,
+            @RequestBody WorkDayUpdateRequestDto resource
     ) {
 
-        MenuPlan menuPlan = menuPlanService.updateMenuPlan(workDayId, menuId, workDayUpdateRequestDto.getPos());
+        MenuPlan menuPlan = menuPlanService.updateMenuPlan(
+                menuPlanId, resource.getWorkDayId(), resource.getMenuId(), resource.getPos());
 
-        return "/menuPlan/" + menuPlan.getId();
+        return "/menuPlans/" + menuPlan.getId();
     }
 }

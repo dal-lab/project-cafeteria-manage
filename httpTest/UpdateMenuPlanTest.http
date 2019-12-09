@@ -1,0 +1,10 @@
+PUT http://localhost:8080/menuPlans/15
+Content-Type: application/json
+
+{
+  "workDayId": 66,
+  "menuId": 62,
+  "pos": 65535
+}
+
+###

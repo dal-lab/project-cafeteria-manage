@@ -177,28 +177,32 @@ public class MenuPlanControllerTests {
     @Test
     public void 존재하는_menuPlan의_pos변경_성공() throws Exception {
 
-        given(menuPlanService.updateMenuPlan(1L, 3L, 233D))
-                .willReturn(MenuPlan.builder().id(1L).build());
+        given(menuPlanService.updateMenuPlan(3L, 5L, 4L, 233D))
+                .willReturn(MenuPlan.builder().id(3L).build());
 
-        mvc.perform(put("/workDays/1/menu/3")
+        mvc.perform(put("/menuPlans/3")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\n" +
-                        "  \"pos\": 233\n" +
+                        "  \"pos\": 233,\n" +
+                        "  \"menuId\": 4,\n" +
+                        "  \"workDayId\": 5\n" +
                         "}"))
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("/menuPlan/1")))
+                .andExpect(content().string(containsString("/menuPlans/3")))
         ;
     }
 
     @Test
     public void 존재하지_않는_menuPlan의_pos변경_실패_404() throws Exception {
 
-        given(menuPlanService.updateMenuPlan(4L, 4L, 233D))
+        given(menuPlanService.updateMenuPlan(44L,4L, 4L, 233D))
                 .willThrow(MenuPlanNotFoundException.class);
 
-        mvc.perform(put("/workDays/4/menu/4")
+        mvc.perform(put("/menuPlans/44")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\n" +
+                        "  \"workDayId\": 4,\n" +
+                        "  \"menuId\": 4,\n" +
                         "  \"pos\": 233\n" +
                         "}"))
                 .andExpect(status().isNotFound())
