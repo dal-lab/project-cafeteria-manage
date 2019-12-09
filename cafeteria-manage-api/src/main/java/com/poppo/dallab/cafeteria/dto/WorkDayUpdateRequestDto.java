@@ -11,5 +11,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class WorkDayUpdateRequestDto {
 
+    private Long workDayId;
+
+    private Long menuId;
+
     private Double pos;
 }

@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface MenuPlanRepository extends CrudRepository<MenuPlan, Long> {
 
-    List<MenuPlan> findAllByWorkDayId(Long workDayId);
+    List<MenuPlan> findAllByWorkDayIdOrderByPos(Long workDayId);
 
     Optional<MenuPlan> findByWorkDayIdAndMenuId(Long workDayId, Long menuId);
 

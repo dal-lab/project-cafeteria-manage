@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -47,13 +49,17 @@ public class MenuPlanService {
                 .orElseThrow(MenuPlanNotFoundException::new);
     }
 
-    public MenuPlan updateMenuPlan(Long workDayId, Long menuId, Double pos) {
+    public MenuPlan updateMenuPlan(Long menuPlanId, Long workDayId, Long menuId, Double pos) {
 
-        MenuPlan menuPlan = menuPlanRepository.findByWorkDayIdAndMenuId(workDayId, menuId)
-                .orElseThrow(MenuPlanNotFoundException::new);
+        MenuPlan menuPlan = menuPlanRepository.findById(menuPlanId).orElseThrow(MenuPlanNotFoundException::new);
 
-        menuPlan.changePos(pos);
+        menuPlan.changeAll(workDayId, menuId, pos);
 
         return menuPlan;
+    }
+
+    public List<MenuPlan> getMenuPlansByWorkDayId(Long workDayId) {
+
+        return menuPlanRepository.findAllByWorkDayIdOrderByPos(workDayId);
     }
 }

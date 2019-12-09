@@ -31,6 +31,7 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import MenuplanList from './MenuplanList.vue'
+import dragger from '../utils/dragger'
 
 export default {
     components: {
@@ -41,10 +42,14 @@ export default {
             loading: false,
             month: this.$route.params.month,
             weekCount: 1,
+            menuDragger: null,
         }
     },
     created() {
         this.fetchData()
+    },
+    updated() {
+        this.setMenuDragabble()
     },
     computed: {
         ...mapState({
@@ -54,7 +59,8 @@ export default {
     },
     methods: {
         ...mapActions([
-            'GET_MONTHLYMENUPLANS'
+            'GET_MONTHLYMENUPLANS',
+            'UPDATE_MENUPLAN'
         ]),
         fetchData() {
             this.loading = true
@@ -72,7 +78,50 @@ export default {
                 this.weekCount -= 1;
                 this.fetchData();
             }
-        }
+        },
+        setMenuDragabble() {
+            if (this.menuDragger) this.menuDragger.destroy()
+
+            this.menuDragger = dragger.init(Array.from(this.$el.querySelectorAll('.menu-list2')))
+
+            this.menuDragger.on('drop', (el, wrapper, target, silblings) => {
+
+                // 드래그하고 있는 타겟 메뉴의 기본값 설정
+                const targetMenuPlan = {
+                    menuPlanId: el.dataset.menuplanId * 1,
+                    menuId: el.dataset.menuId * 1,
+                    workDayId: wrapper.dataset.monthlymenuplanId * 1,
+                    pos: 65535,
+                }
+
+                // 타겟 메뉴의 위치값 계산을 위한 앞, 뒤 메뉴 포지션 갖고오기
+                const {prev, next} = dragger.sibling({
+                    el,
+                    wrapper,
+                    candidates: Array.from(wrapper.querySelectorAll('.menu-item2')),
+                    type: 'menu'
+                })
+
+                // 타겟 메뉴 포지션 계산
+                if (!prev && next) targetMenuPlan.pos = next.pos / 2
+                else if (!next && prev) targetMenuPlan.pos = prev.pos * 2
+                else if (next && prev) targetMenuPlan.pos = (prev.pos + next.pos) / 2
+
+                console.log(targetMenuPlan);
+                console.log(prev);
+                console.log(next);
+
+                this.UPDATE_MENUPLAN({
+                    menuPlanId: targetMenuPlan.menuPlanId,
+                    workDayId: targetMenuPlan.workDayId,
+                    menuId: targetMenuPlan.menuId,
+                    pos: targetMenuPlan.pos,
+                    year: this.year,
+                    month: this.month,
+                    weekCount: this.weekCount
+                })
+            })
+        },
     }
 }
 </script>

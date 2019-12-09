@@ -13,6 +13,8 @@ public class MenuResponseDto {
 
     private Long id;
 
+    private Long menuPlanId;
+
     private String menuName;
 
     private Double pos;
