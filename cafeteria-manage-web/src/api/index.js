@@ -41,7 +41,7 @@ export const menuPlan = {
   deleteMenuPlan(workDayId, menuId) {
     return request('delete', `/workDays/${workDayId}/menu/${menuId}`)
   },
-  updateMenuPlan(workDayId, menuId, pos) {
-    return request('put', `/workDays/${workDayId}/menu/${menuId}`, {pos}) 
+  updateMenuPlan(menuPlanId, workDayId, menuId, pos) {
+    return request('put', `/menuPlans/${menuPlanId}`, {workDayId, menuId, pos}) 
   }
 }

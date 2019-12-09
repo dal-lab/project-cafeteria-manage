@@ -6,7 +6,7 @@
         </div>
 
         <div class="menu-list2" :data-monthlyMenuPlan-id="data.workDayId">
-          <MenuItem v-for="menu in data.menus" :key="`${ menu.id }`" :data="menu" :work-day-id="data.workDayId" :week-count="weekCount"/>
+          <MenuItem v-for="menu in data.menus" :key="`${ menu.pos }`" :data="menu" :work-day-id="data.workDayId" :week-count="weekCount"/>
         </div>
 
         <div v-if="isAddMenu">

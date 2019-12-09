@@ -52,8 +52,8 @@ const actions = {
             dispatch('GET_MONTHLYMENUPLANS', { year, month, weekCount })
         })
     },
-    UPDATE_MENUPLAN({dispatch}, {workDayId, menuId, pos, year, month, weekCount}) {
-        return api.menuPlan.updateMenuPlan(workDayId, menuId, pos).then(_ => {
+    UPDATE_MENUPLAN({dispatch}, {menuPlanId, workDayId, menuId, pos, year, month, weekCount}) {
+        return api.menuPlan.updateMenuPlan(menuPlanId, workDayId, menuId, pos).then(_ => {
             dispatch('GET_MONTHLYMENUPLANS', {year, month, weekCount})
         })
     }

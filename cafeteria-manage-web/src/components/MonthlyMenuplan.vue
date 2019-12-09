@@ -87,7 +87,8 @@ export default {
             this.menuDragger.on('drop', (el, wrapper, target, silblings) => {
 
                 // 드래그하고 있는 타겟 메뉴의 기본값 설정
-                const targetCard = {
+                const targetMenuPlan = {
+                    menuPlanId: el.dataset.menuplanId * 1,
                     menuId: el.dataset.menuId * 1,
                     workDayId: wrapper.dataset.monthlymenuplanId * 1,
                     pos: 65535,
@@ -102,14 +103,19 @@ export default {
                 })
 
                 // 타겟 메뉴 포지션 계산
-                if (!prev && next) targetCard.pos = next.pos / 2
-                else if (!next && prev) targetCard.pos = prev.pos * 2
-                else if (next && prev) targetCard.pos = (prev.pos + next.pos) / 2
+                if (!prev && next) targetMenuPlan.pos = next.pos / 2
+                else if (!next && prev) targetMenuPlan.pos = prev.pos * 2
+                else if (next && prev) targetMenuPlan.pos = (prev.pos + next.pos) / 2
+
+                console.log(targetMenuPlan);
+                console.log(prev);
+                console.log(next);
 
                 this.UPDATE_MENUPLAN({
-                    workDayId: targetCard.workDayId,
-                    menuId: targetCard.menuId,
-                    pos: targetCard.pos,
+                    menuPlanId: targetMenuPlan.menuPlanId,
+                    workDayId: targetMenuPlan.workDayId,
+                    menuId: targetMenuPlan.menuId,
+                    pos: targetMenuPlan.pos,
                     year: this.year,
                     month: this.month,
                     weekCount: this.weekCount
