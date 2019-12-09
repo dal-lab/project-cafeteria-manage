@@ -107,7 +107,6 @@ public class MenuPlanController {
         menuPlanService.deleteMenuPlan(workDayId, menuId);
     }
 
-    // TODO: MenuPlan ID 받아서 처리하도록 변경 필요
     @PutMapping("/menuPlans/{menuPlanId}")
     public String updatePos(
             @PathVariable(name = "menuPlanId") Long menuPlanId,
