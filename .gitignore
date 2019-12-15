@@ -33,3 +33,6 @@ workspace.xml
 .vscode/
 
 **/node_modules
+
+### data
+/data
