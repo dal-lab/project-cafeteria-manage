@@ -14,6 +14,7 @@ services:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
       timeout: 10s
       retries: 10
+
   cafeteria-manage-api:
     image: openjdk:8
     env_file: .env
@@ -24,13 +25,16 @@ services:
       - 8080:8080
     depends_on:
       - mysql
+    environment:
+      - MYSQL_HOST=mysql
     command: bash -c "cd /home/cafeteria && sh run.sh"
+
   cafeteria-manage-web:
     image: node:10.16.3
     volumes:
       - ./cafeteria-manage-web:/home/cafeteria
     ports:
-      - 3333:3000
+      - 3333:3333
     command: bash -c "cd /home/cafeteria && npm run dev"
     healthcheck:
       test: curl -sS http://localhost:8080 || exit 1
