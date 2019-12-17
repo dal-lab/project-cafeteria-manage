@@ -9,7 +9,7 @@
 
 ### Web 의존성 설치
 ```shell script
-cd cafeteria-manage-web
+bash -c "cd cafeteria-manage-web && npm install"
 ```
 
 ### Docker 실행
