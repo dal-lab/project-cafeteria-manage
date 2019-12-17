@@ -36,3 +36,6 @@ workspace.xml
 
 ### data
 /data
+
+### env
+.env
