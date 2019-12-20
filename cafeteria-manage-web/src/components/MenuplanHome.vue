@@ -2,16 +2,16 @@
     <div>
         <div class="menu-plan-home-title">식단 관리</div>
         <div class="menu-plan-list">
+          <div class="menu-plan-item menu-plan-item-new">
+              <a class="new-menu-plan-btn" href="" @click.prevent="SET_IS_ADD_MENUPLAN(true)">
+                  &plus; 새 식단 추가
+              </a>
+          </div>
           <div class="menu-plan-item" v-for="month in menuPlanMonth" :key="month"
               ref="menuPlanItem">
               <router-link :to="`/menuPlans/${ month }`">
                   <div class="menu-plan-item-title">{{ month }}월</div>
               </router-link>
-          </div>
-          <div class="menu-plan-item menu-plan-item-new">
-              <a class="new-menu-plan-btn" href="" @click.prevent="SET_IS_ADD_MENUPLAN(true)">
-                  &plus; 새 식단 추가
-              </a>
           </div>
         </div>
         <AddMenuplan v-if="isAddMenuplan" />
