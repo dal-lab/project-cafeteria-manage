@@ -15,8 +15,8 @@ import { mapActions, mapState } from 'vuex'
 export default {
     data() {
         return {
-            menuName: "",
-            month: this.$route.params.month,
+          menuName: "",
+          month: this.$route.params.month,
         }
     },
     computed: {
@@ -26,6 +26,10 @@ export default {
         ...mapState({
           year: 'year'
         })
+    },
+    mounted() {
+      this.$refs.inputText.focus()
+      this.setupClickOutside(this.$el)
     },
     props: ['workDayId', 'weekCount'],
     methods: {
@@ -42,8 +46,8 @@ export default {
           month: this.month,
           weekCount: this.weekCount,
         })
-          .catch(err => alert(err.data))
-          .finally(_ => this.menuName = "")
+        .catch(err => alert(err.data))
+        .finally(_ => this.menuName = "")
       },
       newMenuPos() {
         const workDay = this.$store.state.monthlyMenuPlans.filter(menuPlan => menuPlan.workDayId === this.workDayId)[0]
@@ -54,6 +58,13 @@ export default {
         
         return menus[menus.length - 1].pos * 2
       },
+      setupClickOutside(el) {
+        document.querySelector('body').addEventListener('click', e => {
+          if (el.contains(e.target)) return
+          // TODO: 마운트 안 된 상태에서 마운트 된 것처럼 동작하는 이유 찾기
+          // this.$emit('close')
+        })
+      }
     }
 }
 </script>

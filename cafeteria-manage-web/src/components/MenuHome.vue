@@ -2,16 +2,16 @@
     <div>
         <div class="menu-home-title">메뉴 관리</div>
         <div class="menu-list">
+            <div class="menu-item menu-item-new">
+                <a class="new-menu-btn" href="" @click.prevent="SET_IS_ADD_MENU(true)">
+                    &plus; 새 메뉴 추가
+                </a>
+            </div>
             <div class="menu-item" v-for="menu in menus" :key="menu.id"
                 ref="menuItem">
                 <router-link :to="`/menus/${menu.id}`">
                     <div class="menu-item-title">{{ menu.menuName }}</div>
                 </router-link>
-            </div>
-            <div class="menu-item menu-item-new">
-                <a class="new-menu-btn" href="" @click.prevent="SET_IS_ADD_MENU(true)">
-                    &plus; 새 메뉴 추가
-                </a>
             </div>
         </div>
         <AddMenu v-if="isAddMenu" />
@@ -74,7 +74,7 @@ export default {
   flex-wrap: wrap;
 }
 .menu-item {
-  width: 23%;
+  width: 12%;
   height: 100px;
   margin: 0 2% 20px 0;
   border-radius: 3px;

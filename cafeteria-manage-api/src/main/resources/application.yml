@@ -24,3 +24,5 @@ spring:
   profiles: develop
   datasource:
     url: jdbc:h2:~/data/cafeteria
+    username: sa
+    password:
