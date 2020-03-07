@@ -1,5 +1,5 @@
 const state = {
-    year: 2019,
+    year: 2020,
     isAddMenu: false,
     isMenu: false,
     isAddMenuplan: false,

@@ -6,14 +6,14 @@
         <ul class="header-menus">
             <li class="header-menu"><router-link to="/menus">메뉴 관리</router-link></li>
             <li class="header-menu"><router-link to="/menuplans">식단 관리</router-link></li>
-            <li class="header-menu"><router-link to="/ingredients">식자재 관리</router-link></li>
+            <!-- <li class="header-menu"><router-link to="/ingredients">식자재 관리</router-link></li> -->
         </ul>
     </nav>
 </template>
 
 <script>
 export default {
-    
+
 }
 </script>
 
