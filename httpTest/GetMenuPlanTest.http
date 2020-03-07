@@ -1,95 +1,95 @@
-GET http://localhost:8080/menuPlans?year=2019&month=1&weekCount=1
+GET http://localhost:8080/menuPlans?year=2020&month=1&weekCount=1
 
 ###
 
-GET http://localhost:8080/menuPlans?year=2019&month=1&weekCount=2
+GET http://localhost:8080/menuPlans?year=2020&month=1&weekCount=2
 
 ###
 
-GET http://localhost:8080/menuPlans?year=2019&month=2&weekCount=1
+GET http://localhost:8080/menuPlans?year=2020&month=2&weekCount=1
 
 ###
 
-GET http://localhost:8080/menuPlans?year=2019&month=2&weekCount=2
+GET http://localhost:8080/menuPlans?year=2020&month=2&weekCount=2
 
 ###
 
-GET http://localhost:8080/menuPlans?year=2019&month=3&weekCount=1
+GET http://localhost:8080/menuPlans?year=2020&month=3&weekCount=1
 
 ###
 
-GET http://localhost:8080/menuPlans?year=2019&month=3&weekCount=2
+GET http://localhost:8080/menuPlans?year=2020&month=3&weekCount=2
 
 ###
 
-GET http://localhost:8080/menuPlans?year=2019&month=4&weekCount=1
+GET http://localhost:8080/menuPlans?year=2020&month=4&weekCount=1
 
 ###
 
-GET http://localhost:8080/menuPlans?year=2019&month=4&weekCount=2
+GET http://localhost:8080/menuPlans?year=2020&month=4&weekCount=2
 
 ###
 
-GET http://localhost:8080/menuPlans?year=2019&month=5&weekCount=1
+GET http://localhost:8080/menuPlans?year=2020&month=5&weekCount=1
 
 ###
 
-GET http://localhost:8080/menuPlans?year=2019&month=5&weekCount=2
+GET http://localhost:8080/menuPlans?year=2020&month=5&weekCount=2
 
 ###
 
-GET http://localhost:8080/menuPlans?year=2019&month=6&weekCount=1
+GET http://localhost:8080/menuPlans?year=2020&month=6&weekCount=1
 
 ###
 
-GET http://localhost:8080/menuPlans?year=2019&month=6&weekCount=2
+GET http://localhost:8080/menuPlans?year=2020&month=6&weekCount=2
 
 ###
 
-GET http://localhost:8080/menuPlans?year=2019&month=7&weekCount=1
+GET http://localhost:8080/menuPlans?year=2020&month=7&weekCount=1
 
 ###
 
-GET http://localhost:8080/menuPlans?year=2019&month=7&weekCount=2
+GET http://localhost:8080/menuPlans?year=2020&month=7&weekCount=2
 
 ###
 
-GET http://localhost:8080/menuPlans?year=2019&month=8&weekCount=1
+GET http://localhost:8080/menuPlans?year=2020&month=8&weekCount=1
 
 ###
 
-GET http://localhost:8080/menuPlans?year=2019&month=8&weekCount=2
+GET http://localhost:8080/menuPlans?year=2020&month=8&weekCount=2
 
 ###
 
-GET http://localhost:8080/menuPlans?year=2019&month=9&weekCount=1
+GET http://localhost:8080/menuPlans?year=2020&month=9&weekCount=1
 
 ###
 
-GET http://localhost:8080/menuPlans?year=2019&month=9&weekCount=2
+GET http://localhost:8080/menuPlans?year=2020&month=9&weekCount=2
 
 ###
 
-GET http://localhost:8080/menuPlans?year=2019&month=10&weekCount=1
+GET http://localhost:8080/menuPlans?year=2020&month=10&weekCount=1
 
 ###
 
-GET http://localhost:8080/menuPlans?year=2019&month=10&weekCount=2
+GET http://localhost:8080/menuPlans?year=2020&month=10&weekCount=2
 
 ###
 
-GET http://localhost:8080/menuPlans?year=2019&month=11&weekCount=1
+GET http://localhost:8080/menuPlans?year=2020&month=11&weekCount=1
 
 ###
 
-GET http://localhost:8080/menuPlans?year=2019&month=11&weekCount=5
+GET http://localhost:8080/menuPlans?year=2020&month=11&weekCount=5
 
 ###
 
-GET http://localhost:8080/menuPlans?year=2019&month=12&weekCount=1
+GET http://localhost:8080/menuPlans?year=2020&month=12&weekCount=1
 
 ###
 
-GET http://localhost:8080/menuPlans?year=2019&month=12&weekCount=2
+GET http://localhost:8080/menuPlans?year=2020&month=12&weekCount=2
 
 ###
